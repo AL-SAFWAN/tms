@@ -1,6 +1,6 @@
 from typing import List
 from sqlalchemy.orm import Session
-from ..repository.activity_log import ActivityLogRepository
+from ..repositories.activity_log import ActivityLogRepository
 
 
 class ActivityLogService:
