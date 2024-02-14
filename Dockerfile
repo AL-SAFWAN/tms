@@ -27,7 +27,8 @@ FROM python-base as builder-base
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
-    curl 
+    curl \
+    git
 
 RUN curl -sSL https://install.python-poetry.org | python3 - 
 
