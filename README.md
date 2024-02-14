@@ -9,9 +9,13 @@ Folder Structure
 │    ├── /api                # API route handlers (controllers)
 │    │   └── /v1             # Versioning of the API
 │    │
-│    ├── /db                 # Database related files
-│    │
-│    ├── /models             # SQLAlchemy models
+│    ├── /db                 # Database related files    
+│    │   ├── /models         # SQLAlchemy models
+│    │   │   ├── users.py
+│    │   │   ├── tickets.py
+│    │   │   ├── ticket_updates.py
+│    │   │   └── activity_logs.py
+│    │   └── database.py
 │    │
 │    ├── /repositories       # Database access layer
 │    │
