@@ -1,6 +1,6 @@
 from typing import Optional
 from sqlalchemy.orm import Session
-from ..repository.user import UserRepository
+from ..repositories.user import UserRepository
 
 
 class UserService:
