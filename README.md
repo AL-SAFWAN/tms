@@ -23,10 +23,12 @@ Folder Structure
 │    │
 │    └── main.py             # Entry point of the FastAPI application
 │
-├── .gitignore          # Specifies intentionally untracked files to ignore
+├── /mysql-init         # SQL Scripts 
+│    └── init.sql       # Create database 
 ├── docker-compose.yml  # Docker compose configuration
 ├── Dockerfile          # Docker configuration for building images
 ├── poetry.lock         # Poetry lock file for managing dependencies
-└── pyproject.toml      # Poetry configuration file
+├── pyproject.toml      # Poetry configuration file
+└──.gitignore           # Specifies intentionally untracked files to ignore
 ```
 
