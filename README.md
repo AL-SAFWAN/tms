@@ -18,10 +18,16 @@ Folder Structure
 │    │   └── database.py
 │    │
 │    ├── /repositories       # Database access layer
+│    │   ├── user.py
+│    │   ├── ticket.py
+│    │   └── activity_log.py
 │    │
 │    ├── /schemas            # Pydantic models for request and response data validation
 │    │
 │    ├── /services           # Business logic layer
+│    │   ├── user.py
+│    │   ├── ticket.py
+│    │   └── activity_log.py  
 │    │
 │    ├── /tests              # Test suites
 │    │
