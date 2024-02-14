@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Enum
 from sqlalchemy.orm import relationship
+from sqlalchemy_utils import EmailType
+
 from ..database import Base
 
 
@@ -7,7 +9,7 @@ class User(Base):
     __tablename__ = "Users"  # Define the table name
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(255), nullable=False)
-    email = Column(String(255), unique=True, nullable=False)
+    email = Column(EmailType, unique=True, nullable=False)
     role = Column(
         Enum("Requester", "Helpdesk Agent", "SysAdmin"), nullable=False
     )
