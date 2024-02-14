@@ -23,6 +23,9 @@ Folder Structure
 │    │   └── activity_log.py
 │    │
 │    ├── /schemas            # Pydantic models for request and response data validation
+│    │   ├── user.py
+│    │   ├── ticket.py
+│    │   └── activity_log.py  
 │    │
 │    ├── /services           # Business logic layer
 │    │   ├── user.py
