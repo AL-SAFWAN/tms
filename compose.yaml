@@ -31,12 +31,13 @@ services:
     image: mysql:5.7
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d # Mount your initialization scripts directory 
     environment:
       MYSQL_DATABASE: tms_db
       # [TODO] change this to secret.txt
       MYSQL_ROOT_PASSWORD: password # Set the root user's password
     ports:
-      - "3030:3306"
+      - "3036:3306"
 
 volumes:
   mysql_data:

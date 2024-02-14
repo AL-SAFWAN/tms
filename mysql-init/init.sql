@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS tms_db;
+USE tms_db;
