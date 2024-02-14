@@ -47,7 +47,7 @@ COPY --from=builder-base $POETRY_HOME $POETRY_HOME
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 RUN poetry install
-WORKDIR /app
+WORKDIR /
 
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
@@ -60,7 +60,7 @@ FROM python-base as production
 COPY --from=builder-base $POETRY_HOME $POETRY_HOME
 COPY --from=builder-base $VIRTUAL_ENV $VIRTUAL_ENV
 
-WORKDIR /app
+WORKDIR /
 COPY . .
 EXPOSE 8000
 
