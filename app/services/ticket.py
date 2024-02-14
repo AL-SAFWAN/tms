@@ -1,6 +1,6 @@
 from typing import Optional
 from sqlalchemy.orm import Session
-from ..repository.ticket import TicketRepository
+from ..repositories.ticket import TicketRepository
 
 
 class TicketService:
