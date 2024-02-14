@@ -32,7 +32,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: fast_lms
+      MYSQL_DATABASE: tms_db
       # [TODO] change this to secret.txt
       MYSQL_ROOT_PASSWORD: password # Set the root user's password
     ports:
