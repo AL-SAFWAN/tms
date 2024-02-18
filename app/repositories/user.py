@@ -39,6 +39,6 @@ class UserRepository:
             self.db.delete(user)
             self.db.commit()
             return True  # Indicate success
-        return  # User not found
+        return False  # User not found
 
     # Add more functions as necessary, such as for updating or deleting users
