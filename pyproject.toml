@@ -13,7 +13,10 @@ sqlalchemy = "^2.0.25"
 sqlalchemy-utils = "^0.41.1"
 pymysql = "^1.1.0"
 alembic = "^1.13.1"
-
+pydantic = {extras = ["email"], version = "^2.6.1"}
+python-multipart = "^0.0.9"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.0.0"
