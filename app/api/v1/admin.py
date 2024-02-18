@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.schemas.user import UserUpdate
+from app.schemas.user import UserUpdate, User
 from app.services.auth import (
     admin_auth_required,
 )
@@ -41,14 +41,14 @@ async def update_user(
     user_service: UserService = Depends(UserService),
 ):
     user = user_service.update_user(user_id=user_id, update_data=user_data)
-
+    print(user.username)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"{user_data.email} dons't exists",
         )
 
-    return user
+    return User.model_validate(user)
 
 
 # DELETE /admin/users/{user_id}: Delete a user.

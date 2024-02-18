@@ -6,16 +6,16 @@ class UserRepository:
     def __init__(self, db_session: Session):
         self.db = db_session
 
-    def get_user_by_username(self, username: str):
+    def read_user_by_username(self, username: str):
         return self.db.query(User).filter(User.username == username).first()
 
-    def get_user_by_email(self, email: str):
+    def read_user_by_email(self, email: str):
         return self.db.query(User).filter(User.email == email).first()
 
-    def get_user_by_id(self, user_id: int):
+    def read_user_by_id(self, user_id: int):
         return self.db.query(User).filter(User.id == user_id).first()
 
-    def get_users(self):
+    def read_users(self):
         return self.db.query(User).all()
 
     def create_user(self, user_data: dict):
@@ -25,20 +25,18 @@ class UserRepository:
         return user
 
     def update_user(self, user_id: int, update_data: dict):
-        user = self.db.query(User).filter(User.id == user_id).first()
+        user = self.read_user_by_id(user_id)
         if user:
             for key, value in update_data.items():
                 setattr(user, key, value)
             self.db.commit()
             return user
-        return None  # User not found
+        return None
 
-    def delete_user_by_id(self, user_id: int):
-        user = self.db.query(User).filter(User.id == user_id).first()
+    def delete_user(self, user_id: int):
+        user = self.read_user_by_id(user_id)
         if user:
             self.db.delete(user)
             self.db.commit()
-            return True  # Indicate success
-        return False  # User not found
-
-    # Add more functions as necessary, such as for updating or deleting users
+            return user
+        return None

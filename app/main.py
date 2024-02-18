@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from app.db.database import engine
 from app.db.models import users, activity_logs, ticket_updates, tickets
-from app.api.v1 import auth, admin
+from app.api.v1 import auth, admin, tickets as apiTickets
 
 # Create database tables based on the defined
 # SQLAlchemy models if they don't exist
@@ -22,3 +22,4 @@ async def root():
 
 app.include_router(auth.router, tags=["Authentication"])
 app.include_router(admin.router, tags=["Admin"])
+app.include_router(apiTickets.router, tags=["Ticket"])

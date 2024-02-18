@@ -101,7 +101,9 @@ async def get_user_from_token(
 async def user_auth_required(
     user_service=Depends(UserService), token=Depends(oauth2_scheme)
 ):
-    return await get_user_from_token(token, user_service=user_service)
+    return await get_user_from_token(
+        token, user_service=user_service, required_role=None
+    )
 
 
 async def admin_auth_required(
