@@ -9,6 +9,8 @@ Folder Structure
 │    ├── /api                # API route handlers (controllers)
 │    │   └── /v1             # Versioning of the API
 │    │   │   ├── auth.py
+│    │   │   ├── activity_logs.py
+│    │   │   ├── tickets.py
 │    │   │   └── admin.py
 │    │
 │    ├── /core               # Contains configurations 
