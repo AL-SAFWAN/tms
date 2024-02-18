@@ -8,6 +8,11 @@ Folder Structure
 │    │
 │    ├── /api                # API route handlers (controllers)
 │    │   └── /v1             # Versioning of the API
+│    │   │   ├── auth.py
+│    │   │   └── admin.py
+│    │
+│    ├── /core               # Contains configurations 
+│    │   └── /secuirty.py     
 │    │
 │    ├── /db                 # Database related files    
 │    │   ├── /models         # SQLAlchemy models
@@ -29,6 +34,7 @@ Folder Structure
 │    │
 │    ├── /services           # Business logic layer
 │    │   ├── user.py
+│    │   ├── auth.py
 │    │   ├── ticket.py
 │    │   └── activity_log.py  
 │    │
