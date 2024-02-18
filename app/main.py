@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.db.database import engine
 from app.db.models import users, activity_logs, ticket_updates, tickets
+from app.api.v1 import auth
 
 # Create database tables based on the defined
 # SQLAlchemy models if they don't exist
@@ -12,6 +13,8 @@ ticket_updates.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(title="Ticket Management System (TMS)")
+
+app.include_router(auth.router)
 
 
 @app.get("/")

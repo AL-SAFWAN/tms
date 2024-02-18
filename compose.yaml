@@ -17,14 +17,16 @@ services:
       context: .
       # Default target is development. Change to production as needed.
       target: development
+    working_dir: /app
     volumes:
-      - .:/app
+      - .:/app 
       - $VIRTUAL_ENV:/venv # Only for development; remove for production
     ports:
       - "8000:8000"
+    restart: on-failure
     environment:
-      - PYTHONPATH=/app
-    # command: poetry run uvicorn app.main:app --host 0.0.0.0:8000 --reload # Development command; adjust as necessary
+      - PYTHONPATH=/
+    # command: uvicorn app.main:app --host 0.0.0.0:8000 --reload # Development command; adjust as necessary
     depends_on:
       - db
   db:
