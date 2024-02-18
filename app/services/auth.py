@@ -3,7 +3,7 @@ from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 
 from app.db.database import get_db
-from app.schemas.user import TokenData
+from app.schemas.user import TokenData, Role, User
 from app.core.security import (
     pwd_context,
     ACCESS_TOKEN_EXPIRE_MINUTES,
@@ -68,8 +68,8 @@ class AuthService:
         )
 
 
-async def get_current_user(
-    user_service=Depends(UserService), token=Depends(oauth2_scheme)
+async def get_user_from_token(
+    token: str, user_service: UserService, required_role: str = None
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -78,15 +78,43 @@ async def get_current_user(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
+        username = payload.get("sub")
+        role = payload.get("role")
         if username is None:
             raise credentials_exception
-        token_data = TokenData(username=username)
-
+        if required_role and role != required_role:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="The user has incorrect privileges",
+            )
+        token_data = TokenData(username=username, role=role)
     except JWTError:
         raise credentials_exception
-    user = user_service.get_user_by_username(token_data.username)
 
+    user = user_service.get_user_by_username(token_data.username)
     if user is None:
         raise credentials_exception
-    return user
+
+    return User.model_validate(user)
+
+
+async def user_auth_required(
+    user_service=Depends(UserService), token=Depends(oauth2_scheme)
+):
+    return await get_user_from_token(token, user_service=user_service)
+
+
+async def admin_auth_required(
+    user_service=Depends(UserService), token=Depends(oauth2_scheme)
+):
+    return await get_user_from_token(
+        token, user_service=user_service, required_role=Role.SysAdmin
+    )
+
+
+async def agent_auth_required(
+    user_service=Depends(UserService), token=Depends(oauth2_scheme)
+):
+    return await get_user_from_token(
+        token, user_service=user_service, required_role=Role.Helpdesk_Agent
+    )
