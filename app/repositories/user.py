@@ -15,8 +15,8 @@ class UserRepository:
     def get_user_by_id(self, user_id: int):
         return self.db.query(User).filter(User.id == user_id).first()
 
-    def get_users(self, user_id: int):
-        return self.db.query(User).filter(User.id == user_id).all()
+    def get_users(self):
+        return self.db.query(User).all()
 
     def create_user(self, user_data: dict):
         user = User(**user_data)
@@ -39,6 +39,6 @@ class UserRepository:
             self.db.delete(user)
             self.db.commit()
             return True  # Indicate success
-        return False  # User not found
+        return  # User not found
 
     # Add more functions as necessary, such as for updating or deleting users

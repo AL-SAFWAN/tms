@@ -61,8 +61,3 @@ async def read_items(token=Depends(admin_auth_required)):
 )
 async def read_users_me(current_user=Depends(user_auth_required)):
     return current_user
-
-
-# @router.get("/users/me/items/")
-# async def read_own_items(current_user=Depends(get_current_user)):
-#     return [{"item_id": "Foo", "owner": current_user.username}]
