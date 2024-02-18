@@ -42,10 +42,9 @@ class UserUpdate(BaseModel):
 
 class User(UserBase):
     id: int
-    password_hash: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Token(BaseModel):
@@ -55,3 +54,4 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: str | None = None
+    role: Role
