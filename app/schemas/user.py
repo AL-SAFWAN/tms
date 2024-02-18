@@ -35,9 +35,7 @@ class UserCreate(UserBase):
         return value
 
 
-class UserUpdate(BaseModel):
-    username: str = None
-    email: EmailStr = None
+class UserUpdate(UserBase): ...
 
 
 class User(UserBase):

@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import Depends
 from app.db.database import get_db
+from app.schemas.user import User, UserCreate
+from pydantic import TypeAdapter
 from sqlalchemy.orm import Session
 from ..repositories.user import UserRepository
 
@@ -9,21 +11,30 @@ class UserService:
     def __init__(self, db_session: Session = Depends(get_db)):
         self.user_repository = UserRepository(db_session)
 
-    def get_user_by_email(self, email: str):
-        return self.user_repository.get_user_by_email(email)
+    def read_user_by_id(self, user_id: int):
+        user = self.user_repository.get_user_by_id(user_id)
+        return User.model_validate(user) if user else None
 
-    def get_user_by_username(self, username: str):
+    def read_user_by_username(self, username: str):
         return self.user_repository.get_user_by_username(username)
 
-    def get_user_by_id(self, user_id: int):
-        user = self.user_repository.get_user_by_id(user_id)
-        return user if user else None
+    def read_user_by_email(self, email: str):
+        return self.user_repository.get_user_by_email(email)
+
+    def read_users(self):
+        return TypeAdapter(List[User]).validate_python(
+            self.user_repository.get_users()
+        )
 
     def create_user(self, user_data: dict) -> dict:
         return self.user_repository.create_user(user_data)
 
-    def update_user(self, user_id: int, update_data: dict) -> Optional[dict]:
-        user = self.user_repository.update_user(user_id, update_data)
+    def update_user(
+        self, user_id: int, update_data: UserCreate
+    ) -> Optional[dict]:
+        user = self.user_repository.update_user(
+            user_id, update_data.model_dump()
+        )
         return user if user else None
 
     def delete_user_by_id(self, user_id: int) -> bool:
