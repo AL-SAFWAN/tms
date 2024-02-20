@@ -3,45 +3,18 @@
 Folder Structure
 
 ```
-/tms
+/backend
 │ └──/app
-│    │
 │    ├── /api                # API route handlers (controllers)
 │    │   └── /v1             # Versioning of the API
-│    │   │   ├── auth.py
-│    │   │   ├── activity_logs.py
-│    │   │   ├── tickets.py
-│    │   │   └── admin.py
-│    │
 │    ├── /core               # Contains configurations 
-│    │   └── /secuirty.py     
-│    │
 │    ├── /db                 # Database related files    
 │    │   ├── /models         # SQLAlchemy models
-│    │   │   ├── users.py
-│    │   │   ├── tickets.py
-│    │   │   ├── ticket_updates.py
-│    │   │   └── activity_logs.py
 │    │   └── database.py
-│    │
 │    ├── /repositories       # Database access layer
-│    │   ├── user.py
-│    │   ├── ticket.py
-│    │   └── activity_log.py
-│    │
 │    ├── /schemas            # Pydantic models for request and response data validation
-│    │   ├── user.py
-│    │   ├── ticket.py
-│    │   └── activity_log.py  
-│    │
 │    ├── /services           # Business logic layer
-│    │   ├── user.py
-│    │   ├── auth.py
-│    │   ├── ticket.py
-│    │   └── activity_log.py  
-│    │
 │    ├── /tests              # Test suites
-│    │
 │    └── main.py             # Entry point of the FastAPI application
 │
 ├── /mysql-init         # SQL Scripts 
