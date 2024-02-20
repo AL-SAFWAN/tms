@@ -12,8 +12,6 @@ version: "3.8"
 
 services:
   backend:
-    depends_on:
-      - db
     # env_file:
     #   - .env
     build:
@@ -26,6 +24,8 @@ services:
     ports:
       - "8000:80"
     command: /start-reload.sh
+    depends_on:
+      - db
 
   frontend:
     build:

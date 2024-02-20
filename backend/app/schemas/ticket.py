@@ -1,6 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
 from typing import Optional
+from .user import UserBase
 import enum
 
 
@@ -42,3 +43,7 @@ class Ticket(TicketBase):
 
     class Config:
         from_attributes = True
+
+
+class TicketWithRequester(Ticket):
+    requester: UserBase
