@@ -31,6 +31,6 @@ Folder Structure
 ├── /mysql-init         # SQL Scripts
 │    └── init.sql       # Create Initial database
 ├── Dockerfile          # Docker configuration for building images
-└──.gitignore           # Specifies intentionally untracked files to ignore
+├──.gitignore           # Specifies intentionally untracked files to ignore
 └──.pre-commit-config   # Configuration for Black (formatting) and Flake8 (linting)
 ```
