@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-
-from schemas.ticket import TicketCreate, TicketUpdate
+from typing import List
+from schemas.ticket import TicketCreate, TicketUpdate, TicketWithRequester
 from schemas.user import Role
 
 from services.auth import user_auth_required, admin_auth_required
@@ -23,7 +23,7 @@ async def create_ticket(
     return ticket
 
 
-@router.get("/tickets/")
+@router.get("/tickets/", response_model=List[TicketWithRequester])
 async def read_tickets(
     requester_id: int = None,
     ticket_service: TicketService = Depends(TicketService),

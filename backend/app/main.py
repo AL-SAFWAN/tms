@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from db.database import engine
 from db.models import users, activity_logs, ticket_updates, tickets
 from api.v1 import auth, admin, tickets as apiTickets
+from fastapi.middleware.cors import CORSMiddleware
 
 # Create database tables based on the defined
 # SQLAlchemy models if they don't exist
@@ -12,6 +13,18 @@ ticket_updates.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(title="Ticket Management System (TMS)")
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
