@@ -4,6 +4,7 @@
 # For more help, visit the .dockerignore file reference guide at
 # https://docs.docker.com/engine/reference/builder/#dockerignore-file
 
+
 **/.DS_Store
 **/__pycache__
 **/.venv
@@ -25,6 +26,7 @@
 **/docker-compose*
 **/compose*
 **/Dockerfile*
+**/package-lock.json
 **/node_modules
 **/npm-debug.log
 **/obj

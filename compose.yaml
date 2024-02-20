@@ -17,7 +17,6 @@ services:
     # env_file:
     #   - .env
     build:
-      # target: development
       context: ./backend
       dockerfile: backend.dockerfile
       args:
@@ -28,11 +27,21 @@ services:
       - "8000:80"
     command: /start-reload.sh
 
+  frontend:
+    build:
+      target: development
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    volumes:
+      - "./frontend:/app"
+    ports:
+      - "3000:5173"
+
   db:
     image: mysql:5.7
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql-init:/docker-entrypoint-initdb.d # Mount your initialization scripts directory 
+      - ./mysql-init:/docker-entrypoint-initdb.d # Mount your initialization scripts directory
     environment:
       MYSQL_DATABASE: tms_db
       # [TODO] change this to secret.txt
