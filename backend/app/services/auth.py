@@ -2,9 +2,9 @@ from fastapi import Depends, HTTPException, status
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 
-from app.db.database import get_db
-from app.schemas.user import TokenData, Role, User
-from app.core.security import (
+from db.database import get_db
+from schemas.user import TokenData, Role, User
+from core.security import (
     pwd_context,
     ACCESS_TOKEN_EXPIRE_MINUTES,
     ALGORITHM,

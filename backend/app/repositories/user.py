@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from ..db.models.users import User
+from db.models.users import User
 
 
 class UserRepository:

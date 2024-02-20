@@ -1,45 +1,48 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.schemas.user import UserUpdate, User
-from app.services.auth import (
+from schemas.user import UserUpdate, User
+from services.auth import (
     admin_auth_required,
 )
-from app.services.user import UserService
+from services.user import UserService
 
 router = APIRouter(prefix="/api/v1/admin")
 
+# admin user management
 
-# GET /admin/users: List all users. This is crucial for admin oversight.
+
 @router.get("/users/")
 async def read_users(
     user_service: UserService = Depends(UserService),
     token=Depends(admin_auth_required),
 ):
+    """List all users"""
     users = user_service.read_users()
     return users
 
 
+# [TODO]
 # POST /admin/users: Create a new user.
 # Essential for expanding the user base, especially in role-based systems.
 
 
-# GET /admin/users/{user_id}: Get details of a specific user.
 @router.get("/users/{user_id}", dependencies=[Depends(admin_auth_required)])
 async def read_user(
     user_id: int,
     user_service: UserService = Depends(UserService),
 ):
+    """Get details of a specific user."""
     users = user_service.read_user_by_id(user_id=user_id)
     return users
 
 
-# PUT /admin/users/{user_id}: Update user details.
 @router.put("/users/{user_id}", dependencies=[Depends(admin_auth_required)])
 async def update_user(
     user_id: int,
     user_data: UserUpdate,
     user_service: UserService = Depends(UserService),
 ):
+    """Update user details."""
     user = user_service.update_user(user_id=user_id, update_data=user_data)
     print(user.username)
     if not user:
@@ -51,13 +54,12 @@ async def update_user(
     return User.model_validate(user)
 
 
-# DELETE /admin/users/{user_id}: Delete a user.
-# Important for managing the lifecycle of user access.
 @router.delete("/users/{user_id}", dependencies=[Depends(admin_auth_required)])
 async def delete_user(
     user_id: int,
     user_service: UserService = Depends(UserService),
 ):
+    """Delete a user."""
     user = user_service.delete_user_by_id(user_id=user_id)
 
     if not user:

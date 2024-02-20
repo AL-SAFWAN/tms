@@ -1,10 +1,11 @@
 from typing import Optional, List
 from fastapi import Depends
-from app.db.database import get_db
-from app.schemas.user import User, UserCreate
 from pydantic import TypeAdapter
 from sqlalchemy.orm import Session
-from ..repositories.user import UserRepository
+
+from repositories.user import UserRepository
+from db.database import get_db
+from schemas.user import User, UserCreate
 
 
 class UserService:

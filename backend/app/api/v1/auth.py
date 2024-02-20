@@ -1,14 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.schemas.user import Token, UserCreate
-from app.services.auth import (
+from schemas.user import Token, UserCreate
+from services.auth import (
     AuthService,
     user_auth_required,
     admin_auth_required,
 )
 
 router = APIRouter()
+
+# user authentication management
 
 
 @router.post("/token")
@@ -51,13 +53,11 @@ async def signup(
     return Token(access_token=access_token, token_type="bearer")
 
 
-@router.get("/items/")
-async def read_items(token=Depends(admin_auth_required)):
-    return {"token": token}
-
-
-@router.get(
-    "/users/me/",
-)
+@router.get("/users/me/")
 async def read_users_me(current_user=Depends(user_auth_required)):
     return current_user
+
+
+@router.get("/user/me/token")
+async def read_items(token=Depends(admin_auth_required)):
+    return {"token": token}
