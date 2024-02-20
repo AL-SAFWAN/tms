@@ -1,9 +1,9 @@
 from typing import Optional
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from ..repositories.ticket import TicketRepository
-from app.schemas.ticket import TicketCreate
-from app.db.database import get_db
+from repositories.ticket import TicketRepository
+from schemas.ticket import TicketCreate
+from db.database import get_db
 
 
 class TicketService:

@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import EmailType
-
 from ..database import Base
 
 

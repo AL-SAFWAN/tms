@@ -1,8 +1,7 @@
 from fastapi import FastAPI
-
-from app.db.database import engine
-from app.db.models import users, activity_logs, ticket_updates, tickets
-from app.api.v1 import auth, admin, tickets as apiTickets
+from db.database import engine
+from db.models import users, activity_logs, ticket_updates, tickets
+from api.v1 import auth, admin, tickets as apiTickets
 
 # Create database tables based on the defined
 # SQLAlchemy models if they don't exist

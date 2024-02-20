@@ -11,24 +11,23 @@
 version: "3.8"
 
 services:
-  tms:
-    container_name: fastapi_app
-    build:
-      context: .
-      # Default target is development. Change to production as needed.
-      target: development
-    working_dir: /app
-    volumes:
-      - .:/app 
-      - $VIRTUAL_ENV:/venv # Only for development; remove for production
-    ports:
-      - "8000:8000"
-    restart: on-failure
-    environment:
-      - PYTHONPATH=/
-    # command: uvicorn app.main:app --host 0.0.0.0:8000 --reload # Development command; adjust as necessary
+  backend:
     depends_on:
       - db
+    # env_file:
+    #   - .env
+    build:
+      # target: development
+      context: ./backend
+      dockerfile: backend.dockerfile
+      args:
+        INSTALL_DEV: ${INSTALL_DEV-true}
+    volumes:
+      - ./backend/app:/app
+    ports:
+      - "8000:80"
+    command: /start-reload.sh
+
   db:
     image: mysql:5.7
     volumes:

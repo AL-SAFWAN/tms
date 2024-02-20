@@ -1,12 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.schemas.ticket import TicketCreate, TicketUpdate
-from app.schemas.user import Role
+from schemas.ticket import TicketCreate, TicketUpdate
+from schemas.user import Role
 
-from app.services.auth import user_auth_required, admin_auth_required
-from app.services.ticket import TicketService
+from services.auth import user_auth_required, admin_auth_required
+from services.ticket import TicketService
 
 router = APIRouter(prefix="/api/v1")
+
+# ticket management
 
 
 @router.post("/tickets/")
