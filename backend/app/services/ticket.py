@@ -10,14 +10,12 @@ class TicketService:
     def __init__(self, db: Session = Depends(get_db)):
         self.ticket_repository = TicketRepository(db)
 
-    def get_tickets_by_requester_id(self, user_id: int, requester_id=None):
+    def get_tickets_by_requester_id(self, requester_id: int):
         return self.ticket_repository.read_tickets_by_requester_id(
-            (requester_id, user_id)[requester_id is None]
+            requester_id
         )
 
-    def get_tickets(self, requester_id=None):
-        if requester_id is not None:
-            return self.get_tickets_by_requester_id(requester_id)
+    def get_tickets(self):
         return self.ticket_repository.read_tickets()
 
     def get_ticket_by_id(self, ticket_id: int) -> Optional[dict]:

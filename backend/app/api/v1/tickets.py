@@ -25,7 +25,6 @@ async def create_ticket(
 
 @router.get("/tickets/", response_model=List[TicketWithRequester])
 async def read_tickets(
-    requester_id: int = None,
     ticket_service: TicketService = Depends(TicketService),
     user=Depends(user_auth_required),
 ):
@@ -33,11 +32,9 @@ async def read_tickets(
     specific to a Requester, all for SysAdmin or Agent"""
 
     if user.role is Role.Requester:
-        return ticket_service.get_tickets_by_requester_id(
-            user.id, requester_id=None
-        )
+        return ticket_service.get_tickets_by_requester_id(user.id)
     else:
-        return ticket_service.get_tickets(requester_id=requester_id)
+        return ticket_service.get_tickets()
 
 
 @router.get("/tickets/{ticket_id}")
