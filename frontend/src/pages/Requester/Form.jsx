@@ -7,45 +7,42 @@ import { signUpSchema } from '../../utils/Validations/authValidator';
 import { setCredential } from '../../redux/slice/user';
 import TextField from '../../components/TextField';
 
-export const SignUp = ({ setStage }) => {
+export const Form = ({ setStage }) => {
   const navigation = useNavigate();
-  const token = useSelector((state) => state.user.token);
-  if (token) {
-    navigation('/');
-  }
 
   const dispatch = useDispatch();
   let [singUp] = useSingUpMutation();
 
   let handleSubmit = async (values, actions) => {
-    try {
-      console.log(values);
-      const result = await singUp(values).unwrap();
-      dispatch(setCredential(result));
-      actions.resetForm();
-      actions.setStatus({
-        sent: true,
-        msg: 'Login successful!',
-      });
-      navigation('/');
-    } catch ({ status, data: { detail } }) {
-      actions.setStatus({
-        sent: false,
-        msg: detail, // Customize your error message based on the error structure
-      });
-    } finally {
-      actions.setSubmitting(false);
-    }
+    console.log(values);
+    // try {
+    //   console.log(values);
+    //   const result = await singUp(values).unwrap();
+    //   dispatch(setCredential(result));
+    //   actions.resetForm();
+    //   actions.setStatus({
+    //     sent: true,
+    //     msg: 'Login successful!',
+    //   });
+    //   navigation('/');
+    // } catch ({ status, data: { detail } }) {
+    //   actions.setStatus({
+    //     sent: false,
+    //     msg: detail, // Customize your error message based on the error structure
+    //   });
+    // } finally {
+    //   actions.setSubmitting(false);
+    // }
   };
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      email: '',
-      role: '',
-      password: '',
+      title: '',
+      description: '',
+      status: 'Open',
+      priority: '',
     },
-    validationSchema: signUpSchema,
+    // validationSchema: signUpSchema,
     onSubmit: handleSubmit,
   });
 
@@ -66,7 +63,7 @@ export const SignUp = ({ setStage }) => {
         <div>
           <TextField
             formik={formik}
-            label={'username'}
+            label={'title'}
             Icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -78,63 +75,49 @@ export const SignUp = ({ setStage }) => {
               </svg>
             }
           />
-          <TextField
-            formik={formik}
-            label={'email'}
-            type="email"
-            Icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="w-4 h-4 opacity-70"
-              >
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-              </svg>
-            }
-          />
+
           <div className="text-base-content/70 p-1 font-thin capitalize">
-            select a role
+            Description
           </div>
-          <select
-            name="role"
+
+          <textarea
+            id="description"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.role}
+            value={formik.values.description}
+            placeholder="description"
+            className="textarea textarea-bordered textarea-lg w-full max"
+          ></textarea>
+
+          <div className="text-base-content/70 p-1 font-thin capitalize">
+            Priority
+          </div>
+          <select
+            id="priority"
+            name="priority"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.priority}
             className="select select-bordered w-full text-[#babbbb] capitalize"
           >
+            {formik.touched.role && formik.errors.role ? (
+              <div className=" text-error italic p-2 pb-0">
+                {formik.errors.description}
+              </div>
+            ) : null}
+
             <option disabled value="">
-              select a role
+              select priority
             </option>
-            <option value="Requester">Requester</option>
-            <option value="SysAdmin">SysAdmin</option>
-            <option value="Helpdesk Agent">Helpdesk Agent</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
           </select>
           {formik.touched.role && formik.errors.role ? (
             <div className=" text-error italic p-2 pb-0">
               {formik.errors.role}
             </div>
           ) : null}
-
-          <TextField
-            formik={formik}
-            label={'password'}
-            type="password"
-            Icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="w-4 h-4 opacity-70"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            }
-          />
         </div>
       </div>
       <div className="self-end"></div>
@@ -154,15 +137,11 @@ export const SignUp = ({ setStage }) => {
           </button>
         )}
         <button
-          type="button"
-          className="btn btn-primary btn-md btn-outline"
+          type="submit"
+          className="btn btn-primary "
           disabled={formik.isSubmitting}
-          onClick={() => setStage(false)}
         >
-          Back
-        </button>
-        <button type="submit" className="btn btn-accent ">
-          Sign Up
+          Create Ticket
         </button>
       </div>
     </form>

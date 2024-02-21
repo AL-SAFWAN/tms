@@ -1,6 +1,7 @@
-import { useGetTicketQuery } from '../redux/api/ticket.js';
-import Nav from '../components/Nav.jsx';
-import Table from '../components/Table.jsx';
+import { useGetTicketQuery } from '../../redux/api/ticket.js';
+import Nav from '../../components/Nav.jsx';
+import Table from '../../components/Table.jsx';
+import { Form } from './Form.jsx';
 
 function Requester() {
   const { data, error, isLoading } = useGetTicketQuery();
@@ -19,9 +20,22 @@ function Requester() {
           {/* LEFT SIDE */}
           <div className="flex flex-row space-x-5 ">
             <div className="flex flex-col space-y-5">
-              <button className="btn btn-sm btn-primary w-30 h-10 ">
+              <button
+                className="btn btn-primary "
+                onClick={() =>
+                  document.getElementById('my_modal_2').showModal()
+                }
+              >
                 Create Ticket
               </button>
+              <dialog id="my_modal_2" className="modal">
+                <div className="modal-box">
+                  <Form />
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+                </form>
+              </dialog>
             </div>
             <div className="flex flex-row space-x-4">
               <Table data={data} />

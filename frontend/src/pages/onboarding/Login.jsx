@@ -64,6 +64,7 @@ export const Login = ({ setStage }) => {
         <div>
           <TextField
             formik={formik}
+            type="email"
             label={'email'}
             Icon={
               <svg

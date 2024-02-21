@@ -11,7 +11,7 @@ import {
 import { useSelector } from 'react-redux';
 // import { setCredential } from '../redux/slice/user';
 
-import Requester from './pages/Requester.jsx';
+import Requester from './pages/Requester/Requester.jsx';
 import Onboarding from './pages/onboarding/Onboarding.jsx';
 
 let Layout = () => {
