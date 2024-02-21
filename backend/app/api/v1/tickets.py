@@ -37,6 +37,7 @@ async def read_tickets(
         return ticket_service.get_tickets()
 
 
+
 @router.get("/tickets/{ticket_id}")
 async def read_ticket(
     ticket_id: int = None,

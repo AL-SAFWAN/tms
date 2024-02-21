@@ -3,6 +3,7 @@ import { ticketApi } from './api/ticket';
 import { authApi } from './api/auth';
 import user, { userSlice } from './slice/user';
 
+
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
@@ -14,6 +15,7 @@ export const store = configureStore({
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([ticketApi.middleware, authApi.middleware]),
+
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
