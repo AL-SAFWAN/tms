@@ -5,19 +5,24 @@ from repositories.ticket import TicketRepository
 from schemas.ticket import TicketCreate, Status
 from db.database import get_db
 from datetime import datetime
+from fastapi_pagination.ext.sqlalchemy import paginate
 
 
 class TicketService:
     def __init__(self, db: Session = Depends(get_db)):
+        self.db = db
         self.ticket_repository = TicketRepository(db)
 
     def get_tickets_by_requester_id(self, requester_id: int, status, priority):
-        return self.ticket_repository.read_tickets_by_requester_id(
-            requester_id, status, priority
+        return paginate(
+            self.db,
+            self.ticket_repository.read_tickets_by_requester_id(
+                requester_id, status, priority
+            ),
         )
 
     def get_tickets(self):
-        return self.ticket_repository.read_tickets()
+        return paginate(self.db, self.ticket_repository.read_tickets())
 
     def get_ticket_by_id(self, ticket_id: int) -> Optional[dict]:
         return self.ticket_repository.read_ticket_by_id(ticket_id)

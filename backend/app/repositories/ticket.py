@@ -14,13 +14,13 @@ class TicketRepository:
             query = query.filter(Ticket.status == status)
         if priority:
             query = query.filter(Ticket.priority == priority)
-        return query.all()
+        return query.order_by(Ticket.creation_date)
 
     def read_ticket_by_id(self, ticket_id: int):
         return self.db.query(Ticket).filter(Ticket.id == ticket_id).first()
 
     def read_tickets(self):
-        return self.db.query(Ticket).all()
+        return self.db.query(Ticket).order_by(Ticket.creation_date)
 
     def create_ticket(
         self,

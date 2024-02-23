@@ -1,5 +1,7 @@
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-from typing import List, Optional
+from fastapi_pagination import Page
+
 from schemas.ticket import (
     TicketCreate,
     TicketUpdate,
@@ -29,7 +31,7 @@ async def create_ticket(
     return ticket
 
 
-@router.get("/tickets/", response_model=List[TicketWithRequester])
+@router.get("/tickets/", response_model=Page[TicketWithRequester])
 async def read_tickets(
     status: Optional[Status] = Query(None),
     priority: Optional[Priority] = Query(None),

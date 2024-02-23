@@ -3,6 +3,7 @@ from db.database import engine
 from db.models import users, activity_logs, ticket_updates, tickets
 from api.v1 import auth, admin, tickets as apiTickets
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 
 # Create database tables based on the defined
 # SQLAlchemy models if they don't exist
@@ -13,6 +14,7 @@ ticket_updates.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(title="Ticket Management System (TMS)")
+add_pagination(app)
 
 origins = [
     "http://localhost:3000",

@@ -29,9 +29,8 @@ async def login(
     access_token = auth_service.create_access_token(
         data={"sub": user.username, "role": user.role}
     )
-    
-    return Token(access_token=access_token, token_type="bearer", user=user)
 
+    return Token(access_token=access_token, token_type="bearer", user=user)
 
 
 @router.post("/signup")
@@ -53,7 +52,6 @@ async def signup(
     )
 
     return Token(access_token=access_token, token_type="bearer", user=user)
-
 
 
 @router.get("/users/me/")
