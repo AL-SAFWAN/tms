@@ -117,7 +117,7 @@ function Stats({ id, description, setDescription, setDescriptionDisable }) {
             Cancel
           </button>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary text-base-100"
             onClick={() => {
               save();
             }}

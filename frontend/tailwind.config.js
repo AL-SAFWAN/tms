@@ -6,7 +6,7 @@ export default {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['dracula'], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+    themes: ['night', 'nord'], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
   },
 };

@@ -155,7 +155,7 @@ export const SignUp = ({ setStage }) => {
         )}
         <button
           type="button"
-          className="btn btn-primary btn-md btn-outline"
+          className="btn btn-primary text-base-100 btn-md btn-outline"
           disabled={formik.isSubmitting}
           onClick={() => setStage(false)}
         >

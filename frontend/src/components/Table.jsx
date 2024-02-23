@@ -6,7 +6,7 @@ function Table({ data, setFilterParams }) {
   return (
     <>
       {/* // <div className=" overflow-x-auto overflow-y-auto  w-full h-full"> */}
-      <table className="table table-md  bg-base-100 table-pin-rows rounded-2xl ">
+      <table className="table   bg-base-100 table-pin-rows rounded-2xl ">
         {/* head */}
         <thead>
           <tr className="bg-base-200 ">
@@ -44,7 +44,11 @@ function Table({ data, setFilterParams }) {
                 <th>{id}</th>
                 <td>{requester.username}</td>
                 <td>{title}</td>
-                <td>{description}</td>
+                <td className="bg-red-510 text-clip text-wrap ...">
+                  {description.length > 20
+                    ? description.substring(0, 20) + '...'
+                    : description}
+                </td>
                 <td>{creation_date}</td>
                 <td>{status}</td>
                 <td>{priority}</td>
@@ -53,7 +57,6 @@ function Table({ data, setFilterParams }) {
             )
           )}
         </tbody>
-        <tfoot className="h-10 "></tfoot>
       </table>
     </>
   );

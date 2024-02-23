@@ -7,9 +7,9 @@ function Header({ id }) {
     <div className="mb-6">
       <h1 className="text-2xl font-bold divider divider-start ">
         {data?.title}
-        <span className="font-thin text-slate-400"> #{data?.id}</span>
+        <span className="font-thin text-base-content/80"> #{data?.id}</span>
       </h1>
-      <p className="text-slate-300 font-thin">
+      <p className="text-base-content/80 font-thin">
         <span className="font-semibold italic">
           {data?.requester?.username}
         </span>{' '}

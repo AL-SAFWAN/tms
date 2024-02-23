@@ -35,14 +35,14 @@ export const ticketApi = createApi({
         console.log(queryParams.toString());
         return `/tickets/?${queryParams.toString()}`;
       },
-      transformResponse: (obj) => {
-        obj.items.map((ticket) => ({
+      transformResponse: (obj) => ({
+        ...obj,
+        items: obj.items.map((ticket) => ({
           ...ticket,
           creation_date: formatDate(ticket.creation_date),
           resolution_date: formatDate(ticket.resolution_date),
-        }));
-        return obj;
-      },
+        })),
+      }),
       providesTags: ['Tickets'],
     }),
     createTicket: builder.mutation({

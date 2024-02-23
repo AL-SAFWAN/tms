@@ -5,10 +5,10 @@ import { Form } from './Form.jsx';
 
 function Requester() {
   const [{ status, priority, page, size }, setFilterParams] = useState({
-    status: null,
-    priority: null,
+    status: '',
+    priority: '',
     page: 1,
-    size: 5,
+    size: 8,
   });
   const { data, isLoading } = useGetTicketsQuery({
     status,
@@ -32,7 +32,7 @@ function Requester() {
             <div className="flex flex-row space-x-5 ">
               <div className="flex flex-col space-y-5 w-40 ">
                 <button
-                  className="btn btn-primary "
+                  className="btn btn-primary text-base-100"
                   onClick={() =>
                     document.getElementById('my_modal_2').showModal()
                   }
@@ -90,10 +90,13 @@ function Requester() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-between  max-h-[700px] min-h-[500px] w-full min:w-2/3 overflow-x-auto rounded-2xl">
-            <div className="  bg-base-100 rounded-2xl">
-              <Table data={data} setFilterParams={setFilterParams} />
+          <div className="flex flex-col justify-between w-full min:w-2/3">
+            <div className="min-h-[400px]  overflow-x-auto rounded-2xl bg-base-100">
+              <div className="  bg-base-100 rounded-2xl">
+                <Table data={data} setFilterParams={setFilterParams} />
+              </div>
             </div>
+
             <div className="join mx-auto p-2 ">
               <button
                 className="join-item btn"
@@ -107,18 +110,7 @@ function Requester() {
               >
                 «
               </button>
-              <button className="join-item btn">
-                {/* {pages.map((page) => (
-                  <button
-                    key={page}
-                    className={`btn ${page === page ? 'btn-active' : ''}`}
-                    onClick={() => onPageChange(page)}
-                  >
-                    {page}
-                  </button>
-                ))} */}
-                {data?.page}
-              </button>
+              <button className="join-item btn">{data?.page}</button>
 
               <button
                 className="join-item btn"

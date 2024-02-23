@@ -56,15 +56,13 @@ function TicketDisplay({
           </div>
         </div>
         <textarea
-          className="textarea textarea-bordered"
+          className="textarea textarea-bordered min-h-36"
           disabled={descriptionDisabled}
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
         ></textarea>
-
-        {/* <p className="p-2 w-full">{data?.description}</p> */}
       </div>
     </div>
   );

@@ -147,7 +147,7 @@ export const Form = ({ setStage }) => {
         )}
         <button
           type="submit"
-          className="btn btn-primary "
+          className="btn btn-primary text-base-100"
           disabled={formik.isSubmitting}
         >
           Create Ticket

@@ -28,7 +28,9 @@ function Comment() {
           ></textarea>
 
           <div className="card-actions justify-end">
-            <button className="btn btn-primary btn-sm">Comment</button>
+            <button className="btn btn-primary text-base-100 btn-sm">
+              Comment
+            </button>
           </div>
         </div>
       </div>{' '}

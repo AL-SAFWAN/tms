@@ -117,7 +117,7 @@ export const Login = ({ setStage }) => {
       <div className="flex flex-col space-y-3">
         <button
           type="submit"
-          className="btn btn-primary btn-md"
+          className="btn btn-primary text-base-100 btn-md"
           disabled={formik.isSubmitting}
         >
           Login
