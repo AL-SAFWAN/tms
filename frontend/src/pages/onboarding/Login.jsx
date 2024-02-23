@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { loginSchema } from '../../utils/Validations/authValidator';
 import { useLoginMutation } from '../../redux/api/auth';
@@ -9,9 +9,11 @@ import TextField from '../../components/TextField';
 
 export const Login = ({ setStage }) => {
   const navigation = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
   const token = useSelector((state) => state.user.token);
   if (token) {
-    navigation('/');
+    navigation(from);
   }
 
   const dispatch = useDispatch();
@@ -27,7 +29,7 @@ export const Login = ({ setStage }) => {
         sent: true,
         msg: 'Login successful!',
       });
-      navigation('/');
+      navigation(from);
     } catch ({ status, data: { detail } }) {
       actions.setStatus({
         sent: false,

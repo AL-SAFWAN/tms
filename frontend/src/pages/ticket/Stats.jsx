@@ -3,14 +3,14 @@ import {
   useGetTicketQuery,
   useUpdateTicketMutation,
 } from '../../redux/api/ticket';
-
+import { usePermission } from '../../hooks/usePermission';
 function Stats({ id, description, setDescription, setDescriptionDisable }) {
   const { data, isFetching } = useGetTicketQuery(id);
   const [priority, setPriority] = useState('');
   const [status, setStatus] = useState('');
   const [hasChanged, setHasChanged] = useState(false);
-
-  const [updateTicket, { isLoading }] = useUpdateTicketMutation();
+  const adminOrAgent = usePermission(['SysAdmin', 'Helpdesk Agent']);
+  const [updateTicket] = useUpdateTicketMutation();
   const save = () => {
     setDescriptionDisable(true);
     updateTicket({
@@ -73,7 +73,7 @@ function Stats({ id, description, setDescription, setDescriptionDisable }) {
               <select
                 className="select  w-full select-xs mt-2 -mb-1 select-bordered"
                 value={status}
-                disabled={true} //[TODO] only for admin and helpdesk agent
+                disabled={!adminOrAgent}
                 onChange={(e) => {
                   setStatus(e.target.value);
                 }}

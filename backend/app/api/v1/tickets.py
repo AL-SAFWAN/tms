@@ -90,12 +90,22 @@ async def update_ticket(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"ticket id {ticket_id} doesn't exist",
         )
-
-    if user.role is Role.Requester and user.id is not ticket.requester_id:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Cannot access this ticket",
-        )
+    if user.role == Role.Requester:
+        if user.id != ticket.requester_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="You do not have permission to access this ticket.",
+            )
+        if ticket_data.status != ticket.status:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="As a requester, you cannot change the ticket's status",
+            )
+        if ticket_data.assigned_agent != ticket.assigned_agent:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="As a requester, you cannot change the assigned agent.",
+            )
 
     return ticket_service.update_ticket(ticket, ticket_data)
 

@@ -21,6 +21,7 @@ export const SignUp = ({ setStage }) => {
     try {
       console.log(values);
       const result = await singUp(values).unwrap();
+      console.log(result);
       dispatch(setCredential(result));
       actions.resetForm();
       actions.setStatus({

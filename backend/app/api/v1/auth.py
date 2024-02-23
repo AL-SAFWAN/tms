@@ -48,7 +48,7 @@ async def signup(
         )
 
     access_token = auth_service.create_access_token(
-        data={"sub": user.email, "role": user.role},
+        data={"sub": user.username, "role": user.role},
     )
 
     return Token(access_token=access_token, token_type="bearer", user=user)

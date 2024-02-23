@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { logout } from '../redux/slice/user';
 import { ticketApi } from '../redux/api/ticket';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 const Nav = () => {
   let dispatch = useDispatch();
   let user = useSelector((state) => state.user);
@@ -19,7 +19,7 @@ const Nav = () => {
   return (
     <div className="navbar bg-base-100 ">
       <div className="navbar-start">
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,17 +50,19 @@ const Nav = () => {
               <a>logout</a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">TMS</a>
+        <Link className="btn btn-ghost text-xl" to="/">
+          TMS
+        </Link>
       </div>
-      <div className="navbar-end z-20 space-x-3">
+      <div className="navbar-end z-20 pr-2">
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar  "
+            className="btn btn-ghost btn-sm btn-circle avatar  "
           >
             {/* <div className="w-10 rounded-full"> */}
             <div className="bg-neutral border border-slate-500 text-neutral-content rounded-full w-full h-full !flex !items-center !justify-center ">

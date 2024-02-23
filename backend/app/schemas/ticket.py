@@ -33,6 +33,7 @@ class TicketUpdate(BaseModel):
     description: Optional[str] = None
     status: Optional[Status] = None
     priority: Optional[Priority] = None
+    resolution_date: Optional[datetime] = None
 
 
 class Ticket(TicketBase):

@@ -34,7 +34,10 @@ function Table({ data, setFilterParams }) {
             }) => (
               <tr
                 key={id}
-                className="hover cursor-pointer"
+                className={
+                  'hover cursor-pointer ' +
+                  (status === 'Resolved' && 'opacity-30  hover:opacity-70')
+                }
                 onClick={() => {
                   console.log(id, 'ticket id ');
                   navigate('/ticket', { state: { id: id } });
@@ -42,7 +45,25 @@ function Table({ data, setFilterParams }) {
                 }}
               >
                 <th>{id}</th>
-                <td>{requester.username}</td>
+                <td>
+                  {/* {requester.username} */}
+                  <div className="avatar placeholder items-center space-x-2">
+                    <div className="bg-neutral text-neutral-content rounded-full w-7">
+                      <span className="capitalize text-xs">
+                        {requester.username[0]}
+                      </span>
+                    </div>
+
+                    <span
+                      className="relative z-20 tooltip cursor-pointer tooltip-right"
+                      data-tip={requester.email}
+                    >
+                      <span className="font-semibold ">
+                        {requester.username}
+                      </span>
+                    </span>
+                  </div>
+                </td>
                 <td>{title}</td>
                 <td className="bg-red-510 text-clip text-wrap ...">
                   {description.length > 20
@@ -50,8 +71,20 @@ function Table({ data, setFilterParams }) {
                     : description}
                 </td>
                 <td>{creation_date}</td>
-                <td>{status}</td>
-                <td>{priority}</td>
+                <td
+                  className={` font-bold ${status === 'Open' && 'text-error'}
+                      ${status === 'In Progress' && 'text-warning'}
+                    ${status === 'Resolved' && 'text-info'}`}
+                >
+                  {status}
+                </td>
+                <td
+                  className={` font-bold ${priority === 'High' && 'text-error'}
+                      ${priority === 'Medium' && 'text-warning'}
+                    ${priority === 'Low' && 'text-info'}`}
+                >
+                  {priority}
+                </td>
                 <td>{resolution_date}</td>
               </tr>
             )

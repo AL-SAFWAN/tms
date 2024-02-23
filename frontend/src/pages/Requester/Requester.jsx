@@ -27,67 +27,57 @@ function Requester() {
             My Tickets
           </h1>
         </div>
-        <div className="flex flex-row space-x-10 justify-between ">
-          <div className="w-fit flex space-x-5 ">
-            <div className="flex flex-row space-x-5 ">
-              <div className="flex flex-col space-y-5 w-40 ">
-                <button
-                  className="btn btn-primary text-base-100"
-                  onClick={() =>
-                    document.getElementById('my_modal_2').showModal()
-                  }
-                >
-                  Create Ticket
-                </button>
-                <dialog id="my_modal_2" className="modal">
-                  <div className="modal-box">
-                    <Form />
-                  </div>
-                  <form method="dialog" className="modal-backdrop">
-                    <button>close</button>
-                  </form>
-                </dialog>
-                <div>
-                  <label className="">Priority</label>
-                  <select
-                    className="select  w-full  select-bordered "
-                    value={priority}
-                    onChange={(e) => {
-                      setFilterParams((prevParams) => ({
-                        ...prevParams,
-                        priority:
-                          e.target.value === 'All' ? null : e.target.value,
-                      }));
-                      // setPriority(e.target.value);
-                    }}
-                  >
-                    <option>All</option>
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="">Status</label>
-                  <select
-                    className="select  w-full  select-bordered"
-                    value={status}
-                    onChange={(e) => {
-                      setFilterParams((prevParams) => ({
-                        ...prevParams,
-                        status:
-                          e.target.value === 'All' ? null : e.target.value,
-                      }));
-                      // setPriority(e.target.value);
-                    }}
-                  >
-                    <option>All</option>
-                    <option>Open</option>
-                    <option>In Progress</option>
-                    <option>Resolved</option>
-                  </select>
-                </div>
+        <div className="flex flex-row space-x-5 justify-between ">
+          <div className="flex flex-col space-y-5  w-40 ">
+            <button
+              className="btn btn-primary text-base-100"
+              onClick={() => document.getElementById('my_modal_2').showModal()}
+            >
+              Create Ticket
+            </button>
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box">
+                <Form />
               </div>
+              <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+              </form>
+            </dialog>
+            <div className="space-y-1">
+              <label className="">Priority</label>
+              <select
+                className="select  w-full  select-bordered "
+                value={priority}
+                onChange={(e) => {
+                  setFilterParams((prevParams) => ({
+                    ...prevParams,
+                    priority: e.target.value === 'All' ? null : e.target.value,
+                  }));
+                }}
+              >
+                <option>All</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="">Status</label>
+              <select
+                className="select  w-full  select-bordered"
+                value={status}
+                onChange={(e) => {
+                  setFilterParams((prevParams) => ({
+                    ...prevParams,
+                    status: e.target.value === 'All' ? null : e.target.value,
+                  }));
+                }}
+              >
+                <option>All</option>
+                <option>Open</option>
+                <option>In Progress</option>
+                <option>Resolved</option>
+              </select>
             </div>
           </div>
           <div className="flex flex-col justify-between w-full min:w-2/3">
@@ -120,7 +110,7 @@ function Requester() {
                     page: prevState.page + 1,
                   }));
                 }}
-                disabled={data?.page === data?.pages}
+                disabled={data?.page === data?.pages || data?.pages === 0}
               >
                 »
               </button>

@@ -24,17 +24,19 @@ let Layout = () => {
   );
 };
 
-let RequireAuth = () => {
+let RequireAuth = ({ roleType }) => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
-
+  console.log('user', user);
   return (
     <>
-      {user.token !== null ? (
+      {roleType.find((role) => role == user.role) ? (
         <>
           <Nav />
           <Outlet />
         </>
+      ) : user?.token ? (
+        <Navigate to="/unauthorized" state={{ from: location }} replace />
       ) : (
         <Navigate to="/onboarding" state={{ from: location }} replace />
       )}
@@ -47,11 +49,22 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route element={<RequireAuth />}>
+          <Route path="/onboarding" element={<Onboarding />} />
+
+          <Route
+            element={
+              <RequireAuth
+                roleType={['Requester', 'SysAdmin', 'Helpdesk Agent']}
+              />
+            }
+          >
             <Route path="/" element={<Requester />} />
             <Route path="/ticket" element={<Discussions />} />
           </Route>
-          <Route path="/onboarding" element={<Onboarding />} />
+
+          <Route element={<RequireAuth roleType={['TopG']} />}></Route>
+
+          <Route path="/*" element={<> 404 missing</>} />
           {/* <Route path="*" element={<NoMatch />} /> */}
         </Route>
       </Routes>
