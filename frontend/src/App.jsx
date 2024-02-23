@@ -11,14 +11,16 @@ import {
 import { useSelector } from 'react-redux';
 // import { setCredential } from '../redux/slice/user';
 
-import Requester from './pages/Requester/Requester.jsx';
+import Requester from './pages/requester/Requester.jsx';
 import Onboarding from './pages/onboarding/Onboarding.jsx';
+import Nav from './components/Nav.jsx';
+import Discussions from './pages/ticket/Discussions.jsx';
 
 let Layout = () => {
   return (
-    <>
+    <main className=" bg-base-300">
       <Outlet />
-    </>
+    </main>
   );
 };
 
@@ -29,7 +31,10 @@ let RequireAuth = () => {
   return (
     <>
       {user.token !== null ? (
-        <Outlet />
+        <>
+          <Nav />
+          <Outlet />
+        </>
       ) : (
         <Navigate to="/onboarding" state={{ from: location }} replace />
       )}
@@ -44,6 +49,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Requester />} />
+            <Route path="/ticket" element={<Discussions />} />
           </Route>
           <Route path="/onboarding" element={<Onboarding />} />
           {/* <Route path="*" element={<NoMatch />} /> */}

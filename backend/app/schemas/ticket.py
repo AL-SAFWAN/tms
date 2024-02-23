@@ -22,7 +22,6 @@ class TicketBase(BaseModel):
     description: str
     status: Status
     priority: Priority
-    requester_id: Optional[int] = None
 
 
 class TicketCreate(TicketBase):
@@ -40,6 +39,7 @@ class Ticket(TicketBase):
     id: int
     creation_date: datetime
     resolution_date: Optional[datetime] = None
+    requester_id: Optional[int] = None
 
     class Config:
         from_attributes = True

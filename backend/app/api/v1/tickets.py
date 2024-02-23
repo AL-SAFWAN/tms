@@ -1,6 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from typing import List
-from schemas.ticket import TicketCreate, TicketUpdate, TicketWithRequester
+from fastapi import APIRouter, Depends, HTTPException, status, Query
+from typing import List, Optional
+from schemas.ticket import (
+    TicketCreate,
+    TicketUpdate,
+    TicketWithRequester,
+    Status,
+    Priority,
+)
 from schemas.user import Role
 
 from services.auth import user_auth_required, admin_auth_required
@@ -25,6 +31,9 @@ async def create_ticket(
 
 @router.get("/tickets/", response_model=List[TicketWithRequester])
 async def read_tickets(
+    status: Optional[Status] = Query(None),
+    priority: Optional[Priority] = Query(None),
+    # sort: Optional[str] = Query(None),
     ticket_service: TicketService = Depends(TicketService),
     user=Depends(user_auth_required),
 ):
@@ -32,13 +41,14 @@ async def read_tickets(
     specific to a Requester, all for SysAdmin or Agent"""
 
     if user.role is Role.Requester:
-        return ticket_service.get_tickets_by_requester_id(user.id)
+        return ticket_service.get_tickets_by_requester_id(
+            user.id, status, priority
+        )
     else:
         return ticket_service.get_tickets()
 
 
-
-@router.get("/tickets/{ticket_id}")
+@router.get("/tickets/{ticket_id}", response_model=TicketWithRequester)
 async def read_ticket(
     ticket_id: int = None,
     ticket_service: TicketService = Depends(TicketService),
@@ -65,7 +75,7 @@ async def read_ticket(
 @router.put("/tickets/{ticket_id}")
 async def update_ticket(
     ticket_id: int,
-    ticket: TicketUpdate,
+    ticket_data: TicketUpdate,
     ticket_service: TicketService = Depends(TicketService),
     user=Depends(user_auth_required),
 ):
@@ -85,7 +95,7 @@ async def update_ticket(
             detail="Cannot access this ticket",
         )
 
-    return ticket_service.update_ticket(ticket_id, ticket)
+    return ticket_service.update_ticket(ticket, ticket_data)
 
 
 @router.delete(

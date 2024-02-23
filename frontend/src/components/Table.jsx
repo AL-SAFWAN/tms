@@ -1,12 +1,14 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 function Table({ data }) {
+  const navigate = useNavigate();
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-lg  bg-base-100">
+    <>
+      {/* // <div className=" overflow-x-auto overflow-y-auto  w-full h-full"> */}
+      <table className="table table-xs lg:table-md  bg-base-100 table-pin-rows rounded-sm">
         {/* head */}
         <thead>
-          <tr>
+          <tr className="">
             <th>ID</th>
             <th>Requester</th>
             <th>Title</th>
@@ -14,6 +16,7 @@ function Table({ data }) {
             <th>Date</th>
             <th>Status</th>
             <th>Priority</th>
+            <th>Resolution Date</th>
           </tr>
         </thead>
         <tbody>
@@ -28,7 +31,15 @@ function Table({ data }) {
               resolution_date,
               description,
             }) => (
-              <tr key={id}>
+              <tr
+                key={id}
+                className="hover cursor-pointer"
+                onClick={() => {
+                  console.log(id, 'ticket id ');
+                  navigate('/ticket', { state: { id: id } });
+                  // should have a navigate here
+                }}
+              >
                 <th>{id}</th>
                 <td>{requester.username}</td>
                 <td>{title}</td>
@@ -36,12 +47,20 @@ function Table({ data }) {
                 <td>{creation_date}</td>
                 <td>{status}</td>
                 <td>{priority}</td>
+                <td>{resolution_date}</td>
               </tr>
             )
           )}
         </tbody>
+        <tfoot>
+          <div className="join mx-auto p-2 h-6">
+            {/* <button className="join-item btn">«</button>
+            <button className="join-item btn">0</button>
+            <button className="join-item btn">»</button> */}
+          </div>
+        </tfoot>
       </table>
-    </div>
+    </>
   );
 }
 

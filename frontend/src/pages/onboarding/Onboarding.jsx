@@ -5,7 +5,7 @@ import { SignUp } from './SignUp';
 function Onboarding() {
   const [stage, setStage] = useState(false);
   return (
-    <div className="h-screen bg-base-300 flex flex-col items-center justify-center">
+    <div className="max-h-fit min-h-screen bg-base-300 flex flex-col items-center justify-center">
       <h2 className="card-title pb-4">Login to your account!</h2>
       <div className="card card-side bg-base-100 shadow-xl  w-3/4 h-[660px] ">
         <figure className="w-1/2">

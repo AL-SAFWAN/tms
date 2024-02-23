@@ -17,13 +17,13 @@ export const userSlice = createSlice({
     setCredential: (state, action) => {
       const {
         access_token,
-        user: { username, emails, role, id },
+        user: { username, email, role, id },
       } = action.payload;
 
       console.log(action.payload);
       state.token = access_token;
       state.username = username;
-      state.email = emails;
+      state.email = email;
       state.role = role;
       state.id = id;
       // localStorage.setItem('user', state);

@@ -2,17 +2,18 @@ from typing import Optional
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from repositories.ticket import TicketRepository
-from schemas.ticket import TicketCreate
+from schemas.ticket import TicketCreate, Status
 from db.database import get_db
+from datetime import datetime
 
 
 class TicketService:
     def __init__(self, db: Session = Depends(get_db)):
         self.ticket_repository = TicketRepository(db)
 
-    def get_tickets_by_requester_id(self, requester_id: int):
+    def get_tickets_by_requester_id(self, requester_id: int, status, priority):
         return self.ticket_repository.read_tickets_by_requester_id(
-            requester_id
+            requester_id, status, priority
         )
 
     def get_tickets(self):
@@ -21,13 +22,17 @@ class TicketService:
     def get_ticket_by_id(self, ticket_id: int) -> Optional[dict]:
         return self.ticket_repository.read_ticket_by_id(ticket_id)
 
-    def create_ticket(self, ticket: TicketCreate, requester_id) -> dict:
-        if ticket.requester_id is None:
-            ticket.requester_id = requester_id
-        return self.ticket_repository.create_ticket(dict(ticket))
+    def create_ticket(self, ticket: TicketCreate, user_id) -> dict:
+        return self.ticket_repository.create_ticket(dict(ticket), user_id)
 
-    def update_ticket(self, ticket_id, ticket):
-        return self.ticket_repository.update_ticket(ticket_id, dict(ticket))
+    def update_ticket(self, ticket, ticket_data):
+        if ticket_data.status == Status.resolved:
+            ticket.resolution_date = datetime.now()
+        else:
+            ticket.resolution_date = None
+        return self.ticket_repository.update_ticket(
+            ticket=ticket, ticket_data=dict(ticket_data)
+        )
 
     def delete_ticket(self, ticket_id):
         return self.ticket_repository.delete_ticket(ticket_id)

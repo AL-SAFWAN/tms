@@ -1,38 +1,47 @@
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import { useSingUpMutation } from '../../redux/api/auth';
+import { useCreateTicketMutation } from '../../redux/api/ticket';
 import { signUpSchema } from '../../utils/Validations/authValidator';
-import { setCredential } from '../../redux/slice/user';
 import TextField from '../../components/TextField';
 
 export const Form = ({ setStage }) => {
-  const navigation = useNavigate();
-
   const dispatch = useDispatch();
-  let [singUp] = useSingUpMutation();
+  let [createTicket] = useCreateTicketMutation();
 
   let handleSubmit = async (values, actions) => {
-    console.log(values);
-    // try {
-    //   console.log(values);
-    //   const result = await singUp(values).unwrap();
-    //   dispatch(setCredential(result));
-    //   actions.resetForm();
-    //   actions.setStatus({
-    //     sent: true,
-    //     msg: 'Login successful!',
-    //   });
-    //   navigation('/');
-    // } catch ({ status, data: { detail } }) {
-    //   actions.setStatus({
-    //     sent: false,
-    //     msg: detail, // Customize your error message based on the error structure
-    //   });
-    // } finally {
-    //   actions.setSubmitting(false);
-    // }
+    try {
+      const result = await createTicket(values).unwrap();
+      // dispatch(setCredential(result));
+      actions.resetForm();
+      actions.setStatus({
+        sent: true,
+        msg: result?.title + ' Created!',
+      });
+
+      setTimeout(() => {
+        actions.setStatus({
+          sent: true,
+          msg: '',
+        });
+      }, 1500);
+    } catch ({ status, data }) {
+      console.log(data.detail);
+      actions.setStatus({
+        sent: false,
+        msg: data.detail.map((e) => e.msg).join(),
+        // msg: 'Error',
+      });
+
+      setTimeout(() => {
+        actions.setStatus({
+          sent: false,
+          msg: '',
+        });
+      }, 1500);
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   const formik = useFormik({
@@ -49,10 +58,10 @@ export const Form = ({ setStage }) => {
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col">
       <div>
-        <div className="-mt-2 h-12">
+        <div className="-mt-2 ">
           {formik.status && formik.status.msg && (
             <p
-              className={`  italic text-center text-lg font-bold p-3 ${
+              className={`  italic text-center text-lg font-bold p-3 capitalize ${
                 formik.status.sent ? 'text-success ' : 'text-error'
               }`}
             >
@@ -124,7 +133,7 @@ export const Form = ({ setStage }) => {
 
       <div className="divider"></div>
       <div className="flex flex-row space-x-3 self-end">
-        {(formik.values.password || formik.values.username) && (
+        {(formik.values.title || formik.values.description) && (
           <button
             type="reset"
             className="btn btn-secondary btn-md btn-outline"
