@@ -4,20 +4,24 @@ import Table from '../../components/Table.jsx';
 import { Form } from './Form.jsx';
 
 function Requester() {
-  const [{ status, priority }, setFilterParams] = useState({
+  const [{ status, priority, page, size }, setFilterParams] = useState({
     status: null,
     priority: null,
+    page: 1,
+    size: 5,
   });
   const { data, isLoading } = useGetTicketsQuery({
     status,
     priority,
+    page,
+    size,
   });
-
+  console.log(data);
   if (isLoading) <>...Loading</>;
 
   return (
     <div className="max-h-fit min-h-screen p-6 space-y-6 ">
-      <div className=" w-2/3 mx-auto ">
+      <div className="  mx-auto ">
         <div className="mb-6">
           <h1 className="text-2xl font-bold divider divider-start">
             My Tickets
@@ -86,8 +90,49 @@ function Requester() {
               </div>
             </div>
           </div>
-          <div className="  max-h-[700px] w-full min-w-[200px] overflow-x-auto p-2">
-            <Table data={data} />
+          <div className="flex flex-col justify-between  max-h-[700px] min-h-[500px] w-full min:w-2/3 overflow-x-auto rounded-2xl">
+            <div className="  bg-base-100 rounded-2xl">
+              <Table data={data} setFilterParams={setFilterParams} />
+            </div>
+            <div className="join mx-auto p-2 ">
+              <button
+                className="join-item btn"
+                onClick={() => {
+                  setFilterParams((prevState) => ({
+                    ...prevState,
+                    page: prevState.page - 1,
+                  }));
+                }}
+                disabled={data?.page === 1}
+              >
+                «
+              </button>
+              <button className="join-item btn">
+                {/* {pages.map((page) => (
+                  <button
+                    key={page}
+                    className={`btn ${page === page ? 'btn-active' : ''}`}
+                    onClick={() => onPageChange(page)}
+                  >
+                    {page}
+                  </button>
+                ))} */}
+                {data?.page}
+              </button>
+
+              <button
+                className="join-item btn"
+                onClick={() => {
+                  setFilterParams((prevState) => ({
+                    ...prevState,
+                    page: prevState.page + 1,
+                  }));
+                }}
+                disabled={data?.page === data?.pages}
+              >
+                »
+              </button>
+            </div>
           </div>
         </div>
       </div>

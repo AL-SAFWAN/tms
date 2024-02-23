@@ -12,7 +12,7 @@ export const ticketApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Tickets'], // Define a tag type
+  tagTypes: ['Tickets'],
   endpoints: (builder) => ({
     getTicket: builder.query({
       query: (id) => `/tickets/${id}`,
@@ -21,37 +21,29 @@ export const ticketApi = createApi({
         creation_date: formatDate(ticket.creation_date),
         resolution_date: formatDate(ticket.resolution_date),
       }),
-      providesTags: ['Tickets'], // Associate this query with a tag
+      providesTags: ['Tickets'],
     }),
-    // getTickets: builder.query({
-    //   query: () => '/tickets',
-    //   transformResponse: (tickets) =>
-    //     tickets.map((ticket) => ({
-    //       ...ticket,
-    //       creation_date: formatDate(ticket.creation_date),
-    //       resolution_date: formatDate(ticket.resolution_date),
-    //     })),
-    // }),
     getTickets: builder.query({
       query: (filter) => {
         let queryParams = new URLSearchParams();
-        if (filter.status) {
-          queryParams.append('status', filter.status);
-        }
-        if (filter.priority) {
-          queryParams.append('priority', filter.priority);
-        }
 
-        // Construct the URL with any query parameters that are not null
+        Object.entries(filter).forEach(([key, value]) => {
+          if (value) {
+            queryParams.append(key, value.toString());
+          }
+        });
+        console.log(queryParams.toString());
         return `/tickets/?${queryParams.toString()}`;
       },
-      transformResponse: (tickets) =>
-        tickets.map((ticket) => ({
+      transformResponse: (obj) => {
+        obj.items.map((ticket) => ({
           ...ticket,
           creation_date: formatDate(ticket.creation_date),
           resolution_date: formatDate(ticket.resolution_date),
-        })),
-      invalidatesTags: ['Tickets'], // Invalidate this tag upon success
+        }));
+        return obj;
+      },
+      providesTags: ['Tickets'],
     }),
     createTicket: builder.mutation({
       query: (values) => ({
@@ -59,7 +51,7 @@ export const ticketApi = createApi({
         method: 'POST',
         body: values,
       }),
-      invalidatesTags: ['Tickets'], // Invalidate this tag upon success
+      invalidatesTags: ['Tickets'],
     }),
     updateTicket: builder.mutation({
       query: (data) => ({
@@ -67,7 +59,7 @@ export const ticketApi = createApi({
         method: 'PUT',
         body: data.body,
       }),
-      invalidatesTags: ['Tickets'], // Invalidate this tag upon success
+      invalidatesTags: ['Tickets'],
     }),
   }),
 });

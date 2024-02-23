@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-function Table({ data }) {
+
+function Table({ data, setFilterParams }) {
   const navigate = useNavigate();
   return (
     <>
       {/* // <div className=" overflow-x-auto overflow-y-auto  w-full h-full"> */}
-      <table className="table table-xs lg:table-md  bg-base-100 table-pin-rows rounded-sm">
+      <table className="table table-md  bg-base-100 table-pin-rows rounded-2xl ">
         {/* head */}
         <thead>
-          <tr className="">
+          <tr className="bg-base-200 ">
             <th>ID</th>
             <th>Requester</th>
             <th>Title</th>
@@ -19,8 +20,8 @@ function Table({ data }) {
             <th>Resolution Date</th>
           </tr>
         </thead>
-        <tbody>
-          {data?.map(
+        <tbody className="">
+          {data?.items?.map(
             ({
               id,
               title,
@@ -52,13 +53,7 @@ function Table({ data }) {
             )
           )}
         </tbody>
-        <tfoot>
-          <div className="join mx-auto p-2 h-6">
-            {/* <button className="join-item btn">«</button>
-            <button className="join-item btn">0</button>
-            <button className="join-item btn">»</button> */}
-          </div>
-        </tfoot>
+        <tfoot className="h-10 "></tfoot>
       </table>
     </>
   );
