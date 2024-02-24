@@ -5,7 +5,8 @@ from fastapi_pagination import Page
 from schemas.ticket import (
     TicketCreate,
     TicketUpdate,
-    TicketWithRequester,
+    TicketWithRequesterAndAgent,
+    # TicketWithRequester,
     Status,
     Priority,
 )
@@ -31,7 +32,7 @@ async def create_ticket(
     return ticket
 
 
-@router.get("/tickets/", response_model=Page[TicketWithRequester])
+@router.get("/tickets/", response_model=Page[TicketWithRequesterAndAgent])
 async def read_tickets(
     status: Optional[Status] = Query(None),
     priority: Optional[Priority] = Query(None),
@@ -43,14 +44,12 @@ async def read_tickets(
     specific to a Requester, all for SysAdmin or Agent"""
 
     if user.role is Role.Requester:
-        return ticket_service.get_tickets_by_requester_id(
-            user.id, status, priority
-        )
+        return ticket_service.get_tickets_by_requester_id(user.id, status, priority)
     else:
-        return ticket_service.get_tickets()
+        return ticket_service.get_tickets(status, priority)
 
 
-@router.get("/tickets/{ticket_id}", response_model=TicketWithRequester)
+@router.get("/tickets/{ticket_id}", response_model=TicketWithRequesterAndAgent)
 async def read_ticket(
     ticket_id: int = None,
     ticket_service: TicketService = Depends(TicketService),
@@ -83,7 +82,6 @@ async def update_ticket(
 ):
     """Updates ticket details if the ticket exists
     and the user is authorized."""
-
     ticket = ticket_service.get_ticket_by_id(ticket_id=ticket_id)
     if ticket is None:
         raise HTTPException(
@@ -101,18 +99,24 @@ async def update_ticket(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="As a requester, you cannot change the ticket's status",
             )
-        if ticket_data.assigned_agent != ticket.assigned_agent:
+        if ticket_data.assigned_agent_id != ticket.assigned_agent_id:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="As a requester, you cannot change the assigned agent.",
             )
-
+    if ticket_data.status == Status.open or ticket_data.status == Status.in_progress:
+        if ticket_data.resolution_date != ticket.resolution_date:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=(
+                    "You cannot change or add a resolution date "
+                    "for an in-progress or open ticket."
+                ),
+            )
     return ticket_service.update_ticket(ticket, ticket_data)
 
 
-@router.delete(
-    "/tickets/{ticket_id}", dependencies=[Depends(admin_auth_required)]
-)
+@router.delete("/tickets/{ticket_id}", dependencies=[Depends(admin_auth_required)])
 async def delete_ticket(
     ticket_id: int,
     ticket_service: TicketService = Depends(TicketService),

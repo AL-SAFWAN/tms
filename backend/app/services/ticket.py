@@ -21,8 +21,8 @@ class TicketService:
             ),
         )
 
-    def get_tickets(self):
-        return paginate(self.db, self.ticket_repository.read_tickets())
+    def get_tickets(self, status, priority):
+        return paginate(self.db, self.ticket_repository.read_tickets(status, priority))
 
     def get_ticket_by_id(self, ticket_id: int) -> Optional[dict]:
         return self.ticket_repository.read_ticket_by_id(ticket_id)
@@ -32,9 +32,10 @@ class TicketService:
 
     def update_ticket(self, ticket, ticket_data):
         if ticket_data.status == Status.resolved:
-            ticket.resolution_date = datetime.now()
+            if ticket_data.resolution_date is None:
+                ticket_data.resolution_date = datetime.now()
         else:
-            ticket.resolution_date = None
+            ticket_data.resolution_date = None
         return self.ticket_repository.update_ticket(
             ticket=ticket, ticket_data=dict(ticket_data)
         )
