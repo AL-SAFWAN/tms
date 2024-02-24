@@ -16,11 +16,11 @@ export const ticketApi = createApi({
   endpoints: (builder) => ({
     getTicket: builder.query({
       query: (id) => `/tickets/${id}`,
-      transformResponse: (ticket) => ({
-        ...ticket,
-        creation_date: formatDate(ticket.creation_date),
-        resolution_date: formatDate(ticket.resolution_date),
-      }),
+      // transformResponse: (ticket) => ({
+      //   ...ticket,
+      //   creation_date: formatDate(ticket.creation_date),
+      //   resolution_date: formatDate(ticket.resolution_date),
+      // }),
       providesTags: ['Tickets'],
     }),
     getTickets: builder.query({
@@ -61,6 +61,13 @@ export const ticketApi = createApi({
       }),
       invalidatesTags: ['Tickets'],
     }),
+    deleteTicket: builder.mutation({
+      query: (id) => ({
+        url: `/tickets/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Tickets'],
+    }),
   }),
 });
 
@@ -69,4 +76,5 @@ export const {
   useGetTicketsQuery,
   useCreateTicketMutation,
   useUpdateTicketMutation,
+  useDeleteTicketMutation,
 } = ticketApi;

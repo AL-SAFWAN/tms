@@ -7,9 +7,7 @@ class TicketRepository:
         self.db = db_session
 
     def read_tickets_by_requester_id(self, requester_id, status, priority):
-        query = self.db.query(Ticket).filter(
-            Ticket.requester_id == requester_id
-        )
+        query = self.db.query(Ticket).filter(Ticket.requester_id == requester_id)
         if status:
             query = query.filter(Ticket.status == status)
         if priority:
@@ -19,8 +17,13 @@ class TicketRepository:
     def read_ticket_by_id(self, ticket_id: int):
         return self.db.query(Ticket).filter(Ticket.id == ticket_id).first()
 
-    def read_tickets(self):
-        return self.db.query(Ticket).order_by(Ticket.creation_date.desc())
+    def read_tickets(self, status, priority):
+        query = self.db.query(Ticket)
+        if status:
+            query = query.filter(Ticket.status == status)
+        if priority:
+            query = query.filter(Ticket.priority == priority)
+        return query.order_by(Ticket.creation_date.desc())
 
     def create_ticket(
         self,

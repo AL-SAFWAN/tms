@@ -8,7 +8,7 @@ function Requester() {
     status: '',
     priority: '',
     page: 1,
-    size: 8,
+    size: 7,
   });
   const { data, isLoading } = useGetTicketsQuery({
     status,
@@ -16,7 +16,7 @@ function Requester() {
     page,
     size,
   });
-  console.log(data);
+  console.log(data, 'ticket data');
   if (isLoading) <>...Loading</>;
 
   return (

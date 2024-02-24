@@ -11,7 +11,7 @@ import {
 import { useSelector } from 'react-redux';
 // import { setCredential } from '../redux/slice/user';
 
-import Requester from './pages/requester/Requester.jsx';
+import Requester from './pages/home/Requester.jsx';
 import Onboarding from './pages/onboarding/Onboarding.jsx';
 import Nav from './components/Nav.jsx';
 import Discussions from './pages/ticket/Discussions.jsx';
@@ -59,7 +59,7 @@ function App() {
             }
           >
             <Route path="/" element={<Requester />} />
-            <Route path="/ticket" element={<Discussions />} />
+            <Route path="/ticket/:ticketId" element={<Discussions />} />
           </Route>
 
           <Route element={<RequireAuth roleType={['TopG']} />}></Route>

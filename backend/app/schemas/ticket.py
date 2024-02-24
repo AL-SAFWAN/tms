@@ -34,6 +34,7 @@ class TicketUpdate(BaseModel):
     status: Optional[Status] = None
     priority: Optional[Priority] = None
     resolution_date: Optional[datetime] = None
+    assigned_agent_id: Optional[int] = None
 
 
 class Ticket(TicketBase):
@@ -41,6 +42,7 @@ class Ticket(TicketBase):
     creation_date: datetime
     resolution_date: Optional[datetime] = None
     requester_id: Optional[int] = None
+    assigned_agent_id: Optional[int] = None
 
     class Config:
         from_attributes = True
@@ -48,3 +50,8 @@ class Ticket(TicketBase):
 
 class TicketWithRequester(Ticket):
     requester: UserBase
+
+
+class TicketWithRequesterAndAgent(Ticket):
+    requester: UserBase
+    assigned_agent: Optional[UserBase]

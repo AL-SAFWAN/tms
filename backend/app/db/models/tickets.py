@@ -24,13 +24,19 @@ class Ticket(Base):
     requester_id = Column(Integer, ForeignKey("Users.id"), nullable=False)
     assigned_agent_id = Column(Integer, ForeignKey("Users.id"), nullable=True)
 
-    # Relationship to the User model for the requester
+    # Relationship to the User model
     requester = relationship(
-        "User", foreign_keys=[requester_id], back_populates="tickets"
+        "User", foreign_keys=[requester_id], back_populates="initiated_tickets"
     )
-    # Relationship to the User model for the assigned helpdesk agent
     assigned_agent = relationship(
-        "User", foreign_keys=[assigned_agent_id], backref="assigned_tickets"
+        "User",
+        foreign_keys=[assigned_agent_id],
+        back_populates="assigned_tickets",
     )
+    ...
+    # Relationship to the User model for the assigned helpdesk agent
+    # assigned_agent = relationship(
+    #     "User", foreign_keys=[assigned_agent_id], backref="assigned_tickets"
+    # )
     # Relationship to TicketUpdate model for updates to the ticket
-    updates = relationship("TicketUpdate", back_populates="ticket")
+    # updates = relationship("TicketUpdate", back_populates="ticket")

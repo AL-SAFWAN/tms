@@ -1,15 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
-const initialState = {
+
+const loadFromLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem('user');
+    if (serializedState === null) return undefined;
+    return JSON.parse(serializedState);
+  } catch (e) {
+    console.error('Could not load state from local storage:', e);
+    return undefined;
+  }
+};
+
+const initialState = loadFromLocalStorage() || {
   token: null,
   username: null,
   email: null,
   role: null,
   id: null,
 };
-// const storage = localStorage.getItem('user')
-//   ? localStorage.getItem('user')
-//   : initialState;
-// console.log(storage);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -20,13 +29,11 @@ export const userSlice = createSlice({
         user: { username, email, role, id },
       } = action.payload;
 
-      console.log(action.payload);
       state.token = access_token;
       state.username = username;
       state.email = email;
       state.role = role;
       state.id = id;
-      // localStorage.setItem('user', state);
     },
     logout: (state) => {
       state.token = null;
