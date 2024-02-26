@@ -11,9 +11,9 @@ function Onboarding() {
     localStorage.setItem('isdark', JSON.stringify(isdark));
   }, [isdark]);
   return (
-    <div className="max-h-fit min-h-screen bg-base-300 flex flex-col items-center justify-center">
+    <div className="max-h-fit min-h-screen bg-base-300 flex flex-col items-center justify-center p-28">
       <h2 className="card-title pb-4">Login to your account!</h2>
-      <div className="relative card card-side bg-base-100 shadow-xl  w-3/4 h-[660px] ">
+      <div className="relative card card-side bg-base-100 shadow-xl  max-w-[900px]  min-h-[660px]  ">
         <figure className="w-1/2">
           <img
             className="w-full h-full object-cover"

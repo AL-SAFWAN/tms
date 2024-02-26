@@ -99,9 +99,9 @@ function Table({ data, setFilterParams }) {
                   onClick={() => {
                     navigate(`/ticket/${id}`);
                   }}
-                  className={` font-bold ${status === 'Open' && 'text-error'}
+                  className={` font-bold  ${status === 'Open' && ' text-error '}
                       ${status === 'In Progress' && 'text-warning'}
-                    ${status === 'Resolved' && 'text-info'}`}
+                    ${status === 'Resolved' && 'text-success'}`}
                 >
                   {status}
                 </td>

@@ -6,7 +6,16 @@ export default {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['night', 'nord'], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
-    logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
+    themes: [
+      'night',
+      {
+        nord: {
+          ...require('daisyui/src/theming/themes')['nord'],
+          error: '#cc1233',
+          warning: '#ffb400',
+        },
+      },
+    ],
+    logs: false,
   },
 };

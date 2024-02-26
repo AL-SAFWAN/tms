@@ -1,5 +1,5 @@
 from fastapi import Depends, HTTPException, status
-from jose import jwt, JWTError
+from jose import jwt, JWTError, ExpiredSignatureError
 from datetime import datetime, timedelta, timezone
 
 from db.database import get_db
@@ -25,9 +25,7 @@ class AuthService:
     def get_password_hash(self, password: str) -> str:
         return pwd_context.hash(password)
 
-    def verify_password(
-        self, plain_password: str, hashed_password: str
-    ) -> bool:
+    def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return pwd_context.verify(plain_password, hashed_password)
 
     def create_access_token(
@@ -46,9 +44,7 @@ class AuthService:
 
     def authenticate_user(self, user_data):
         user = self.user_service.read_user_by_email(user_data.username)
-        if not user or not self.verify_password(
-            user_data.password, user.password_hash
-        ):
+        if not user or not self.verify_password(user_data.password, user.password_hash):
             return False
         return user
 
@@ -88,6 +84,10 @@ async def get_user_from_token(
                 detail="The user has incorrect privileges",
             )
         token_data = TokenData(username=username, role=role)
+    except ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_403, detail="token has been expired"
+        )
     except JWTError:
         raise credentials_exception
 
