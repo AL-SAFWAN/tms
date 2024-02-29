@@ -42,3 +42,26 @@ export const signUpSchema = yup.object().shape({
       'Invalid role selected'
     ),
 });
+
+export const updateUserSchema = yup.object().shape({
+  username: yup
+    .string()
+    .required('Username is required')
+    .min(3, 'Username must be at least 3 characters long')
+    .max(20, 'Username cannot be more than 20 characters long')
+    .matches(
+      /^[a-zA-Z0-9_]+$/,
+      'Username can only contain letters, numbers, and underscores'
+    ),
+  email: yup
+    .string()
+    .email('Must be a valid email')
+    .required('Email is required'),
+  role: yup
+    .string()
+    .required('Role is required')
+    .oneOf(
+      ['Requester', 'SysAdmin', 'Helpdesk Agent'],
+      'Invalid role selected'
+    ),
+});

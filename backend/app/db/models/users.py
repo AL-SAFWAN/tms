@@ -16,16 +16,19 @@ class User(Base):
         "Ticket",
         back_populates="requester",
         foreign_keys="[Ticket.requester_id]",
+        cascade="all, delete",
     )
     assigned_tickets = relationship(
         "Ticket",
         back_populates="assigned_agent",
         foreign_keys="[Ticket.assigned_agent_id]",
+        cascade="all, delete",
     )
 
-    # Relationship for ticket updates made by the user
-    # updates = relationship(
-    #     "TicketUpdate",
-    #     back_populates="updated_by",
-    #     foreign_keys="[TicketUpdate.updated_by_id]",
-    # )
+    # Relationship for Comments
+    updates = relationship(
+        "Comments",
+        back_populates="user",
+        foreign_keys="[Comments.commented_by_id]",
+        cascade="all, delete",
+    )

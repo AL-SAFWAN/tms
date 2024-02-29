@@ -45,6 +45,27 @@ export const ticketApi = createApi({
       }),
       providesTags: ['Tickets'],
     }),
+    getAgentsTickets: builder.query({
+      query: (filter) => {
+        let queryParams = new URLSearchParams();
+        console.log(filter, 'filter');
+        Object.entries(filter).forEach(([key, value]) => {
+          if (value && typeof value !== 'object') {
+            queryParams.append(key, value.toString());
+          }
+        });
+        return `/tickets/agent/${filter.path.id}/?${queryParams.toString()}`;
+      },
+      transformResponse: (obj) => ({
+        ...obj,
+        items: obj.items.map((ticket) => ({
+          ...ticket,
+          creation_date: formatDate(ticket.creation_date),
+          resolution_date: formatDate(ticket.resolution_date),
+        })),
+      }),
+      providesTags: ['Tickets'],
+    }),
     createTicket: builder.mutation({
       query: (values) => ({
         url: `/tickets`,
@@ -74,6 +95,7 @@ export const ticketApi = createApi({
 export const {
   useGetTicketQuery,
   useGetTicketsQuery,
+  useGetAgentsTicketsQuery,
   useCreateTicketMutation,
   useUpdateTicketMutation,
   useDeleteTicketMutation,

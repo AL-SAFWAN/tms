@@ -9,4 +9,4 @@ repos:
     hooks:
       - id: flake8
         exclude: "alembic"
-        args: [--ignore=E701, --ignore=E501]
+        args: ["--ignore=E701,E501"]

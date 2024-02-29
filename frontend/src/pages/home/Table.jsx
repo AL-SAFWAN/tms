@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePermission } from '../hooks/usePermission';
-import { useDeleteTicketMutation } from '../redux/api/ticket';
+import { usePermission } from '../../hooks/usePermission';
+import { useDeleteTicketMutation } from '../../redux/api/ticket';
 function Table({ data, setFilterParams }) {
   const navigate = useNavigate();
   const isAdmin = usePermission(['SysAdmin']);
@@ -43,7 +43,7 @@ function Table({ data, setFilterParams }) {
               <tr
                 key={id}
                 className={
-                  'hover cursor-pointer ' +
+                  'hover hover:cursor-pointer ' +
                   (status === 'Resolved' && 'opacity-30  hover:opacity-70')
                 }
               >
@@ -136,7 +136,7 @@ function Table({ data, setFilterParams }) {
                       </div>
 
                       <span
-                        className="relative z-20 tooltip cursor-pointer tooltip-left"
+                        className="relative z-10 tooltip cursor-pointer tooltip-left"
                         data-tip={assigned_agent?.email}
                       >
                         <span className="font-semibold ">

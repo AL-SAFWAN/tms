@@ -13,8 +13,4 @@ class ActivityLogRepository:
         return log
 
     def get_logs_by_user_id(self, user_id: int):
-        return (
-            self.db.query(ActivityLog)
-            .filter(ActivityLog.user_id == user_id)
-            .all()
-        )
+        return self.db.query(ActivityLog).filter(ActivityLog.user_id == user_id).all()

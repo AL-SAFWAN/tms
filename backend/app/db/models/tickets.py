@@ -21,22 +21,28 @@ class Ticket(Base):
     priority = Column(Enum("Low", "Medium", "High"), nullable=False)
     creation_date = Column(DateTime, default=datetime.utcnow)
     resolution_date = Column(DateTime, nullable=True)
-    requester_id = Column(Integer, ForeignKey("Users.id"), nullable=False)
-    assigned_agent_id = Column(Integer, ForeignKey("Users.id"), nullable=True)
+    requester_id = Column(
+        Integer, ForeignKey("Users.id", ondelete="CASCADE"), nullable=False
+    )
+    assigned_agent_id = Column(
+        Integer, ForeignKey("Users.id", ondelete="CASCADE"), nullable=True
+    )
 
     # Relationship to the User model
     requester = relationship(
-        "User", foreign_keys=[requester_id], back_populates="initiated_tickets"
+        "User",
+        foreign_keys=[requester_id],
+        back_populates="initiated_tickets",
     )
     assigned_agent = relationship(
         "User",
         foreign_keys=[assigned_agent_id],
         back_populates="assigned_tickets",
     )
-    ...
-    # Relationship to the User model for the assigned helpdesk agent
-    # assigned_agent = relationship(
-    #     "User", foreign_keys=[assigned_agent_id], backref="assigned_tickets"
-    # )
-    # Relationship to TicketUpdate model for updates to the ticket
-    # updates = relationship("TicketUpdate", back_populates="ticket")
+
+    # Relationship to Comments
+    comments = relationship(
+        "Comments",
+        back_populates="ticket",
+        cascade="all, delete",
+    )

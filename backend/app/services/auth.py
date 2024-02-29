@@ -86,7 +86,7 @@ async def get_user_from_token(
         token_data = TokenData(username=username, role=role)
     except ExpiredSignatureError:
         raise HTTPException(
-            status_code=status.HTTP_403, detail="token has been expired"
+            status_code=status.HTTP_403_FORBIDDEN, detail="token has been expired"
         )
     except JWTError:
         raise credentials_exception

@@ -24,8 +24,8 @@ function Discussions() {
               descriptionDisabled={descriptionDisabled}
               setDescriptionDisable={setDescriptionDisable}
             />
-            {/* <Comments /> */}
-            <Comment />
+            <Comments id={ticketId} />
+            <Comment id={ticketId} />
           </div>
           <Stats
             id={ticketId}
