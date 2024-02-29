@@ -6,6 +6,7 @@ from schemas.ticket import (
     TicketCreate,
     TicketUpdate,
     TicketWithRequesterAndAgent,
+    TicketWithDetails,
     # TicketWithRequester,
     Status,
     Priority,
@@ -36,7 +37,6 @@ async def create_ticket(
 async def read_tickets(
     status: Optional[Status] = Query(None),
     priority: Optional[Priority] = Query(None),
-    # sort: Optional[str] = Query(None),
     ticket_service: TicketService = Depends(TicketService),
     user=Depends(user_auth_required),
 ):
@@ -49,7 +49,32 @@ async def read_tickets(
         return ticket_service.get_tickets(status, priority)
 
 
-@router.get("/tickets/{ticket_id}", response_model=TicketWithRequesterAndAgent)
+@router.get(
+    "/tickets/agent/{assigned_agent_id}",
+    response_model=Page[TicketWithRequesterAndAgent],
+)
+async def read_tickets_by_agent_id(
+    assigned_agent_id: int,
+    status: Optional[Status] = Query(None),
+    priority: Optional[Priority] = Query(None),
+    ticket_service: TicketService = Depends(TicketService),
+    user=Depends(user_auth_required),
+):
+    """Fetches tickets based on user role;
+    specific to a Requester, all for SysAdmin or Agent"""
+
+    if user.role is Role.Requester:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Requester cannot access these tickets",
+        )
+    else:
+        return ticket_service.get_tickets_by_agent_id(
+            assigned_agent_id, status, priority
+        )
+
+
+@router.get("/tickets/{ticket_id}", response_model=TicketWithDetails)
 async def read_ticket(
     ticket_id: int = None,
     ticket_service: TicketService = Depends(TicketService),

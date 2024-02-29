@@ -1,7 +1,8 @@
 from datetime import datetime
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from .user import UserBase
+from .comment import CommentWithUser
 import enum
 
 
@@ -55,3 +56,9 @@ class TicketWithRequester(Ticket):
 class TicketWithRequesterAndAgent(Ticket):
     requester: UserBase
     assigned_agent: Optional[UserBase]
+
+
+class TicketWithDetails(Ticket):
+    requester: UserBase
+    assigned_agent: Optional[UserBase]
+    comments: List[CommentWithUser] = []

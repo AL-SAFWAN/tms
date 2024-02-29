@@ -11,8 +11,9 @@ export default {
       {
         nord: {
           ...require('daisyui/src/theming/themes')['nord'],
-          error: '#cc1233',
-          warning: '#ffb400',
+          error: '#f93e3e',
+          warning: '#fca12f',
+          info: '#61affe',
         },
       },
     ],

@@ -7,7 +7,7 @@ import { usePermission } from '../../hooks/usePermission';
 import { useSelector } from 'react-redux';
 function Stats({ id, description, setDescription, setDescriptionDisable }) {
   const user = useSelector((state) => state.user);
-  const { data, isFetching } = useGetTicketQuery(id);
+  const { data } = useGetTicketQuery(id);
   const [updateTicket] = useUpdateTicketMutation();
 
   const [status, setStatus] = useState('');
@@ -66,18 +66,12 @@ function Stats({ id, description, setDescription, setDescriptionDisable }) {
     }
   }, [priority, status, data, description, dateTime, assignMe]);
 
-  if (isFetching || !data) {
-    return <div>Loading...</div>;
-  }
-
-  console.log(dateTime);
-  console.log(data, user);
   return (
-    <div className="flex flex-col space-y-3">
+    <div className="flex flex-col space-y-3 min-w-[250px] ">
       {isAdminOrAgent &&
         (user.id == data?.assigned_agent_id ? (
           <button
-            className="btn btn-primary btn-outline"
+            className="btn btn-secondary btn-outline"
             onClick={() => setAssignMe(null)}
           >
             Remove Assign Me

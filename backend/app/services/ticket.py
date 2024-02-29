@@ -21,6 +21,12 @@ class TicketService:
             ),
         )
 
+    def get_tickets_by_agent_id(self, agent_id: int, status, priority):
+        return paginate(
+            self.db,
+            self.ticket_repository.read_tickets_by_agent_id(agent_id, status, priority),
+        )
+
     def get_tickets(self, status, priority):
         return paginate(self.db, self.ticket_repository.read_tickets(status, priority))
 

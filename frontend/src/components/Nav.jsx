@@ -3,7 +3,11 @@ import { logout } from '../redux/slice/user';
 import { ticketApi } from '../redux/api/ticket';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { usePermission } from '../hooks/usePermission';
 const Nav = () => {
+  let isAdmin = usePermission(['SysAdmin']);
+  let isAdminAndAgent = usePermission(['SysAdmin', 'Helpdesk Agent']);
+
   let dispatch = useDispatch();
   let user = useSelector((state) => state.user);
   let handelLogout = () => {
@@ -19,46 +23,19 @@ const Nav = () => {
   return (
     <div className="navbar bg-base-100 ">
       <div className="navbar-start">
-        {/* <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h7"
-              />
-            </svg>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a>Homepage</a>
-            </li>
-            <li>
-              <a>Portfolio</a>
-            </li>
-            <li onClick={() => {}}>
-              <a>logout</a>
-            </li>
-          </ul>
-        </div> */}
-      </div>
-      <div className="navbar-center">
+        {/* add logo here */}
         <Link className="btn btn-ghost text-xl" to="/">
           TMS
+          <img
+            className=" h-5 scale-[3.5] object-fit pb-[1px]  "
+            alt="Tailwind CSS Navbar component"
+            src="/tms_logo.png"
+          />
         </Link>
       </div>
-      <div className="navbar-end z-20 pr-2">
-        <div className="dropdown dropdown-end">
+      {/* <div className="navbar-center"></div> */}
+      <div className="navbar-end z-20 pr-2 ">
+        <div className="dropdown dropdown-end ">
           <div
             tabIndex={0}
             role="button"
@@ -69,18 +46,14 @@ const Nav = () => {
               <span className="capitalize text-sm"> {user.username[0]}</span>
             </div>
 
-            {/* <img
-                alt="Tailwind CSS Navbar component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              /> */}
             {/* </div> */}
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 space-y-2"
+            className="menu menu-sm dropdown-content mt-3  p-2 shadow  bg-base-100 rounded-box w-52 space-y-2 border border-slate-500 "
           >
             <li>
-              <a className="flex flex-col p-2">
+              <a className="flex flex-col p-2 z-50">
                 <div className="absolute right-2">
                   <label className="cursor-pointer grid place-items-center">
                     <input
@@ -142,7 +115,37 @@ const Nav = () => {
                 </div>
               </a>
             </li>
-            <div className="divider p-0 m-0 h-[1px]"></div>
+            {isAdminAndAgent && (
+              <>
+                <div className="divider p-0 m-0 h-[1px] z-50 "></div>
+                <li>
+                  <Link className="p-2 " to={'/'}>
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link className="p-2 " to={'/my_tickets'}>
+                    My Tickets
+                  </Link>
+                </li>
+                {isAdmin && (
+                  <>
+                    <li>
+                      <Link className="p-2 " to={'/users'}>
+                        Users
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="p-2 " to={'/logs'}>
+                        Activity Logs
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </>
+            )}
+
+            <div className="divider p-0 m-0 h-[1px] z-50 "></div>
             <li onClick={handelLogout}>
               <a className="p-2 ">
                 <svg

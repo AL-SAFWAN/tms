@@ -30,9 +30,7 @@ class UserService:
     def create_user(self, user_data: dict) -> dict:
         return self.user_repository.create_user(user_data)
 
-    def update_user(
-        self, user_id: int, update_data: UserCreate
-    ) -> Optional[dict]:
+    def update_user(self, user_id: int, update_data: UserCreate) -> Optional[dict]:
         user = self.user_repository.update_user(user_id, dict(update_data))
         return user
 

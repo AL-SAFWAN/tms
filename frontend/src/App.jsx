@@ -11,14 +11,17 @@ import {
 import { useSelector } from 'react-redux';
 // import { setCredential } from '../redux/slice/user';
 
-import Requester from './pages/home/Requester.jsx';
-import Onboarding from './pages/onboarding/Onboarding.jsx';
+import Home from './pages/home';
+import Login from './pages/onboarding';
 import Nav from './components/Nav.jsx';
-import Discussions from './pages/ticket/Discussions.jsx';
+import Ticket from './pages/ticket';
+import AssignedTickets from './pages/my_tickets/index.jsx';
+import Users from './pages/users/index.jsx';
+import User from './pages/users/user.jsx';
 
 let Layout = () => {
   return (
-    <main className=" bg-base-300">
+    <main className=" bg-base-300 min-w-fit">
       <Outlet />
     </main>
   );
@@ -49,7 +52,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/onboarding" element={<Login />} />
 
           <Route
             element={
@@ -58,12 +61,18 @@ function App() {
               />
             }
           >
-            <Route path="/" element={<Requester />} />
-            <Route path="/ticket/:ticketId" element={<Discussions />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/my_tickets" element={<AssignedTickets />} />
+            <Route path="/ticket/:ticketId" element={<Ticket />} />
           </Route>
 
-          <Route element={<RequireAuth roleType={['TopG']} />}></Route>
+          <Route element={<RequireAuth roleType={['SysAdmin']} />}>
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:userId" element={<User />} />
+            <Route path="/logs" element={<> Logs</>} />
+          </Route>
 
+          <Route path="/unauthorized" element={<> Get out of here</>} />
           <Route path="/*" element={<> 404 missing</>} />
           {/* <Route path="*" element={<NoMatch />} /> */}
         </Route>

@@ -14,6 +14,14 @@ class TicketRepository:
             query = query.filter(Ticket.priority == priority)
         return query.order_by(Ticket.creation_date.desc())
 
+    def read_tickets_by_agent_id(self, agent_id, status, priority):
+        query = self.db.query(Ticket).filter(Ticket.assigned_agent_id == agent_id)
+        if status:
+            query = query.filter(Ticket.status == status)
+        if priority:
+            query = query.filter(Ticket.priority == priority)
+        return query.order_by(Ticket.creation_date.desc())
+
     def read_ticket_by_id(self, ticket_id: int):
         return self.db.query(Ticket).filter(Ticket.id == ticket_id).first()
 
