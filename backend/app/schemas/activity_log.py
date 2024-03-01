@@ -1,10 +1,19 @@
 from datetime import datetime
 from pydantic import BaseModel
-from typing import Optional
+import enum
+from .user import UserBase
+
+
+class ActivityType(str, enum.Enum):
+    create = "Create"
+    read = "Read"
+    update = "Update"
+    delete = "Delete"
 
 
 class ActivityLogBase(BaseModel):
-    activity_type: str
+    user_id: int
+    activity_type: ActivityType
     details: str
 
 
@@ -12,14 +21,13 @@ class ActivityLogCreate(ActivityLogBase):
     pass
 
 
-class ActivityLogUpdate(BaseModel):
-    details: Optional[str] = None
-
-
 class ActivityLog(ActivityLogBase):
     id: int
     activity_date: datetime
-    user_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+
+class ActivityLogWithUser(ActivityLogBase):
+    user: UserBase

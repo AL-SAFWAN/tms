@@ -7,7 +7,6 @@ from schemas.ticket import (
     TicketUpdate,
     TicketWithRequesterAndAgent,
     TicketWithDetails,
-    # TicketWithRequester,
     Status,
     Priority,
 )
@@ -17,8 +16,6 @@ from services.auth import user_auth_required, admin_auth_required
 from services.ticket import TicketService
 
 router = APIRouter(prefix="/api/v1")
-
-# ticket management
 
 
 @router.post("/tickets/")
