@@ -29,5 +29,5 @@ class ActivityLog(ActivityLogBase):
         from_attributes = True
 
 
-class ActivityLogWithUser(ActivityLogBase):
+class ActivityLogWithUser(ActivityLog):
     user: UserBase

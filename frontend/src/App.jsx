@@ -18,6 +18,7 @@ import Ticket from './pages/ticket';
 import AssignedTickets from './pages/my_tickets/index.jsx';
 import Users from './pages/users/index.jsx';
 import User from './pages/users/user.jsx';
+import Logs from './pages/logs';
 
 let Layout = () => {
   return (
@@ -69,7 +70,7 @@ function App() {
           <Route element={<RequireAuth roleType={['SysAdmin']} />}>
             <Route path="/users" element={<Users />} />
             <Route path="/users/:userId" element={<User />} />
-            <Route path="/logs" element={<> Logs</>} />
+            <Route path="/logs" element={<Logs />} />
           </Route>
 
           <Route path="/unauthorized" element={<> Get out of here</>} />
