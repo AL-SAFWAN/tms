@@ -8,13 +8,13 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ticketApi } from '../../redux/api/ticket';
+import { logsApi } from '../../redux/api/logs';
 
 function Requester() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, isLoading } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
-  console.log(data);
   if (isLoading) <>...Loading</>;
 
   return (
@@ -96,6 +96,7 @@ function Requester() {
                                 dispatch(
                                   ticketApi.util.invalidateTags(['Tickets'])
                                 );
+                                dispatch(logsApi.util.invalidateTags(['logs']));
                               });
                             }}
                           >
