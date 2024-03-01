@@ -25,10 +25,16 @@ class User(Base):
         cascade="all, delete",
     )
 
-    # Relationship for Comments
-    updates = relationship(
+    ticket_comments = relationship(
         "Comments",
         back_populates="user",
         foreign_keys="[Comments.commented_by_id]",
+        cascade="all, delete",
+    )
+
+    user_logs = relationship(
+        "ActivityLog",
+        back_populates="user",
+        foreign_keys="[ActivityLog.user_id]",
         cascade="all, delete",
     )

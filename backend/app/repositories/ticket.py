@@ -41,7 +41,7 @@ class TicketRepository:
         ticket = Ticket(**ticket_data, requester_id=user_id)
         self.db.add(ticket)
         self.db.commit()
-        return ticket_data
+        return ticket
 
     def update_ticket(self, ticket, ticket_data: dict):
         for key, value in ticket_data.items():
@@ -51,7 +51,6 @@ class TicketRepository:
 
     def delete_ticket(self, ticket_id):
         ticket = self.read_ticket_by_id(ticket_id)
-        print(ticket, "thicket her")
         if ticket:
             self.db.delete(ticket)
             self.db.commit()
