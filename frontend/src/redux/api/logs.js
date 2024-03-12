@@ -22,7 +22,26 @@ export const logsApi = createApi({
       query: () => `/logs/`,
       providesTags: ['logs'],
     }),
+    deleteAllLogs: builder.mutation({
+      query: () => ({
+        url: `/logs/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['logs'],
+    }),
+    deleteUserLogs: builder.mutation({
+      query: (id) => ({
+        url: `/logs/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['logs'],
+    }),
   }),
 });
 
-export const { useGetLogsQuery, useGetUserLogsQuery } = logsApi;
+export const {
+  useGetLogsQuery,
+  useGetUserLogsQuery,
+  useDeleteAllLogsMutation,
+  useDeleteUserLogsMutation,
+} = logsApi;

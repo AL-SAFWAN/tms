@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from '../../redux/api/admin';
-import { useGetUserLogsQuery } from '../../redux/api/logs';
+import {
+  useGetUserLogsQuery,
+  useDeleteUserLogsMutation,
+} from '../../redux/api/logs';
 import { CreateUser, UpdateUser } from '../onboarding/SignUp';
 
 function User() {
-  const [descriptionDisabled, setDescriptionDisable] = useState(true);
-  const [description, setDescription] = useState(true);
   let { userId } = useParams();
-  let { data, isLoading } = useGetUserQuery(userId);
-  let { data: logData, isLoading: logLoading } = useGetUserLogsQuery(userId);
+  let [deleteUserLogs] = useDeleteUserLogsMutation();
+  let { data: logData } = useGetUserLogsQuery(userId);
 
-  if (isLoading || logLoading) return;
-  console.log(userId, 'from param ', data);
   return (
     <div className="max-h-fit min-h-screen p-6 space-y-6  ">
       <div className="flex flex-col w-2/3 mx-auto">
@@ -23,10 +22,21 @@ function User() {
           </h1>
         </div>
         <div className="w-full flex flex-col space-y-5 ">
-          <UpdateUser user={data} />
+          <UpdateUser userId={userId} />
         </div>
-        <div className="mb-6">
+        <div className="mb-0">
           <h1 className="text-2xl font-bold divider divider-start ">Logs</h1>
+        </div>
+        <div className="flex self-end mb-6">
+          <button
+            type="submit"
+            className="btn btn-secondary "
+            onClick={() => {
+              deleteUserLogs(userId);
+            }}
+          >
+            Clear User Logs
+          </button>
         </div>
         <div className="space-y-3 ">
           {logData?.map((data) => {

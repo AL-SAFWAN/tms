@@ -30,5 +30,29 @@ async def read_user_activity(
     comment_service: ActivityLogService = Depends(ActivityLogService),
 ):
     """Read all the log data for a user."""
-
+    print("log for a user")
     return comment_service.get_logs_by_user_id(user_id)
+
+
+@router.delete(
+    "/logs/",
+    dependencies=[Depends(admin_auth_required)],
+)
+async def delete_logs(
+    comment_service: ActivityLogService = Depends(ActivityLogService),
+):
+    """delete all logs"""
+
+    return comment_service.delete_logs()
+
+
+@router.delete(
+    "/logs/{user_id}",
+    dependencies=[Depends(admin_auth_required)],
+)
+async def delete_user_logs(
+    user_id: int,
+    comment_service: ActivityLogService = Depends(ActivityLogService),
+):
+    """delete user logs"""
+    comment_service.delete_user_logs(user_id)
