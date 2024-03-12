@@ -17,8 +17,14 @@ class ActivityLogService:
         print(log)
         return self.activity_log_repository.create_log(log)
 
-    def get_logs_by_user_id(self, user_id: int) -> List[dict]:
+    def get_logs_by_user_id(self, user_id: int):
         return self.activity_log_repository.get_logs_by_user_id(user_id)
 
     def get_logs(self) -> List[dict]:
         return self.activity_log_repository.get_logs()
+
+    def delete_user_logs(self, user_id) -> None:
+        return self.activity_log_repository.delete_user_logs(user_id)
+
+    def delete_logs(self) -> List[dict]:
+        return self.activity_log_repository.delete_logs()

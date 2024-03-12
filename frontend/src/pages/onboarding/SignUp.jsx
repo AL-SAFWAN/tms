@@ -9,7 +9,11 @@ import {
 } from '../../utils/Validations/authValidator';
 import { setCredential } from '../../redux/slice/user';
 import TextField from '../../components/TextField';
-import { adminApi, useUpdateUserMutation } from '../../redux/api/admin';
+import {
+  adminApi,
+  useGetUserQuery,
+  useUpdateUserMutation,
+} from '../../redux/api/admin';
 import { useEffect, useState } from 'react';
 import { ticketApi } from '../../redux/api/ticket';
 
@@ -40,6 +44,12 @@ export const SignUp = ({ setStage }) => {
         sent: false,
         msg: detail, // Customize your error message based on the error structure
       });
+      setTimeout(() => {
+        actions.setStatus({
+          sent: false,
+          msg: '',
+        });
+      }, 1500);
     } finally {
       actions.setSubmitting(false);
     }
@@ -59,17 +69,26 @@ export const SignUp = ({ setStage }) => {
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col">
       <div>
-        <div className="-mt-2 h-12">
-          {formik.status && formik.status.msg && (
-            <p
-              className={`  italic text-center text-lg font-bold p-3 ${
-                formik.status.sent ? 'text-success ' : 'text-error'
-              }`}
+        {formik.status && formik.status.msg && (
+          <div className="alert alert-error p-2 my-3 mt-6 capitalize">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
             >
-              {formik.status.msg}
-            </p>
-          )}
-        </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+
+            <p className={`font-semibold `}>{formik.status.msg}</p>
+          </div>
+        )}
+
         <div>
           <TextField
             formik={formik}
@@ -325,7 +344,8 @@ export const CreateUser = () => {
   );
 };
 
-export const UpdateUser = ({ user }) => {
+export const UpdateUser = ({ userId }) => {
+  let { data, isLoading } = useGetUserQuery(userId);
   const dispatch = useDispatch();
 
   let [updateUser] = useUpdateUserMutation();
@@ -333,8 +353,8 @@ export const UpdateUser = ({ user }) => {
 
   let handleSubmit = async (values, actions) => {
     try {
-      const result = await updateUser({
-        id: user.id,
+      await updateUser({
+        id: data?.id,
         body: values,
       }).unwrap();
       // actions.resetForm();
@@ -356,22 +376,22 @@ export const UpdateUser = ({ user }) => {
 
   const formik = useFormik({
     initialValues: {
-      username: user.username,
-      email: user.email,
-      role: user.role,
+      username: data?.username,
+      email: data?.email,
+      role: data?.role,
     },
     validationSchema: updateUserSchema,
     onSubmit: handleSubmit,
   });
   useEffect(() => {
-    if (user) {
+    if (data) {
       const changed =
-        formik.values.username !== user.username ||
-        formik.values.email !== user.email ||
-        formik.values.role !== user.role;
+        formik.values.username !== data.username ||
+        formik.values.email !== data.email ||
+        formik.values.role !== data.role;
       setHasChanged(changed);
     }
-  }, [formik.values, user]);
+  }, [formik.values, data]);
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col ">
       <div>

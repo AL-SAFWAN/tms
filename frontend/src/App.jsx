@@ -19,11 +19,13 @@ import AssignedTickets from './pages/my_tickets/index.jsx';
 import Users from './pages/users/index.jsx';
 import User from './pages/users/user.jsx';
 import Logs from './pages/logs';
+import toast, { Toaster } from 'react-hot-toast';
 
 let Layout = () => {
   return (
     <main className=" bg-base-300 min-w-fit">
       <Outlet />
+      <Toaster position="bottom-center" />
     </main>
   );
 };
