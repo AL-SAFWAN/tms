@@ -26,7 +26,7 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://tms-frontend-app.s3-website.eu-west-2.amazonaws.com",
-    "https://d3hogs8bohpwdj.cloudfront.net/onboarding",
+    "https://d3hogs8bohpwdj.cloudfront.net",
 ]
 
 app.add_middleware(
