@@ -11,15 +11,15 @@ import {
 import { useSelector } from 'react-redux';
 // import { setCredential } from '../redux/slice/user';
 
-import Home from './pages/home';
-import Login from './pages/onboarding';
+import Home from './pages/home/index.jsx';
+import Login from './pages/onboarding/index.jsx';
 import Nav from './components/Nav.jsx';
-import Ticket from './pages/ticket';
+import Ticket from './pages/ticket/index.jsx';
 import AssignedTickets from './pages/my_tickets/index.jsx';
 import Users from './pages/users/index.jsx';
 import User from './pages/users/user.jsx';
-import Logs from './pages/logs';
-import toast, { Toaster } from 'react-hot-toast';
+import Logs from './pages/logs/index.jsx';
+import { Toaster } from 'react-hot-toast';
 
 let Layout = () => {
   return (
