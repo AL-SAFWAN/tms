@@ -1,6 +1,5 @@
 ﻿# tms
 
-
 ```mermaid
 graph TD
     subgraph Docker Compose
@@ -54,16 +53,25 @@ Folder Structure
 ```
 /tms
 │ └──/backend
+│     ├── .ebextensions
+│     │   └─ 01_fastapi.config
+│     ├── .elasticbeanstalk
+│     │   └─config.yml
+│     ├── Dockerfile
+│     ├── Procfile
+│     ├── env
 │     └──/app
 │         ├── /api                # API route handlers (controllers)
 │         │   └─ /v1              # Versioning of the API
 │         ├── /core               # Contains configurations
 │         ├── /db                 # Database related files
-│         │    └─ /models         # SQLAlchemy models
 │         ├── /repositories       # Database access layer
 │         ├── /schemas            # Pydantic models for request and response data validation
 │         ├── /services           # Business logic layer
 │         ├── /tests              # Test suites
+│         ├── poetry.lock
+│         ├── pyporoject.toml
+│         ├── README.md
 │         └── main.py             # Entry point of the FastAPI application
 │
 ├── /frontend

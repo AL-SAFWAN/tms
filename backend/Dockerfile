@@ -17,7 +17,6 @@ RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; els
 ARG INSTALL_JUPYTER=false
 RUN bash -c "if [ $INSTALL_JUPYTER == 'true' ] ; then pip install jupyterlab ; fi"
 
-EXPOSE 8000
-
+EXPOSE 80
 COPY ./app /app
 ENV PYTHONPATH=/app
