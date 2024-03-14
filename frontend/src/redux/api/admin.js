@@ -4,7 +4,7 @@ export const adminApi = createApi({
   reducerPath: 'adminApi',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8000/api/v1/admin',
+    baseUrl: import.meta.env.VITE_API_URL + '/api/v1/admin',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().user.token;
       if (token) {

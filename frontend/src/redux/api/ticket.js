@@ -3,7 +3,7 @@ import { formatDate } from '../../utils/formats';
 export const ticketApi = createApi({
   reducerPath: 'ticketApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:8000/api/v1',
+    baseUrl: import.meta.env.VITE_API_URL + '/api/v1',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().user.token;
       if (token) {
