@@ -10,6 +10,8 @@ from api.v1 import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
+
 
 # Create database tables based on the defined
 # SQLAlchemy models if they don't exist
@@ -21,6 +23,7 @@ comments.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Ticket Management System (TMS)")
 add_pagination(app)
+app.add_middleware(ProxyHeadersMiddleware)
 
 origins = [
     "http://localhost:3000",
@@ -28,7 +31,7 @@ origins = [
     "http://tms-frontend-app.s3-website.eu-west-2.amazonaws.com",  # S3 bucket
     "https://d3hogs8bohpwdj.cloudfront.net",  # cloud front
     "https://www.tms-applications.com",  # route 53
-    "https://tms-applications.com",  # route 53
+    "https://tms-applications.com",  # apex route 53
 ]
 
 app.add_middleware(
