@@ -25,8 +25,10 @@ add_pagination(app)
 origins = [
     "http://localhost:3000",
     "http://localhost:5173",
-    "http://tms-frontend-app.s3-website.eu-west-2.amazonaws.com",
-    "https://d3hogs8bohpwdj.cloudfront.net",
+    "http://tms-frontend-app.s3-website.eu-west-2.amazonaws.com",  # S3 bucket
+    "https://d3hogs8bohpwdj.cloudfront.net",  # cloud front
+    "https://www.tms-applications.com",  # route 53
+    "https://tms-applications.com",  # route 53
 ]
 
 app.add_middleware(
