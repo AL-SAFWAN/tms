@@ -25,14 +25,16 @@ app = FastAPI(title="Ticket Management System (TMS)")
 add_pagination(app)
 app.add_middleware(ProxyHeadersMiddleware)
 
-origins = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://tms-frontend-app.s3-website.eu-west-2.amazonaws.com",  # S3 bucket
-    "https://d3hogs8bohpwdj.cloudfront.net",  # cloud front
-    "https://www.tms-applications.com",  # route 53
-    "https://tms-applications.com",  # apex route 53
-]
+# origins = [
+#     "http://localhost:3000",
+#     "http://localhost:5173",
+#     "http://tms-frontend-app.s3-website.eu-west-2.amazonaws.com",  # S3 bucket
+#     "https://d3hogs8bohpwdj.cloudfront.net",  # cloud front
+#     "https://www.tms-applications.com",  # route 53
+#     "https://tms-applications.com",  # apex route 53
+# ]
+
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
