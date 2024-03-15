@@ -9,7 +9,7 @@ router = APIRouter(prefix="/api/v1")
 # admin user management
 
 
-@router.post("/comments/")
+@router.post("/comments")
 async def create_comment(
     comment_data: CommentCreate,
     comment_service: CommentService = Depends(CommentService),
@@ -20,7 +20,7 @@ async def create_comment(
     return comment
 
 
-@router.delete("/comments/{comment_id}/", dependencies=[Depends(user_auth_required)])
+@router.delete("/comments/{comment_id}", dependencies=[Depends(user_auth_required)])
 async def delete_comment(
     comment_id: int,
     comment_service: CommentService = Depends(CommentService),
@@ -34,7 +34,7 @@ async def delete_comment(
         )
 
 
-@router.put("/comments/{comment_id}/", dependencies=[Depends(user_auth_required)])
+@router.put("/comments/{comment_id}", dependencies=[Depends(user_auth_required)])
 async def update_comment(
     comment_id: int,
     comment_data: CommentUpdate,
