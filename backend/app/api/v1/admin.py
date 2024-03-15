@@ -18,7 +18,7 @@ async def read_users(
     return users
 
 
-@router.get("/users/{user_id}", dependencies=[Depends(admin_auth_required)])
+@router.get("/users/{user_id}/", dependencies=[Depends(admin_auth_required)])
 async def read_user(
     user_id: int,
     user_service: UserService = Depends(UserService),
@@ -33,7 +33,7 @@ async def read_user(
     return user
 
 
-@router.put("/users/{user_id}", dependencies=[Depends(admin_auth_required)])
+@router.put("/users/{user_id}/", dependencies=[Depends(admin_auth_required)])
 async def update_user(
     user_id: int,
     user_data: UserUpdate,
@@ -50,7 +50,7 @@ async def update_user(
     return User.model_validate(user)
 
 
-@router.delete("/users/{user_id}", dependencies=[Depends(admin_auth_required)])
+@router.delete("/users/{user_id}/", dependencies=[Depends(admin_auth_required)])
 async def delete_user(
     user_id: int,
     user_service: UserService = Depends(UserService),

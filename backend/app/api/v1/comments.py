@@ -20,7 +20,7 @@ async def create_comment(
     return comment
 
 
-@router.delete("/comments/{comment_id}", dependencies=[Depends(user_auth_required)])
+@router.delete("/comments/{comment_id}/", dependencies=[Depends(user_auth_required)])
 async def delete_comment(
     comment_id: int,
     comment_service: CommentService = Depends(CommentService),
@@ -34,7 +34,7 @@ async def delete_comment(
         )
 
 
-@router.put("/comments/{comment_id}", dependencies=[Depends(user_auth_required)])
+@router.put("/comments/{comment_id}/", dependencies=[Depends(user_auth_required)])
 async def update_comment(
     comment_id: int,
     comment_data: CommentUpdate,

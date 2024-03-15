@@ -13,7 +13,7 @@ router = APIRouter()
 # user authentication management
 
 
-@router.post("/token")
+@router.post("/token/")
 async def token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     auth_service: AuthService = Depends(AuthService),
@@ -33,7 +33,7 @@ async def token(
     return Token(access_token=access_token, token_type="bearer", user=user)
 
 
-@router.post("/login")
+@router.post("/login/")
 async def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     auth_service: AuthService = Depends(AuthService),
@@ -53,7 +53,7 @@ async def login(
     return Token(access_token=access_token, token_type="bearer", user=user)
 
 
-@router.post("/signup")
+@router.post("/signup/")
 async def signup(
     user: UserCreate,
     auth_service: AuthService = Depends(AuthService),
@@ -79,6 +79,6 @@ async def read_users_me(current_user=Depends(user_auth_required)):
     return current_user
 
 
-@router.get("/user/me/token")
+@router.get("/user/me/token/")
 async def read_items(token=Depends(admin_auth_required)):
     return {"token": token}
