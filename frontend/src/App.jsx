@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -45,7 +44,7 @@ let RequireAuth = ({ roleType }) => {
       ) : user?.token ? (
         <Navigate to="/unauthorized" state={{ from: location }} replace />
       ) : (
-        <Navigate to="/onboarding" state={{ from: location }} replace />
+        <Navigate to="/login" state={{ from: location }} replace />
       )}
     </>
   );
@@ -56,7 +55,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/onboarding" element={<Login />} />
+          <Route path="/login" element={<Login />} />
 
           <Route
             element={
