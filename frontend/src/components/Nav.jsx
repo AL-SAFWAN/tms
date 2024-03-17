@@ -4,26 +4,29 @@ import { ticketApi } from '../redux/api/ticket';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { usePermission } from '../hooks/usePermission';
+
 const Nav = () => {
   let isAdmin = usePermission(['SysAdmin']);
   let isAdminAndAgent = usePermission(['SysAdmin', 'Helpdesk Agent']);
-
   let dispatch = useDispatch();
   let user = useSelector((state) => state.user);
+
   let handelLogout = () => {
     dispatch(logout());
     dispatch(ticketApi.util.resetApiState());
   };
+
   const [isdark, setIsdark] = useState(
     JSON.parse(localStorage.getItem('isdark'))
   );
+
   useEffect(() => {
     localStorage.setItem('isdark', JSON.stringify(isdark));
   }, [isdark]);
+
   return (
     <div className="navbar bg-base-100 ">
       <div className="navbar-start">
-        {/* add logo here */}
         <Link className="btn btn-ghost text-xl" to="/">
           TMS
           <img
@@ -33,7 +36,6 @@ const Nav = () => {
           />
         </Link>
       </div>
-      {/* <div className="navbar-center"></div> */}
       <div className="navbar-end z-20 pr-2 ">
         <div className="dropdown dropdown-end ">
           <div
@@ -41,12 +43,9 @@ const Nav = () => {
             role="button"
             className="btn btn-ghost btn-sm btn-circle avatar  "
           >
-            {/* <div className="w-10 rounded-full"> */}
             <div className="bg-neutral border border-slate-500 text-neutral-content rounded-full w-full h-full !flex !items-center !justify-center ">
               <span className="capitalize text-sm"> {user.username[0]}</span>
             </div>
-
-            {/* </div> */}
           </div>
           <ul
             tabIndex={0}

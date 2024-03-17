@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetUserQuery } from '../../redux/api/admin';
 import {
   useGetUserLogsQuery,
   useDeleteUserLogsMutation,
 } from '../../redux/api/logs';
-import { CreateUser, UpdateUser } from '../onboarding/SignUp';
+import { UpdateUser } from '../onboarding/SignUp';
 
 function removeDuplicateDetails(sequence) {
   const result = [];
@@ -25,7 +24,6 @@ function User() {
   return (
     <div className="max-h-fit min-h-screen p-6 space-y-6  ">
       <div className="flex flex-col w-2/3 mx-auto">
-        {/* Header  */}
         <div className="mb-3">
           <h1 className="text-2xl font-bold divider divider-start">
             Edit User

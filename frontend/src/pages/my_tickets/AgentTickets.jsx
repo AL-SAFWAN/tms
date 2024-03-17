@@ -1,31 +1,30 @@
-import React from 'react';
-import Table from './Table.jsx';
-import { Form } from './CreateTicketForm.jsx';
+import React, { useState } from 'react';
+import { useGetAgentsTicketsQuery } from '../../redux/api/ticket.js';
+import { useSelector } from 'react-redux';
+import Table from '../home/Table.jsx';
 
-export function AllTickets({ priority, setFilterParams, data, status }) {
+export default function AgentTickets() {
+  let userId = useSelector((state) => state.user.id);
+  const [{ priority, status, page, size }, setFilterParams] = useState({
+    priority: '',
+    status: '',
+    page: 1,
+    size: 7,
+  });
+  const { data } = useGetAgentsTicketsQuery({
+    path: { id: userId },
+    priority,
+    status,
+    page,
+    size,
+  });
   return (
     <>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold divider divider-start">
-          All Tickets
-        </h1>
+        <h1 className="text-2xl font-bold divider divider-start">My Tickets</h1>
       </div>
       <div className="flex flex-row space-x-5 justify-between ">
         <div className="flex flex-col space-y-5  w-40 ">
-          <button
-            className="btn btn-primary text-base-100"
-            onClick={() => document.getElementById('my_modal_2').showModal()}
-          >
-            Create Ticket
-          </button>
-          <dialog id="my_modal_2" className="modal">
-            <div className="modal-box">
-              <Form />
-            </div>
-            <form method="dialog" className="modal-backdrop">
-              <button>close</button>
-            </form>
-          </dialog>
           <div className="space-y-1">
             <label className="">Priority</label>
             <select

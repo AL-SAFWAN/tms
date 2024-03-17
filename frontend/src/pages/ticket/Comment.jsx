@@ -5,7 +5,6 @@ import { ticketApi } from '../../redux/api/ticket';
 
 function Comment({ id }) {
   const user = useSelector((state) => state.user);
-  // refactor so I don't need to pass in the user id, should be done via the token
   let dispatch = useDispatch();
   const [description, setDescription] = useState('');
   const [createComment] = useCreateCommentMutation();

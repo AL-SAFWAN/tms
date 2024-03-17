@@ -40,7 +40,7 @@ export const SignUp = ({ setStage }) => {
     } catch ({ status, data: { detail } }) {
       actions.setStatus({
         sent: false,
-        msg: detail, // Customize your error message based on the error structure
+        msg: detail,
       });
       setTimeout(() => {
         actions.setStatus({
@@ -209,7 +209,7 @@ export const CreateUser = () => {
     } catch ({ status, data: { detail } }) {
       actions.setStatus({
         sent: false,
-        msg: detail, // Customize your error message based on the error structure
+        msg: detail,
       });
     } finally {
       actions.setSubmitting(false);
@@ -230,7 +230,6 @@ export const CreateUser = () => {
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col ">
       <div>
-        {/* <div className="-mt-2 h-12 "> */}
         {formik.status && formik.status.msg && (
           <p
             className={`  italic text-center text-lg font-bold p-3 ${
@@ -240,7 +239,6 @@ export const CreateUser = () => {
             {formik.status.msg}
           </p>
         )}
-        {/* </div> */}
         <div>
           <TextField
             formik={formik}
@@ -362,7 +360,7 @@ export const UpdateUser = ({ userId }) => {
     } catch ({ status, data: { detail } }) {
       actions.setStatus({
         sent: false,
-        msg: detail, // Customize your error message based on the error structure
+        msg: detail,
       });
     } finally {
       actions.setSubmitting(false);
@@ -399,7 +397,6 @@ export const UpdateUser = ({ userId }) => {
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col ">
       <div>
-        {/* <div className="-mt-2 h-12 "> */}
         {formik.status && formik.status.msg && (
           <p
             className={`  italic text-center text-lg font-bold p-3 ${
@@ -409,7 +406,6 @@ export const UpdateUser = ({ userId }) => {
             {formik.status.msg}
           </p>
         )}
-        {/* </div> */}
         <div>
           <TextField
             formik={formik}

@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePermission } from '../../hooks/usePermission';
 import { useDeleteTicketMutation } from '../../redux/api/ticket';
-function Table({ data, setFilterParams }) {
+
+function Table({ data }) {
   const navigate = useNavigate();
   const isAdmin = usePermission(['SysAdmin']);
 
@@ -10,9 +11,7 @@ function Table({ data, setFilterParams }) {
 
   return (
     <>
-      {/* // <div className=" overflow-x-auto overflow-y-auto  w-full h-full"> */}
-      <table className="table  bg-base-100 table-pin-rows rounded-2xl ">
-        {/* head */}
+      <table className="table bg-base-100 table-pin-rows rounded-2xl ">
         <thead>
           <tr className="bg-base-200 ">
             <th>ID</th>
@@ -59,7 +58,6 @@ function Table({ data, setFilterParams }) {
                     navigate(`/ticket/${id}`);
                   }}
                 >
-                  {/* {requester.username} */}
                   <div className="avatar placeholder items-center space-x-2">
                     <div className="bg-neutral text-neutral-content rounded-full w-7">
                       <span className="capitalize text-xs">
@@ -153,13 +151,11 @@ function Table({ data, setFilterParams }) {
                     }}
                   >
                     <svg
-                      // fill="bg-base-content"
                       className="h-5 w-5  stroke-current text-base-content hover:scale-125"
                       fill="none"
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
-                      // stroke="bg-base-content"
                       strokeLinecap="rounded"
                       strokeWidth="2"
                     >

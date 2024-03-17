@@ -1,8 +1,5 @@
-import react, { useState, useEffect } from 'react';
-import {
-  useGetAgentsTicketsQuery,
-  useGetTicketsQuery,
-} from '../../redux/api/ticket.js';
+import react, { useState } from 'react';
+import { useGetTicketsQuery } from '../../redux/api/ticket.js';
 
 import { AllTickets } from './Controls.jsx';
 

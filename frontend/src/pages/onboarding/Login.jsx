@@ -23,7 +23,6 @@ export const Login = ({ setStage }) => {
     try {
       const result = await login(values).unwrap();
       dispatch(setCredential(result));
-      // REDIRECT HERE
       actions.resetForm();
       actions.setStatus({
         sent: true,
@@ -33,7 +32,7 @@ export const Login = ({ setStage }) => {
     } catch ({ status, data: { detail } }) {
       actions.setStatus({
         sent: false,
-        msg: detail, // Customize your error message based on the error structure
+        msg: detail,
       });
       setTimeout(() => {
         actions.setStatus({
@@ -77,17 +76,6 @@ export const Login = ({ setStage }) => {
             <p className={`font-semibold `}>{formik.status.msg}</p>
           </div>
         )}
-        {/* <div className="-mt-2 h-12">
-          {formik.status && formik.status.msg && (
-            <p
-              className={`  italic text-center text-lg font-bold p-3 ${
-                formik.status.sent ? 'text-success ' : 'text-error'
-              }`}
-            >
-              {formik.status.msg}
-            </p>
-          )}
-        </div> */}
         <div>
           <TextField
             formik={formik}
@@ -125,21 +113,6 @@ export const Login = ({ setStage }) => {
           />
         </div>
       </div>
-      {/* <div className="self-end">
-        {(formik.values.password || formik.values.username) && (
-          <button
-            type="reset"
-            className="btn btn-secondary btn-md -mb-8 mt-2"
-            disabled={formik.isSubmitting}
-            onClick={() => {
-              formik.resetForm();
-            }}
-          >
-            Clear
-          </button>
-        )}
-      </div> */}
-
       <div className="divider"></div>
       <div className="flex flex-col space-y-3">
         <button

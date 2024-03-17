@@ -1,24 +1,18 @@
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
-
 import { useCreateTicketMutation } from '../../redux/api/ticket';
-import { signUpSchema } from '../../utils/Validations/authValidator';
 import TextField from '../../components/TextField';
 
-export const Form = ({ setStage }) => {
-  const dispatch = useDispatch();
+export const Form = () => {
   let [createTicket] = useCreateTicketMutation();
 
   let handleSubmit = async (values, actions) => {
     try {
       const result = await createTicket(values).unwrap();
-      // dispatch(setCredential(result));
       actions.resetForm();
       actions.setStatus({
         sent: true,
         msg: result?.title + ' Created!',
       });
-
       setTimeout(() => {
         actions.setStatus({
           sent: true,
@@ -29,9 +23,7 @@ export const Form = ({ setStage }) => {
       actions.setStatus({
         sent: false,
         msg: data.detail.map((e) => e.msg).join(),
-        // msg: 'Error',
       });
-
       setTimeout(() => {
         actions.setStatus({
           sent: false,
@@ -50,7 +42,6 @@ export const Form = ({ setStage }) => {
       status: 'Open',
       priority: '',
     },
-    // validationSchema: signUpSchema,
     onSubmit: handleSubmit,
   });
 

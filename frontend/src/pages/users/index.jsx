@@ -1,10 +1,6 @@
-import react, { useState, useEffect } from 'react';
+import react from 'react';
 import { CreateUser } from '../onboarding/SignUp';
-import {
-  adminApi,
-  useDeleteUserMutation,
-  useGetUsersQuery,
-} from '../../redux/api/admin';
+import { useDeleteUserMutation, useGetUsersQuery } from '../../redux/api/admin';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ticketApi } from '../../redux/api/ticket';
