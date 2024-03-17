@@ -16,11 +16,6 @@ export const ticketApi = createApi({
   endpoints: (builder) => ({
     getTicket: builder.query({
       query: (id) => `/tickets/${id}`,
-      // transformResponse: (ticket) => ({
-      //   ...ticket,
-      //   creation_date: formatDate(ticket.creation_date),
-      //   resolution_date: formatDate(ticket.resolution_date),
-      // }),
       providesTags: ['Tickets'],
     }),
     getTickets: builder.query({
@@ -32,7 +27,6 @@ export const ticketApi = createApi({
             queryParams.append(key, value.toString());
           }
         });
-        console.log(queryParams.toString());
         return `/tickets/?${queryParams.toString()}`;
       },
       transformResponse: (obj) => ({
@@ -48,7 +42,6 @@ export const ticketApi = createApi({
     getAgentsTickets: builder.query({
       query: (filter) => {
         let queryParams = new URLSearchParams();
-        console.log(filter, 'filter');
         Object.entries(filter).forEach(([key, value]) => {
           if (value && typeof value !== 'object') {
             queryParams.append(key, value.toString());
@@ -68,7 +61,7 @@ export const ticketApi = createApi({
     }),
     createTicket: builder.mutation({
       query: (values) => ({
-        url: `/tickets`,
+        url: `/tickets/`,
         method: 'POST',
         body: values,
       }),

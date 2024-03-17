@@ -18,7 +18,7 @@ from services.ticket import TicketService
 router = APIRouter(prefix="/api/v1")
 
 
-@router.post("/tickets")
+@router.post("/tickets/")
 async def create_ticket(
     ticket: TicketCreate,
     ticket_service: TicketService = Depends(TicketService),
@@ -30,7 +30,7 @@ async def create_ticket(
     return ticket
 
 
-@router.get("/tickets", response_model=Page[TicketWithRequesterAndAgent])
+@router.get("/tickets/", response_model=Page[TicketWithRequesterAndAgent])
 async def read_tickets(
     status: Optional[Status] = Query(None),
     priority: Optional[Priority] = Query(None),
@@ -47,7 +47,7 @@ async def read_tickets(
 
 
 @router.get(
-    "/tickets/agent/{assigned_agent_id}",
+    "/tickets/agent/{assigned_agent_id}/",
     response_model=Page[TicketWithRequesterAndAgent],
 )
 async def read_tickets_by_agent_id(

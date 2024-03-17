@@ -31,7 +31,6 @@ export const store = configureStore({
 store.subscribe(() => {
   try {
     const serializedState = JSON.stringify(store.getState().user);
-    console.log(serializedState);
     localStorage.setItem('user', serializedState);
   } catch (e) {
     console.error('Could not save state to local storage:', e);

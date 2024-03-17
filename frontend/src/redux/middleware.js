@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
  */
 export const rtkQueryErrorLogger = (api) => (next) => (action) => {
   if (isRejectedWithValue(action)) {
-    console.log(action);
     if (
       action?.type !== 'authApi/executeMutation/rejected' &&
       action.payload.status === 404

@@ -4,13 +4,9 @@ import {
   useGetTicketsQuery,
 } from '../../redux/api/ticket.js';
 
-import { usePermission } from '../../hooks/usePermission.js';
-import { AllTickets } from './TicketTableControls.jsx';
+import { AllTickets } from './Controls.jsx';
 
 function Requester() {
-  // let isRequester = usePermission(['Requester']);
-  // let isRequester = usePermission(['Requester']);
-
   const [{ status, priority, page, size }, setFilterParams] = useState({
     status: '',
     priority: '',
@@ -25,7 +21,6 @@ function Requester() {
     size,
   });
 
-  console.log(data);
   if (isLoading) <>...Loading</>;
 
   return (

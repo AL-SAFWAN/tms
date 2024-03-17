@@ -7,11 +7,21 @@ import {
 } from '../../redux/api/logs';
 import { CreateUser, UpdateUser } from '../onboarding/SignUp';
 
+function removeDuplicateDetails(sequence) {
+  const result = [];
+  for (let i = 0; i < sequence.length; i++) {
+    if (sequence[i]?.details !== result[result.length - 1]?.details) {
+      result.push(sequence[i]);
+    }
+  }
+  return result;
+}
+
 function User() {
   let { userId } = useParams();
   let [deleteUserLogs] = useDeleteUserLogsMutation();
-  let { data: logData } = useGetUserLogsQuery(userId);
-
+  let { data: logData, isLoading } = useGetUserLogsQuery(userId);
+  if (isLoading) return;
   return (
     <div className="max-h-fit min-h-screen p-6 space-y-6  ">
       <div className="flex flex-col w-2/3 mx-auto">
@@ -39,7 +49,7 @@ function User() {
           </button>
         </div>
         <div className="space-y-3 ">
-          {logData?.map((data) => {
+          {removeDuplicateDetails(logData).map((data) => {
             if (data.activity_type == 'Read') {
               return (
                 <div role="alert" className="alert alert-info opacity-50 p-2">

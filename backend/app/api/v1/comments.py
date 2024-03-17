@@ -9,7 +9,7 @@ router = APIRouter(prefix="/api/v1")
 # admin user management
 
 
-@router.post("/comments")
+@router.post("/comments/")
 async def create_comment(
     comment_data: CommentCreate,
     comment_service: CommentService = Depends(CommentService),

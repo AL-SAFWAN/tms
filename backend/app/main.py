@@ -47,7 +47,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return "Health Check"
+    return "Health Check v2"
 
 
 app.include_router(auth.router, tags=["Authentication"])

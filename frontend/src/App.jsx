@@ -9,17 +9,19 @@ import {
 } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-// import { setCredential } from '../redux/slice/user';
+import { Toaster } from 'react-hot-toast';
 
 import Home from './pages/home/index.jsx';
 import Login from './pages/onboarding/index.jsx';
-import Nav from './components/Nav.jsx';
 import Ticket from './pages/ticket/index.jsx';
 import AssignedTickets from './pages/my_tickets/index.jsx';
 import Users from './pages/users/index.jsx';
 import User from './pages/users/user.jsx';
 import Logs from './pages/logs/index.jsx';
-import { Toaster } from 'react-hot-toast';
+
+import Nav from './components/Nav.jsx';
+import NotFound from './components/NotFound.jsx';
+import Unauthorized from './components/Unauthorized.jsx';
 
 let Layout = () => {
   return (
@@ -33,7 +35,6 @@ let Layout = () => {
 let RequireAuth = ({ roleType }) => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
-  console.log('user', user);
   return (
     <>
       {roleType.find((role) => role == user.role) ? (
@@ -75,9 +76,8 @@ function App() {
             <Route path="/logs" element={<Logs />} />
           </Route>
 
-          <Route path="/unauthorized" element={<> Get out of here</>} />
-          <Route path="/*" element={<> 404 missing</>} />
-          {/* <Route path="*" element={<NoMatch />} /> */}
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/*" element={<NotFound />} />
         </Route>
       </Routes>
     </Router>

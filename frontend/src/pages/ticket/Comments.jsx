@@ -21,7 +21,7 @@ let ReadOnlyComment = ({ user, description, creation_date }) => (
             data-tip={user.email}
           >
             <span className="font-semibold ">{user.username}</span>{' '}
-            <span className="font-thin text-sm text-neutral italic">
+            <span className="font-thin text-sm text-base-content/80  italic">
               on{' '}
               {new Date(creation_date).toLocaleString('en-us', {
                 year: 'numeric',
@@ -40,8 +40,7 @@ let ReadOnlyComment = ({ user, description, creation_date }) => (
   </div>
 );
 
-let EditComment = ({ user, description, creation_date, id }) => {
-  console.log(id);
+let EditComment = ({ user, description, creation_date, id, ticketId }) => {
   let [desc, setDescription] = useState(description);
   let [disabled, setDisabled] = useState(true);
   let dispatch = useDispatch();
@@ -148,6 +147,7 @@ let EditComment = ({ user, description, creation_date, id }) => {
                 updateComment({
                   id: id,
                   body: {
+                    ticket_id: ticketId,
                     description: desc,
                   },
                 }).finally(() => {
@@ -179,6 +179,7 @@ function Comments({ id }) {
           {data?.comments.map(({ description, creation_date, user, id }) =>
             isAdmin ? (
               <EditComment
+                ticketId={data?.id}
                 id={id}
                 description={description}
                 creation_date={creation_date}
@@ -186,6 +187,7 @@ function Comments({ id }) {
               />
             ) : userId === user.id ? (
               <EditComment
+                ticketId={data?.id}
                 id={id}
                 description={description}
                 creation_date={creation_date}

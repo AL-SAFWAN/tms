@@ -26,7 +26,6 @@ export const Form = ({ setStage }) => {
         });
       }, 1500);
     } catch ({ status, data }) {
-      console.log(data.detail);
       actions.setStatus({
         sent: false,
         msg: data.detail.map((e) => e.msg).join(),

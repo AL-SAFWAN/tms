@@ -29,9 +29,7 @@ export const SignUp = ({ setStage }) => {
 
   let handleSubmit = async (values, actions) => {
     try {
-      console.log(values);
       const result = await singUp(values).unwrap();
-      console.log(result);
       dispatch(setCredential(result));
       actions.resetForm();
       actions.setStatus({
@@ -201,9 +199,7 @@ export const CreateUser = () => {
 
   let handleSubmit = async (values, actions) => {
     try {
-      console.log(values);
       const result = await singUp(values).unwrap();
-      console.log(result);
       actions.resetForm();
       actions.setStatus({
         sent: true,
@@ -347,7 +343,6 @@ export const CreateUser = () => {
 export const UpdateUser = ({ userId }) => {
   let { data, isLoading } = useGetUserQuery(userId);
   const dispatch = useDispatch();
-
   let [updateUser] = useUpdateUserMutation();
   let [hasChanged, setHasChanged] = useState(false);
 
@@ -376,13 +371,20 @@ export const UpdateUser = ({ userId }) => {
 
   const formik = useFormik({
     initialValues: {
-      username: data?.username,
-      email: data?.email,
-      role: data?.role,
+      username: '',
+      email: '',
+      role: '',
     },
     validationSchema: updateUserSchema,
     onSubmit: handleSubmit,
   });
+  useEffect(() => {
+    if (data) {
+      formik.setFieldValue('username', data.username);
+      formik.setFieldValue('email', data.email);
+      formik.setFieldValue('role', data.role);
+    }
+  }, [formik.values, data]);
   useEffect(() => {
     if (data) {
       const changed =
@@ -392,6 +394,8 @@ export const UpdateUser = ({ userId }) => {
       setHasChanged(changed);
     }
   }, [formik.values, data]);
+
+  if (isLoading) return;
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col ">
       <div>

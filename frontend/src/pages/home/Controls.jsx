@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Table from './Table.jsx';
-import { Form } from './Form.jsx';
+import { Form } from './CreateTicketForm.jsx';
 import { useGetAgentsTicketsQuery } from '../../redux/api/ticket.js';
 import { useSelector } from 'react-redux';
 

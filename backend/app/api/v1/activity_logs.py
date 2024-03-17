@@ -8,7 +8,7 @@ router = APIRouter(prefix="/api/v1")
 
 
 @router.get(
-    "/logs",
+    "/logs/",
     dependencies=[Depends(admin_auth_required)],
     response_model=List[ActivityLogWithUser],
 )
@@ -35,7 +35,7 @@ async def read_user_activity(
 
 
 @router.delete(
-    "/logs",
+    "/logs/",
     dependencies=[Depends(admin_auth_required)],
 )
 async def delete_logs(

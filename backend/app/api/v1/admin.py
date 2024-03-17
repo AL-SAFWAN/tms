@@ -9,7 +9,7 @@ from services.user import UserService
 router = APIRouter(prefix="/api/v1/admin")
 
 
-@router.get("/users", dependencies=[Depends(admin_auth_required)])
+@router.get("/users/", dependencies=[Depends(admin_auth_required)])
 async def read_users(
     user_service: UserService = Depends(UserService),
 ):

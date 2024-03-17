@@ -15,6 +15,7 @@ class CommentCreate(CommentBase):
 
 
 class CommentUpdate(BaseModel):
+    ticket_id: Optional[int] = None
     description: Optional[str] = None
 
 

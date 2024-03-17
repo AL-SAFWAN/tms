@@ -23,7 +23,7 @@ export const adminApi = createApi({
     }),
     getUsers: builder.query({
       query: () => ({
-        url: `/users`,
+        url: `/users/`,
       }),
       providesTags: ['admin'],
     }),

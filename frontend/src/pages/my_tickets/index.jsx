@@ -1,4 +1,4 @@
-import { AgentTickets } from '../home/TicketTableControls.jsx';
+import { AgentTickets } from '../home/Controls.jsx';
 
 function Requester() {
   return (

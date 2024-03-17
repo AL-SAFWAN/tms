@@ -20,16 +20,6 @@ function Stats({ id, description, setDescription, setDescriptionDisable }) {
 
   const save = () => {
     setDescriptionDisable(true);
-    console.log(
-      JSON.stringify({
-        title: data.title,
-        description,
-        priority,
-        status,
-        resolution_date: dateTime,
-        assigned_agent_id: assignMe ? user.id : data.assigned_agent_id,
-      })
-    );
     updateTicket({
       id: data.id,
       body: {
@@ -54,14 +44,12 @@ function Stats({ id, description, setDescription, setDescriptionDisable }) {
 
   useEffect(() => {
     if (data) {
-      // const date = data?.resolution_date ? data.resolution_date : '';
       const changed =
         priority !== data.priority ||
         status !== data.status ||
         description !== data.description ||
         dateTime !== data?.resolution_date ||
         assignMe !== data?.assigned_agent_id;
-      console.log(changed);
       setHasChanged(changed);
     }
   }, [priority, status, data, description, dateTime, assignMe]);
