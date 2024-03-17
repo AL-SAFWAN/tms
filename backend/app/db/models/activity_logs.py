@@ -5,7 +5,7 @@ from ..database import Base
 
 
 class ActivityLog(Base):
-    __tablename__ = "ActivityLogs"  # Table name for activity logs
+    __tablename__ = "ActivityLogs"
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("Users.id"), nullable=False)
     activity_type = Column(Enum("Create", "Read", "Update", "Delete"), nullable=False)

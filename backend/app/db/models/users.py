@@ -5,7 +5,7 @@ from ..database import Base
 
 
 class User(Base):
-    __tablename__ = "Users"  # Define the table name
+    __tablename__ = "Users"
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(255), nullable=False)
     email = Column(EmailType, unique=True, nullable=False)

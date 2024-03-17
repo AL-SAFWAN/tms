@@ -10,8 +10,6 @@ from services.auth import (
 
 router = APIRouter()
 
-# user authentication management
-
 
 @router.post("/token")
 async def token(

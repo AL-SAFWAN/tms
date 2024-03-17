@@ -6,8 +6,6 @@ from services.comment import CommentService
 
 router = APIRouter(prefix="/api/v1")
 
-# admin user management
-
 
 @router.post("/comments/")
 async def create_comment(
