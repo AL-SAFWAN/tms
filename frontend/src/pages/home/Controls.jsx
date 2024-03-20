@@ -12,20 +12,23 @@ export function AllTickets({ priority, setFilterParams, data, status }) {
       </div>
       <div className="flex flex-row space-x-5 justify-between ">
         <div className="flex flex-col space-y-5  w-40 ">
-          <button
-            className="btn btn-primary text-base-100"
-            onClick={() => document.getElementById('my_modal_2').showModal()}
-          >
+          <label htmlFor="my_modal_7" className="btn btn-primary text-base-100">
             Create Ticket
-          </button>
-          <dialog id="my_modal_2" className="modal">
+          </label>
+
+          <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+          <div className="modal">
             <div className="modal-box">
               <Form />
             </div>
             <form method="dialog" className="modal-backdrop">
               <button>close</button>
             </form>
-          </dialog>
+            <label className="modal-backdrop" htmlFor="my_modal_7">
+              Close
+            </label>
+          </div>
+
           <div className="space-y-1">
             <label className="">Priority</label>
             <select

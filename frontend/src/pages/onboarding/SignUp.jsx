@@ -350,18 +350,9 @@ export const UpdateUser = ({ userId }) => {
         id: data?.id,
         body: values,
       }).unwrap();
-      // actions.resetForm();
-      actions.setStatus({
-        sent: true,
-        msg: 'Updated User successfully!',
-      });
+
       dispatch(adminApi.util.invalidateTags(['admin']));
       dispatch(ticketApi.util.invalidateTags(['Tickets']));
-    } catch ({ status, data: { detail } }) {
-      actions.setStatus({
-        sent: false,
-        msg: detail,
-      });
     } finally {
       actions.setSubmitting(false);
     }
@@ -382,7 +373,7 @@ export const UpdateUser = ({ userId }) => {
       formik.setFieldValue('email', data.email);
       formik.setFieldValue('role', data.role);
     }
-  }, [formik.values, data]);
+  }, [data]);
   useEffect(() => {
     if (data) {
       const changed =
@@ -471,6 +462,9 @@ export const UpdateUser = ({ userId }) => {
               disabled={formik.isSubmitting}
               onClick={() => {
                 formik.resetForm();
+                formik.setFieldValue('username', data.username);
+                formik.setFieldValue('email', data.email);
+                formik.setFieldValue('role', data.role);
               }}
             >
               Cancel

@@ -6,6 +6,7 @@ import {
   useUpdateCommentMutation,
 } from '../../redux/api/comment';
 import { usePermission } from '../../hooks/usePermission';
+import Confirm from '../../components/Confirm';
 
 let ReadOnlyComment = ({ user, description, creation_date }) => (
   <div className="card w-full bg-base-100 shadow">
@@ -41,6 +42,7 @@ let ReadOnlyComment = ({ user, description, creation_date }) => (
 );
 
 let EditComment = ({ user, description, creation_date, id, ticketId }) => {
+  console.log(id);
   let [desc, setDescription] = useState(description);
   let [disabled, setDisabled] = useState(true);
   let dispatch = useDispatch();
@@ -93,25 +95,20 @@ let EditComment = ({ user, description, creation_date, id, ticketId }) => {
               </button>
             </div>
             <div>
-              <button
+              <label
+                htmlFor={'delete' + id + 'comment'}
                 className="btn btn-ghost btn-circle btn-sm"
-                onClick={() => {
-                  deleteComment(id).finally(() => {
-                    dispatch(ticketApi.util.invalidateTags(['Tickets']));
-                  });
-                }}
               >
                 <svg
-                  // fill="bg-base-content"
-                  className="h-5 w-5  stroke-current text-base-content "
+                  className="cursor-pointer h-5 w-5  stroke-current text-base-content "
                   fill="none"
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  // stroke="bg-base-content"
                   strokeLinecap="rounded"
                   strokeWidth="2"
                 >
+                  {' '}
                   <g id="SVGRepo_iconCarrier">
                     {' '}
                     <path d="M10 11V17"></path> <path d="M14 11V17"></path>
@@ -120,7 +117,17 @@ let EditComment = ({ user, description, creation_date, id, ticketId }) => {
                     <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"></path>{' '}
                   </g>
                 </svg>
-              </button>
+              </label>
+              <Confirm
+                id={id + 'comment'}
+                fn={() => {
+                  console.log(id);
+                  deleteComment(id).finally(() => {
+                    dispatch(ticketApi.util.invalidateTags(['Tickets']));
+                  });
+                }}
+                msg="delete comment"
+              />
             </div>
           </div>
         </div>
@@ -179,6 +186,7 @@ function Comments({ id }) {
           {data?.comments.map(({ description, creation_date, user, id }) =>
             isAdmin ? (
               <EditComment
+                key={id}
                 ticketId={data?.id}
                 id={id}
                 description={description}
@@ -188,6 +196,7 @@ function Comments({ id }) {
             ) : userId === user.id ? (
               <EditComment
                 ticketId={data?.id}
+                key={id}
                 id={id}
                 description={description}
                 creation_date={creation_date}
@@ -195,6 +204,7 @@ function Comments({ id }) {
               />
             ) : (
               <ReadOnlyComment
+                id={id}
                 description={description}
                 creation_date={creation_date}
                 user={user}
