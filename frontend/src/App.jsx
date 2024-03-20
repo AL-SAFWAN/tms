@@ -26,11 +26,10 @@ let Layout = () => {
   return (
     <main className=" bg-base-300 min-w-fit">
       <Outlet />
-      <Toaster position="bottom-center" />
+      <Toaster position="bottom-right" />
     </main>
   );
 };
-
 let RequireAuth = ({ roleType }) => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
@@ -56,7 +55,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/login" element={<Login />} />
-
           <Route
             element={
               <RequireAuth

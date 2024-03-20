@@ -5,7 +5,7 @@ import {
   useDeleteUserLogsMutation,
 } from '../../redux/api/logs';
 import { UpdateUser } from '../onboarding/SignUp';
-
+import Confirm from '../../components/Confirm';
 function removeDuplicateDetails(sequence) {
   const result = [];
   for (let i = 0; i < sequence.length; i++) {
@@ -36,15 +36,19 @@ function User() {
           <h1 className="text-2xl font-bold divider divider-start ">Logs</h1>
         </div>
         <div className="flex self-end mb-6">
-          <button
-            type="submit"
-            className="btn btn-secondary "
-            onClick={() => {
-              deleteUserLogs(userId);
-            }}
+          <label
+            htmlFor={'delete' + userId + 'userLogs'}
+            className="btn btn-secondary  "
           >
             Clear User Logs
-          </button>
+          </label>
+          <Confirm
+            id={userId + 'userLogs'}
+            fn={() => {
+              deleteUserLogs(userId);
+            }}
+            msg="clear user logs"
+          />
         </div>
         <div className="space-y-3 ">
           {removeDuplicateDetails(logData).map((data) => {
