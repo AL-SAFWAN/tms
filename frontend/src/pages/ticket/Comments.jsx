@@ -42,7 +42,6 @@ let ReadOnlyComment = ({ user, description, creation_date }) => (
 );
 
 let EditComment = ({ user, description, creation_date, id, ticketId }) => {
-  console.log(id);
   let [desc, setDescription] = useState(description);
   let [disabled, setDisabled] = useState(true);
   let dispatch = useDispatch();
@@ -121,7 +120,6 @@ let EditComment = ({ user, description, creation_date, id, ticketId }) => {
               <Confirm
                 id={id + 'comment'}
                 fn={() => {
-                  console.log(id);
                   deleteComment(id).finally(() => {
                     dispatch(ticketApi.util.invalidateTags(['Tickets']));
                   });

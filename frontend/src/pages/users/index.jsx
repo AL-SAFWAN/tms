@@ -13,7 +13,6 @@ function Requester() {
   const { data, isLoading } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   if (isLoading) <>...Loading</>;
-  console.log(data);
   return (
     <div className="max-h-fit min-h-screen p-6 space-y-6 ">
       <div className="  mx-auto ">

@@ -13,7 +13,6 @@ export const rtkQueryErrorLogger = (api) => (next) => (action) => {
   const method = action.meta?.baseQueryMeta?.request?.method;
 
   if (method === 'DELETE') {
-    console.log('delete', action);
     toast.success('Delete Successful!', {
       className: 'alert alert-success',
       icon: '❌',
@@ -24,7 +23,6 @@ export const rtkQueryErrorLogger = (api) => (next) => (action) => {
     isFulfilled(action) &&
     action?.type != 'authApi/executeMutation/fulfilled'
   ) {
-    console.log(method, action, api);
     if (method === 'POST') {
       toast.success('Create Successful!', {
         className: 'alert alert-success',
@@ -38,7 +36,6 @@ export const rtkQueryErrorLogger = (api) => (next) => (action) => {
   }
 
   if (isRejectedWithValue(action)) {
-    console.log('is rejected', action.payload.status);
     if (
       action.payload.status === 404 &&
       action?.type !== 'authApi/executeMutation/rejected'
