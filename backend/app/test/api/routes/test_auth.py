@@ -4,7 +4,7 @@ def test_signup(client):
         json={
             "username": "testuser",
             "email": "testcreateduser@example.com",
-            "password": "Hello123.",
+            "password": "testpasswordHello123.",
             "role": "SysAdmin",
         },
     )
@@ -17,7 +17,10 @@ def test_signup(client):
 def test_login(client):
     response = client.post(
         "/login",
-        data={"username": "testcreateduser@example.com", "password": "Hello123."},
+        data={
+            "username": "testcreateduser@example.com",
+            "password": "testpasswordHello123.",
+        },
     )
     assert response.status_code == 200
     data = response.json()
