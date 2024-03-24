@@ -26,7 +26,7 @@ async def create_ticket(
 ):
     """Endpoint to create a new ticket for an authenticated user."""
 
-    ticket_service.create_ticket(ticket, user.id)
+    ticket = ticket_service.create_ticket(ticket, user.id)
     return ticket
 
 

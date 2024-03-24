@@ -1,5 +1,8 @@
 ﻿# tms
 
+backend test
+docker exec $(docker ps -q --filter ancestor=tms-backend) pytest
+
 ```mermaid
 graph TD
     subgraph Docker Compose

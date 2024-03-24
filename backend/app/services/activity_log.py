@@ -14,7 +14,6 @@ class ActivityLogService:
 
     def create_log(self, details: str, logType: ActivityType) -> dict:
         log = {"details": details, "activity_type": logType, "user_id": self.user.id}
-        print(log)
         return self.activity_log_repository.create_log(log)
 
     def get_logs_by_user_id(self, user_id: int):

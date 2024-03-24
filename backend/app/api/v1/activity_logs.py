@@ -30,7 +30,6 @@ async def read_user_activity(
     comment_service: ActivityLogService = Depends(ActivityLogService),
 ):
     """Read all the log data for a user."""
-    print("log for a user")
     return comment_service.get_logs_by_user_id(user_id)
 
 

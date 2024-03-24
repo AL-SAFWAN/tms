@@ -3,7 +3,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 from repositories.ticket import TicketRepository
 from services.activity_log import ActivityLogService
-from schemas.ticket import TicketCreate, Status
+from schemas.ticket import TicketCreate, Status, Ticket
 from db.database import get_db
 from datetime import datetime
 from fastapi_pagination.ext.sqlalchemy import paginate
@@ -51,12 +51,12 @@ class TicketService:
         )
         return self.ticket_repository.read_ticket_by_id(ticket_id)
 
-    def create_ticket(self, ticketc: TicketCreate, user_id) -> dict:
-        ticket = self.ticket_repository.create_ticket(dict(ticketc), user_id)
+    def create_ticket(self, ticket_data: TicketCreate, user_id) -> dict:
+        ticket = self.ticket_repository.create_ticket(dict(ticket_data), user_id)
         self.activity_log_service.create_log(
             details=f"created ticket {ticket.id}", logType="Create"
         )
-        return ticket
+        return Ticket.model_validate(ticket)
 
     def update_ticket(self, ticket, ticket_data):
 

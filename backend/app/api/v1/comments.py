@@ -30,6 +30,7 @@ async def delete_comment(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Comment with the id {comment_id} dons't exists",
         )
+    return comment
 
 
 @router.put("/comments/{comment_id}", dependencies=[Depends(user_auth_required)])
@@ -47,3 +48,4 @@ async def update_comment(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Comment with the id {comment_id} dons't exists",
         )
+    return comment

@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from repositories.comment import CommentRepository
-from schemas.comment import CommentCreate
+from schemas.comment import CommentCreate, Comment
 from db.database import get_db
 from services.activity_log import ActivityLogService
 
@@ -20,16 +20,18 @@ class CommentService:
             details=f"created a comment on ticket {comment_data.ticket_id}",
             logType="Create",
         )
-        return self.comment_repository.create_comment(dict(comment_data))
+        comment = self.comment_repository.create_comment(dict(comment_data))
+        return Comment.model_validate(comment)
 
     def update_comment(self, comment_id, comment_data):
         self.activity_log_service.create_log(
             details=f"updated comment {comment_id} on ticket {comment_data.ticket_id}",
             logType="Update",
         )
-        return self.comment_repository.update_comment(
+        comment = self.comment_repository.update_comment(
             comment_id=comment_id, comment_data=dict(comment_data)
         )
+        return Comment.model_validate(comment)
 
     def delete_comment(self, comment_id):
         self.activity_log_service.create_log(
