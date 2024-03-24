@@ -54,7 +54,11 @@ function User() {
           {removeDuplicateDetails(logData).map((data) => {
             if (data.activity_type == 'Read') {
               return (
-                <div role="alert" className="alert alert-info opacity-50 p-2">
+                <div
+                  key={data.id}
+                  role="alert"
+                  className="alert alert-info opacity-50 p-2"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -83,7 +87,11 @@ function User() {
             }
             if (data.activity_type == 'Update') {
               return (
-                <div role="alert" className="alert alert-warning p-2">
+                <div
+                  key={data.id}
+                  role="alert"
+                  className="alert alert-warning p-2"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="stroke-current shrink-0 h-6 w-6"
@@ -112,7 +120,11 @@ function User() {
             }
             if (data.activity_type == 'Create') {
               return (
-                <div role="alert" className="alert alert-success p-2">
+                <div
+                  role="alert"
+                  key={data.id}
+                  className="alert alert-success p-2"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="stroke-current shrink-0 h-6 w-6"
@@ -141,7 +153,11 @@ function User() {
             }
             if (data.activity_type == 'Delete') {
               return (
-                <div role="alert" className="alert alert-error p-2">
+                <div
+                  key={data.id}
+                  role="alert"
+                  className="alert alert-error p-2"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="stroke-current shrink-0 h-6 w-6"
