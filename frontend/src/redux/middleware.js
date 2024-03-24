@@ -48,12 +48,6 @@ export const rtkQueryErrorLogger = (api) => (next) => (action) => {
         icon: '⚠️',
       });
     }
-    if (action.payload.status === 401) {
-      toast(action.payload.data.detail, {
-        className: 'alert alert-error',
-        icon: '⚠️',
-      });
-    }
 
     if (
       action.payload.status === 403 &&

@@ -35,7 +35,7 @@ let RequireAuth = ({ roleType }) => {
   const location = useLocation();
   return (
     <>
-      {roleType.find((role) => role == user.role) ? (
+      {roleType.find((role) => role === user.role) ? (
         <>
           <Nav />
           <Outlet />
@@ -63,8 +63,8 @@ function App() {
             }
           >
             <Route path="/" element={<Home />} />
-            <Route path="/my_tickets" element={<AssignedTickets />} />
             <Route path="/ticket/:ticketId" element={<Ticket />} />
+            <Route path="/my_tickets" element={<AssignedTickets />} />
           </Route>
 
           <Route element={<RequireAuth roleType={['SysAdmin']} />}>
