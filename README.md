@@ -272,10 +272,26 @@ graph TD
    ```bash
    docker exec $(docker ps -q --filter ancestor=tms-backend) pytest
    ```
-### 1.6.2 Running vite test
+  **Successful Test Output**:
    ```bash
-   docker exec $(docker ps -q --filter ancestor=tms-frontend) npm run test
+============================= test session starts ==============================
+platform linux -- Python 3.10.14, pytest-8.1.1, pluggy-1.4.0
+rootdir: /app
+configfile: pyproject.toml
+plugins: anyio-4.3.0
+collected 29 items
+
+test/api/routes/test_auth.py ..                                          [  6%]
+test/api/routes/test_comments.py ...                                     [ 17%]
+test/api/routes/test_tickets.py ....                                     [ 31%]
+test/crud/test_activity_logs.py .....                                    [ 48%]
+test/crud/test_comment.py ....                                           [ 62%]
+test/crud/test_ticket.py .....                                           [ 79%]
+test/crud/test_users.py ......                                           [100%]
+
+============================== 29 passed in 5.52s ==============================
    ```
+
 # 2 Overview 
 ##### Figure 1.3: Overview of TMS monorepo 
 ```
