@@ -334,6 +334,43 @@ The `main.py` file serves as the entry point for the Ticket Management System (T
 
 This structured flow ensures that the TMS backend is secure, scalable, and maintainable, with clear separations of concerns and robust data validation at every step of the process.
 
+```mermaid
+graph TD
+    A([main.py]) -->|Listens to| B([API Routes /api/v1])
+    B --> C{Is User Authenticated?}
+    C -->|Yes| D[Dependency Injection]
+    C -->|No| E([Access Denied Response])
+    D --> F{RBAC Check}
+    F -->|Allowed| G([Request Params & Body Validation])
+    F -->|Denied| E
+    G --> H([Controller Layer])
+    H -->|Calls| I([Service Layer])
+    I --> J{Service-Service Interaction}
+    J -->|Activity Log| I
+    I --> K([Repository Layer])
+    K -->|Data Manipulation| L([Database])
+    I --> M([Sanitize & Validate Response])
+    M --> N([Return Response to Client])
+
+    classDef flow fill:#f9f,stroke:#333,stroke-width:2px;
+    class A,B,H,I,K,L,M,N flow;
+
+```
+
+### Explanation of the Diagram:
+- **main.py**: The entry point of the application that listens to routes defined under `/api/v1`.
+- **API Routes /api/v1**: The first layer that handles incoming requests.
+- **Is User Authenticated?**: Checks if the user is authenticated.
+- **Dependency Injection**: Injects dependencies such as the database instance.
+- **RBAC Check**: Role-Based Access Control check to authorize user actions.
+- **Request Params & Body Validation**: Validates request data using Pydantic schemas.
+- **Controller Layer**: Manages custom business logic for request handling.
+- **Service Layer**: Contains business logic and handles interactions with the repository layer or other services.
+- **Service-Service Interaction**: Example interaction where the activity log service logs actions performed.
+- **Repository Layer**: Interacts with the database for CRUD operations.
+- **Database**: The actual database where data is stored and manipulated.
+- **Sanitize & Validate Response**: Prepares and validates the response data to be sent back to the client.
+- **Return Response to Client**: The final step where the response is sent back to the client.
 
 ## Folder Structure for Clean Architecture in TMS Backend
 ```
