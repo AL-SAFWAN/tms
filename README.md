@@ -1,11 +1,11 @@
 # Ticket Management System (TMS)
-This application is a comprehensive **Ticket Management System** designed to optimize the handling of support requests within organizations. It introduces a role-based access control system specifically tailored for three primary user roles: **Requesters**, **Helpdesk Agents**, and **Administrators**.
+This application is a comprehensive **Ticket Management System** designed to optimize the handling of support requests within organizations. It introduces a role-based access control system specifically tailored for three primary user roles: **Requesters**, **Helpdesk Agents**, and **SysAdmins**.
 
-- **Requesters** have the ability to easily submit and track their support tickets, ensuring transparent communication of their issues or requests. This feature is pivotal for users who require support, enabling them to communicate their needs effectively and monitor the progress of their requests.
+- **Requesters**: Have the ability to create, read and update, their own tickets, comments and ticket priorities. They can only view there own tickets 
+  
+- **Helpdesk Agents**: Can do the above, and create read update for all tickets including ticket resolution date, status and assigned agent. They can view all tickets and they're assigned tickets. 
 
-- **Helpdesk Agents** are tasked with the crucial role of efficiently addressing and resolving the tickets. They possess the capability to view all submitted tickets, update statuses, and add comments or solutions. This role is fundamental to the operational aspect of the system, ensuring that support requests are handled promptly and proficiently.
-
-- **Administrators** maintain overarching control over the system, with functionalities that include managing users, tickets, and overseeing all system activities. Their responsibilities extend to adding or removing users and ensuring the quality and efficiency of the ticket resolution process. Administrators ensure the system runs smoothly and effectively, adhering to organizational standards and expectations.
+- **Administrators**: Can do the above, and create, read, update, delete, all users, tickets, comments and system activities. 
   
 ## Background Information 
 
