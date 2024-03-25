@@ -27,12 +27,13 @@
   - [3.5 Folder Structure for Clean Architecture in TMS Backend](#35-folder-structure-for-clean-architecture-in-tms-backend)
 # Table of Figures
 
-- [Figure 1.1 Role-Role Interactions Diagram](#figure-11-role-role-interactions-diagram)
-- [Figure 1.2 TMS Application Architecture](#figure-12-tms-application-architecture)
-- [Figure 1.3 TMS ERD (Entity Relationship Diagram)](#figure-13-tms-erd-entity-relationship-diagram)
-- [Figure 2.1 Container Interactions in Local Development](#figure-21-container-interactions-in-local-development)
-- [Figure 3.1 Backend Flowchart](#figure-31-backend-flowchart)
-- [Figure 3.2 Backend Folder Structure](#figure-32-backend-folder-structure)
+- [Figure 1.1 Interaction between roles](#figure-11-interaction-between-roles)
+- [Figure 1.2 Container Interactions between DB, Frontend, and Backend named services](#figure-12-container-interactions-between-db-frontend-and-backend-named-services)
+- [Figure 1.3 Overview of TMS monorepo](#figure-13-overview-of-tms-monorepo)
+- [Figure 1.4 TMS ERD](#figure-14-tms-erd)
+- [Figure 1.5 Backend Flow Chart](#figure-15-backend-flow-chart)
+- [Figure 1.6 Expanded view of backend folder structure](#figure-16-expanded-view-of-backend-folder-structure)
+
 
 # 1 Ticket Management System (TMS)
 ##### Table 1.1: Applications Infrastructure and Services Status
