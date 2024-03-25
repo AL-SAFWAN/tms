@@ -6,6 +6,8 @@ This application is a comprehensive **Ticket Management System** designed to opt
 - **Helpdesk Agents** are tasked with the crucial role of efficiently addressing and resolving the tickets. They possess the capability to view all submitted tickets, update statuses, and add comments or solutions. This role is fundamental to the operational aspect of the system, ensuring that support requests are handled promptly and proficiently.
 
 - **Administrators** maintain overarching control over the system, with functionalities that include managing users, tickets, and overseeing all system activities. Their responsibilities extend to adding or removing users and ensuring the quality and efficiency of the ticket resolution process. Administrators ensure the system runs smoothly and effectively, adhering to organizational standards and expectations.
+  
+## Background Information 
 
 #### TMS Applications Infrastructure and Services Status
 | Service Type                 | URL                                                                                           | Status |
@@ -246,8 +248,45 @@ graph TD
 ├──.gitignore           # Specifies intentionally untracked files to ignore
 └──.pre-commit-config   # Configuration for Black (formatting) and Flake8 (linting)
 ```
+## Coding conventions and tooling to reinforce to industry standard and best practice
+configured with pre-commit to reinforce standards of every git commit
+### Backend
 
-# Entiry Relationship Diagram 
+- **Naming Conventions**:
+  - **Variables & Functions**: I use `snake_case`.
+  - **Classes**: I stick to `CapWords` (PascalCase).
+  - **Modules**: I prefer short, lowercase names, adding underscores for readability.
+- **Indentation**:
+  - I follow the PEP 8 standard of 4 spaces per indentation level.
+- **Comments**:
+  - I use inline comments to explain "why" rather than "what".
+  - For functions and methods, I rely on docstrings to describe their purpose, parameters, and returns.
+- **Refactoring**:
+  - I aim to keep functions and classes short and focused on a single responsibility.
+  - I use Pydantic models for clean and concise request/response validation.
+  - Dependency injection is a go-to for modular and reusable logic.
+- **Tooling**:
+  - **Black**: For consistent code formatting across my codebase.
+  - **Flake8**: For linting, ensuring I stick to best practices and avoid potential errors.
+
+### Frontend
+- **Naming Conventions**:
+  - **Variables & Functions**: I follow `camelCase`.
+  - **Components & Files**: For React components and their files, I use `PascalCase`.
+  - **Folders**:  I used `snake_case`.
+- **Indentation**:
+  - I use 2 spaces per indentation level for better readability.
+- **Comments**:
+  - In JSX, I use `{/* ... */}` for multi-line comments.
+  - For JavaScript, `//` is my go-to for single-line comments.
+- **Refactoring**:
+  - I break down large components into smaller, reusable ones.
+  - React Hooks are essential in my functional components for state and effects management.
+- **Tooling**:
+  - **ESLint**: It's crucial for enforcing coding standards and catching issues early.
+  - **Prettier**: Works hand-in-hand with ESLint to format my code automatically, ensuring consistency.
+
+# TMS Entiry Relationship Diagram 
 ```mermaid
 erDiagram
     User ||--o{ Ticket : requests
@@ -289,6 +328,41 @@ erDiagram
     }
 
 ```
+## Entity Relationships and Application context 
+
+### Users
+
+The `Users` table is central to the TMS, containing information about individuals interacting with the system. Each user has a distinct ID, username, email, role (Requester, Helpdesk Agent, or SysAdmin), and a hashed password for security.
+
+- **Requests Tickets**: Users with the role of Requester can create tickets, indicating a one-to-many relationship between `Users` and `Tickets` (one user can request multiple tickets).
+- **Assigned Tickets**: Users with the role of Helpdesk Agent can be assigned to tickets, which is also a one-to-many relationship (one agent can be assigned to multiple tickets).
+- **Comments**: Users can leave comments on tickets, signifying a one-to-many relationship between `Users` and `Comments` (a user can make multiple comments on different tickets).
+- **Activity Logs**: Every user action (like ticket and comment creation, updates, or deletions) is logged, showing a one-to-many relationship between `Users` and `ActivityLogs` (a user can have multiple activity log entries).
+
+### Tickets
+
+`Tickets` represent submitted issues, inquiries, or requests. They include details like title, description, priority, status, creation and (optionally) resolution dates, and link back to the requester and the assigned agent.
+
+- **Requester**: Connects to the `Users` table to identify who raised the ticket, a many-to-one relationship (many tickets can be requested by a single user).
+- **Assigned Agent**: Also links to the `Users` table but specifies the Helpdesk Agent assigned to resolve the ticket, another many-to-one relationship (many tickets can be assigned to a single agent, though some may not be assigned right away).
+- **Comments**: Has a one-to-many relationship with the `Comments` table since a ticket can have multiple comments, facilitating discussion and updates on the ticket's resolution.
+
+### Comments
+
+`Comments` enable discussion about a ticket between users and helpdesk agents. Each comment is tied to a specific ticket and authored by a user.
+
+- **Linked to Tickets**: Establishes a many-to-one relationship with `Tickets`, as multiple comments can pertain to a single ticket.
+- **Made by Users**: Indicates a many-to-one relationship with `Users`, as a user can author multiple comments on various tickets.
+
+### ActivityLogs
+
+`ActivityLogs` chronicle the actions users take within the TMS, such as creating, updating, or viewing tickets and comments, detailing the activity type and timestamp.
+
+- **User Activities**: Demonstrates a one-to-many relationship with `Users`, as multiple activity logs can be generated by a single user's actions within the system.
+
+This outline elucidates how the TMS's entities interact, offering a comprehensive overview of the system's structure and the flow of data.
+
+
 # Backend Architecture Overview
 
 The backend of the Ticket Management System (TMS) is designed following the principles of Clean Architecture, ensuring the separation of concerns, scalability, and ease of maintenance. This architecture allows us to decouple the system into independent layers, each with a specific responsibility, enhancing the testability and flexibility of the codebase.
