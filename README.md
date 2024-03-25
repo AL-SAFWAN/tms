@@ -144,17 +144,19 @@ To enhance deployment, scalability, and global reach, TMS incorporates various A
 Before you begin, ensure you have the following software installed on your system:
 
 - **Docker**: A platform for developing, shipping, and running applications. Download and install Docker from [https://www.docker.com/](https://www.docker.com/).
-
-- **Docker Compose**: A tool for defining and running multi-container Docker applications. Follow the installation instructions at [https://docs.docker.com/compose/](https://docs.docker.com/compose/).
-
-- **Python**: The programming language used for scripting in this setup. Version 3.10 or higher is required. Download Python from [https://www.python.org/](https://www.python.org/).
+  **note** - python or node is not required to be downloaded since it is all implemented via dockerfiles and dependencies are managed by depenency managers (poetry and npm) 
 
 Ensure that these tools are correctly installed by running the following commands in your terminal:
 
 ```bash
 docker --version
 docker-compose --version
-python --version
+```
+
+Clone the project 
+```bash
+git clone https://github.com/AL-SAFWAN/tms.git
+cd tms
 ```
 
 ## 1.6 Local Development
@@ -182,10 +184,19 @@ To set up the local development environment for the UI, API, and Database compon
    ```bash
    docker-compose up --build -d <replace-with-service-name>
    ```
-   
-   **note**
-   when starting or restarting the db service, it will always execute the init.sql script in the mysql-init folder to pre-populate the database 
-2. **Successful Build Output**:
+   **note** - when starting or restarting the db service, it will always execute the init.sql script in the mysql-init folder to pre-populate the database
+
+   If you want to remove all containier, volume and network:
+   ```bash
+   docker-compose down -v
+   [+] Running 5/5
+     ✔ Container tms-frontend-1  Removed                                                                               0.0s
+     ✔ Container tms-backend-1   Removed                                                                               0.0s
+     ✔ Container tms-db-1        Removed                                                                               0.0s
+     ✔ Volume tms_mysql_data     Removed                                                                               0.2s
+     ✔ Network tms_default       Removed                                                                               0.5s
+   ```
+3. **Successful Build Output**:
    Upon executing the docker-compose up --build command, you will see output indicating the successful creation of the backend, frontend, and database containers.
    ```bash
    [+] Building 44.2s (22/22) FINISHED                                
