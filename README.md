@@ -1,15 +1,6 @@
+
 # Ticket Management System (TMS)
-This application is a comprehensive **Ticket Management System** designed to optimize the handling of support requests within organizations. It introduces a role-based access control system specifically tailored for three primary user roles: **Requesters**, **Helpdesk Agents**, and **SysAdmins**.
-
-- **Requesters**: Have the ability to create, read and update, their own tickets, comments and ticket priorities. They can only view there own tickets 
-  
-- **Helpdesk Agents**: Can do the above, and create read update for all tickets including ticket resolution date, status and assigned agent. They can view all tickets and they're assigned tickets. 
-
-- **Administrators**: Can do the above, and create, read, update, delete, all users, tickets, comments and system activities. 
-  
-## Background Information 
-
-#### TMS Applications Infrastructure and Services Status
+### Applications Infrastructure and Services Status
 | Service Type                 | URL                                                                                           | Status |
 |------------------------------|-----------------------------------------------------------------------------------------------|--------|
 | UI                           | [https://tms-applications.com/](https://tms-applications.com/)                                 | live   |
@@ -23,7 +14,49 @@ This application is a comprehensive **Ticket Management System** designed to opt
 | AWS EBS (API)                | [backend-prod.eba-5vrqj8mx.eu-west-2.elasticbeanstalk.com](http://backend-prod.eba-5vrqj8mx.eu-west-2.elasticbeanstalk.com) | live   |
 | AWS RDS (API)                | [awseb-e-uapxgq8m35-stack-awsebrdsdatabase-3c0m1cc1hhjn.czcom40qetd2.eu-west-2.rds.amazonaws.com](awseb-e-uapxgq8m35-stack-awsebrdsdatabase-3c0m1cc1hhjn.czcom40qetd2.eu-west-2.rds.amazonaws.com) | live   |
 
+## Background Information 
+This application is a comprehensive **Ticket Management System** designed to optimize the handling of support requests within organizations. It introduces a role-based access control system specifically tailored for three primary user roles: **Requesters**, **Helpdesk Agents**, and **SysAdmins**.
+- **Requesters**: Have the ability to create, read and update, their own tickets, comments and ticket priorities. They can only view there own tickets 
+- **Helpdesk Agents**: Can do the above, and create read update for all tickets including ticket resolution date, status and assigned agent. They can view all tickets and they're assigned tickets. 
+- **Administrators**: Can do the above, and create, read, update, delete, all users, tickets, comments and system activities. 
+  
+To manage the increasing volume of internal and customer-facing issues, an robust Ticket Management System is created named "TMS".
+There are 10 users for this application show below:  
+| User ID | Username         | Role           | Email                      | Password | Notable Actions                                            |
+|---------|------------------|----------------|----------------------------|----------|------------------------------------------------------------|
+| 1       | Admin            | SysAdmin       | admin@example.com          | Hello123. | Resolved VPN issues, manages high-priority tickets         |
+| 2       | Jane Doe         | Requester      | jane.doe@example.com       | Hello123. | Engages actively in ticket creation and follow-up          |
+| 3       | John Smith       | Helpdesk Agent | john.smith@example.com     | Hello123. | Addresses technical issues, including email sync problems  |
+| 4       | Alex Johnson     | Helpdesk Agent | alex.johnson@example.com   | Hello123. | Participates in resolving login issues                     |
+| 5       | Emily White      | Helpdesk Agent | emily.white@example.com    | Hello123. | Involved in software installation tickets                  |
+| 6       | Michael Brown    | Requester      | michael.brown@example.com  | Hello123. | Raises awareness about email syncing issues                |
+| 7       | Sophia Martinez  | Requester      | sophia.martinez@example.com | Hello123. | Initiates a ticket to update contact information           |
+| 8       | Chloe Taylor     | Requester      | chloe.taylor@example.com   | Hello123. | Reports the printer malfunction on the 3rd floor           |
+| 9       | David Wilson     | Requester      | david.wilson@example.com   | Hello123. | Requests password resets                                   |
+| 10      | James Anderson   | Requester      | james.anderson@example.com | Hello123. | Seeks updates to contact information                       |
+| 11      | Isabella Thomas  | Requester      | isabella.thomas@example.com | Hello123. | Reports laptop overheating issues                          |
 
+
+### Role-Role Interactions 
+
+- **SysAdmin (A)**: This role oversees the entire TMS system, ensuring everything runs smoothly. SysAdmins have the highest level of access, allowing them to manage user roles and tackle high-level issues.
+- **Helpdesk Agent (B)**: Helpdesk Agents are directly under SysAdmins in the hierarchy. They are responsible for addressing the tickets raised by Requesters, providing solutions, and ensuring user satisfaction.
+- **Requester (C)**: Requesters are the end-users who initiate tickets when they encounter issues or need assistance. They interact with the system primarily through the Helpdesk Agents.
+
+```mermaid
+graph TD
+    A[SysAdmin] --> B[Helpdesk Agent]
+    A --> C[Requester]
+    B --> C
+
+    classDef sysadmin fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef helpdesk fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef requester fill:#ffb,stroke:#333,stroke-width:2px;
+
+    class A sysadmin;
+    class B helpdesk;
+    class C requester;
+```
 ## Technology Stack and Features
 ### Backend
 
