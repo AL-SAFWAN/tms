@@ -295,17 +295,17 @@ The backend of the Ticket Management System (TMS) is designed following the prin
 
 ## Key Components of the Architecture
 
-- **Entities/Models (`/models`):** These are the core business objects of our application. They represent the data and the business rules that govern that data. In our context, entities include `User`, `Ticket`, and `ActivityLog`.
+- **Entities/Models (`/models`):** These are the core business objects of my application. They represent the data and the business rules that govern that data. In context, entities include `User`, `Ticket`, and `ActivityLog`.
 
 - **Use Cases/Services (`/services`):** This layer contains the application-specific business rules. It orchestrates the flow of data to and from the entities and directs those entities to use their business rules to achieve the goals of the use cases. Examples include user registration, ticket creation, and processing of activity logs.
 
 - **Interface Adapters (`/api`, `/repositories`):**
-  - **Controllers/Routers (`/api`):** These act as the entry point for the external world into our application. They translate HTTP requests into calls to our use case services and then return the appropriate HTTP response.
-  - **Repositories (`/repositories`):** Repositories abstract the logic required to access data sources. They make it easier to perform CRUD operations on our entities without exposing the business layers to the specifics of database access.
+  - **Controllers/Routers (`/api`):** These act as the entry point for the external world into my application. They translate HTTP requests into calls to my use case services and then return the appropriate HTTP response.
+  - **Repositories (`/repositories`):** Repositories abstract the logic required to access data sources. They make it easier to perform CRUD operations on my entities without exposing the business layers to the specifics of database access.
 
 - **Frameworks and Drivers:**
   - **FastAPI:** Serves as the web framework, enabling the creation of RESTful endpoints.
-  - **SQLAlchemy:** Used as the ORM for interacting with the database, abstracted by our repository layer.
+  - **SQLAlchemy:** Used as the ORM for interacting with the database, abstracted by my repository layer.
   - **Pydantic:** Provides data validation and settings management through data parsing and serialization.
 
 ## Clean Architecture Benefits in TMS
@@ -330,7 +330,7 @@ The `main.py` file serves as the entry point for the Ticket Management System (T
 
 - **Sanitization and Validation:** The service layer returns a sanitized object back to the endpoint, suitable for use by the client. This object is also validated using Pydantic schemas to ensure it meets the expected format and data types.
 
-- **Pydantic Schemas:** Within our Pydantic schemas, we define CRUD-based classes, utilize inheritance to define a base model, and implement enums for field values. We also simulate SQL joins in the response model using Pydantic schemas to craft comprehensive and relational data responses.
+- **Pydantic Schemas:** Within my Pydantic schemas, I define CRUD-based classes, utilize inheritance to define a base model, and implement enums for field values. I also simulate SQL joins in the response model using Pydantic schemas to craft comprehensive and relational data responses.
 
 This structured flow ensures that the TMS backend is secure, scalable, and maintainable, with clear separations of concerns and robust data validation at every step of the process.
 
@@ -371,6 +371,27 @@ graph TD
 - **Database**: The actual database where data is stored and manipulated.
 - **Sanitize & Validate Response**: Prepares and validates the response data to be sent back to the client.
 - **Return Response to Client**: The final step where the response is sent back to the client.
+
+### Other programming concepts Implemented 
+
+1. **Async**: I use `async def` for route handlers to efficiently handle IO-bound operations and ensure high concurrency. This asynchronous programming approach greatly enhances the performance of my API by facilitating non-blocking execution of operations.
+
+2. **Type Hints**: Throughout my project, I use Python type hints in conjunction with Pydantic models. This practice not only ensures type safety but also simplifies the process of converting request data into Python types, improving code clarity and reducing the chance of runtime errors.
+
+3. **Dependency Injection**: FastAPI's dependency injection system has been instrumental in my project for sharing common logic like database connections and user authentication across different parts of the application. This modularity promotes code reusability and maintainability.
+
+4. **Pydantic Models and OOP**: By defining data structures with Pydantic models, I align my project with Object-Oriented Programming (OOP) principles. These models encapsulate data validation and schema definition, supporting inheritance and data manipulation in a clean and modular fashion.
+
+5. **Automatic API Documentation**: One of the great features of FastAPI that I've utilized is its automatic API documentation generation. This feature streamlines the testing and debugging process by ensuring that the documentation is always up-to-date and accurately reflects the capabilities of my API.
+
+6. **Security and Authentication**: To secure my API, I've implemented support for OAuth2 with Password and JWT tokens, using libraries like `python-jose` and `passlib`. This setup protects my API endpoints from unauthorized access and ensures the security of user data.
+
+7. **ORM Compatibility**: allows me to interact with the database using high-level Python code, making database management straightforward and efficient.
+
+8. **Testing**: With `pytest`, I ensure that my application functions as expected through comprehensive testing. FastAPI's `TestClient` allows me to simulate API calls within my tests, facilitating both integration and unit testing with ease.
+
+9. **Dependency Override**: FastAPI's feature for dependency override has been particularly useful for testing, allowing me to replace certain components with mocks or test versions. This capability is crucial for isolated testing, ensuring components can be tested under controlled conditions.
+
 
 ## Folder Structure for Clean Architecture in TMS Backend
 ```
