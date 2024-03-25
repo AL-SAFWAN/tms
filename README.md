@@ -1,6 +1,6 @@
 
 # Ticket Management System (TMS)
-### Applications Infrastructure and Services Status
+##### Table 1.1: Applications Infrastructure and Services Status
 | Service Type                 | URL                                                                                           | Status |
 |------------------------------|-----------------------------------------------------------------------------------------------|--------|
 | UI                           | [https://tms-applications.com/](https://tms-applications.com/)                                 | live   |
@@ -19,9 +19,9 @@ This application is a comprehensive **Ticket Management System** designed to opt
 - **Requesters**: Have the ability to create, read and update, their own tickets, comments and ticket priorities. They can only view there own tickets 
 - **Helpdesk Agents**: Can do the above, and create read update for all tickets including ticket resolution date, status and assigned agent. They can view all tickets and they're assigned tickets. 
 - **Administrators**: Can do the above, and create, read, update, delete, all users, tickets, comments and system activities. 
-  
+
 To manage the increasing volume of internal and customer-facing issues, an robust Ticket Management System is created named "TMS".
-There are 10 users for this application show below:  
+##### Table 1.2: users for TMS application 
 | User ID | Username         | Role           | Email                      | Password | Notable Actions                                            |
 |---------|------------------|----------------|----------------------------|----------|------------------------------------------------------------|
 | 1       | Admin            | SysAdmin       | admin@example.com          | Hello123. | Resolved VPN issues, manages high-priority tickets         |
@@ -42,7 +42,7 @@ There are 10 users for this application show below:
 - **SysAdmin (A)**: This role oversees the entire TMS system, ensuring everything runs smoothly. SysAdmins have the highest level of access, allowing them to manage user roles and tackle high-level issues.
 - **Helpdesk Agent (B)**: Helpdesk Agents are directly under SysAdmins in the hierarchy. They are responsible for addressing the tickets raised by Requesters, providing solutions, and ensuring user satisfaction.
 - **Requester (C)**: Requesters are the end-users who initiate tickets when they encounter issues or need assistance. They interact with the system primarily through the Helpdesk Agents.
-
+##### Figure 1.1: Interaction between roles 
 ```mermaid
 graph TD
     A[SysAdmin] --> B[Helpdesk Agent]
@@ -184,6 +184,7 @@ To set up the local development environment for the UI, API, and Database compon
    ```
 
 ### Architecture and Container Interaction of TMS Application Development Environment
+##### Fingure 1.2: Container Interactions between DB, Frontend and Backend named services 
 ```mermaid
 graph TD
     subgraph Docker Compose
@@ -239,7 +240,8 @@ graph TD
    ```bash
    docker exec $(docker ps -q --filter ancestor=tms-frontend) npm run test
    ```
-# Overview of TMS monorepo 
+# Overview 
+##### Figure 1.3: Overview of TMS monorepo 
 ```
 /tms
 │ └──/backend
@@ -374,6 +376,7 @@ By integrating notifications through Redux middleware with RTK Query and employi
 
 
 # TMS Entiry Relationship Diagram 
+##### Figure 1.4: TMS ERD  
 ```mermaid
 erDiagram
     User ||--o{ Ticket : requests
@@ -415,7 +418,7 @@ erDiagram
     }
 
 ```
-## Entity Relationships and Application context 
+## Entity Relationships and with Application context 
 
 ### Users
 
@@ -494,7 +497,7 @@ The `main.py` file serves as the entry point for the Ticket Management System (T
 - **Pydantic Schemas:** Within my Pydantic schemas, I define CRUD-based classes, utilize inheritance to define a base model, and implement enums for field values. I also simulate SQL joins in the response model using Pydantic schemas to craft comprehensive and relational data responses.
 
 This structured flow ensures that the TMS backend is secure, scalable, and maintainable, with clear separations of concerns and robust data validation at every step of the process.
-
+##### Figure 1.5: Backend Flow Flow chart 
 ```mermaid
 graph TD
     A([main.py]) -->|Listens to| B([API Routes /api/v1])
@@ -555,6 +558,7 @@ graph TD
 
 
 ## Folder Structure for Clean Architecture in TMS Backend
+##### Figure 1.6: expanded view of backend folder structure
 ```
 /backend
 │ └──/app
