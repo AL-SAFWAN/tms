@@ -1,34 +1,32 @@
-
 # Table of Contents
-- 1 [Ticket Management System (TMS)](#ticket-management-system-tms)
-  - 1.2 [Background Information](#background-information)
-  - 1.3  [Role-Role Interactions](#role-role-interactions)
-  - 1.4  [Technology Stack and Features](#technology-stack-and-features)
-    - 1.4.1  [Backend](#backend)
-    - 1.4.2  [Frontend](#frontend)
-    - 1.4.3  [AWS Cloud Services](#aws-cloud-services)
-  - 1.5  [Development and Deployment](#development-and-deployment)
-  - 1.6  [Prerequisites](#prerequisites)
-  - 1.7  [Local Development](#local-development)
-    - 1.7.1  [Running FastAPI Tests](#running-fastapi-tests)
-    - 1.7.2  [Running Vite Tests](#running-vite-tests)
-- 2 [Overview](#overview)
-  - 2.1  [Coding Conventions and Tooling](#coding-conventions-and-tooling)
-    - 2.1.1  [Backend](#backend-1)
-    - 2.1.2  [Frontend](#frontend-1)
-  - 2.1  [Authentication & Authorization - My Approach](#authentication--authorization---my-approach)
-  - 2.2  [Validation Backend to Frontend - My Approach](#validation-backend-to-frontend---my-approach)
-  - 2.3  [Notifications and Confirmations - Enhancing UX in My Application](#notifications-and-confirmations---enhancing-ux-in-my-application)
-  - 2.4  [Entity Relationships and Application Context](#entity-relationships-and-application-context)
-- 3 [Backend Architecture Overview](#backend-architecture-overview)
-  - 3.1  [Key Components of the Architecture](#key-components-of-the-architecture)
-  - 3.2  [Clean Architecture Benefits in TMS](#clean-architecture-benefits-in-tms)
-  - 3.3  [Flow](#flow)
-  - 3.4  [Other Programming Concepts Implemented](#other-programming-concepts-implemented)
-  - 3.5  [Folder Structure for Clean Architecture in TMS Backend](#folder-structure-for-clean-architecture-in-tms-backend)
+- [1 Ticket Management System (TMS)](#1-ticket-management-system-tms)
+  - [1.1 Background Information](#11-background-information)
+  - [1.2 Role-Role Interactions](#12-role-role-interactions)
+  - [1.3 Technology Stack and Features](#13-technology-stack-and-features)
+    - [1.3.1 Backend](#131-backend)
+    - [1.3.2 Frontend](#132-frontend)
+    - [1.3.3 AWS Cloud Services](#133-aws-cloud-services)
+  - [1.4 Development and Deployment](#14-development-and-deployment)
+  - [1.5 Prerequisites](#15-prerequisites)
+  - [1.6 Local Development](#16-local-development)
+    - [1.6.1 Running FastAPI Tests](#161-running-fastapi-tests)
+    - [1.6.2 Running Vite Tests](#162-running-vite-tests)
+- [2 Overview](#2-overview)
+  - [2.1 Coding Conventions and Tooling](#21-coding-conventions-and-tooling)
+    - [2.1.1 Backend](#211-backend)
+    - [2.1.2 Frontend](#212-frontend)
+  - [2.2 Authentication & Authorization - My Approach](#22-authentication--authorization---my-approach)
+  - [2.3 Validation Backend to Frontend - My Approach](#23-validation-backend-to-frontend---my-approach)
+  - [2.4 Notifications and Confirmations - Enhancing UX in My Application](#24-notifications-and-confirmations---enhancing-ux-in-my-application)
+  - [2.5 Entity Relationships and Application Context](#25-entity-relationships-and-application-context)
+- [3 Backend Architecture Overview](#3-backend-architecture-overview)
+  - [3.1 Key Components of the Architecture](#31-key-components-of-the-architecture)
+  - [3.2 Clean Architecture Benefits in TMS](#32-clean-architecture-benefits-in-tms)
+  - [3.3 Flow](#33-flow)
+  - [3.4 Other Programming Concepts Implemented](#34-other-programming-concepts-implemented)
+  - [3.5 Folder Structure for Clean Architecture in TMS Backend](#35-folder-structure-for-clean-architecture-in-tms-backend)
 
-
-# Ticket Management System (TMS)
+# 1 Ticket Management System (TMS)
 ##### Table 1.1: Applications Infrastructure and Services Status
 | Service Type                 | URL                                                                                           | Status |
 |------------------------------|-----------------------------------------------------------------------------------------------|--------|
@@ -43,7 +41,7 @@
 | AWS EBS (API)                | [backend-prod.eba-5vrqj8mx.eu-west-2.elasticbeanstalk.com](http://backend-prod.eba-5vrqj8mx.eu-west-2.elasticbeanstalk.com) | live   |
 | AWS RDS (API)                | [awseb-e-uapxgq8m35-stack-awsebrdsdatabase-3c0m1cc1hhjn.czcom40qetd2.eu-west-2.rds.amazonaws.com](awseb-e-uapxgq8m35-stack-awsebrdsdatabase-3c0m1cc1hhjn.czcom40qetd2.eu-west-2.rds.amazonaws.com) | live   |
 
-## Background Information 
+## 1.1 Background Information 
 This application is a comprehensive **Ticket Management System** designed to optimize the handling of support requests within organizations. It introduces a role-based access control system specifically tailored for three primary user roles: **Requesters**, **Helpdesk Agents**, and **SysAdmins**.
 - **Requesters**: Have the ability to create, read and update, their own tickets, comments and ticket priorities. They can only view there own tickets 
 - **Helpdesk Agents**: Can do the above, and create read update for all tickets including ticket resolution date, status and assigned agent. They can view all tickets and they're assigned tickets. 
@@ -66,7 +64,7 @@ To manage the increasing volume of internal and customer-facing issues, an robus
 | 11      | Isabella Thomas  | Requester      | isabella.thomas@example.com | Hello123. | Reports laptop overheating issues                          |
 
 
-### Role-Role Interactions 
+### 1.2 Role-Role Interactions 
 
 - **SysAdmin (A)**: This role oversees the entire TMS system, ensuring everything runs smoothly. SysAdmins have the highest level of access, allowing them to manage user roles and tackle high-level issues.
 - **Helpdesk Agent (B)**: Helpdesk Agents are directly under SysAdmins in the hierarchy. They are responsible for addressing the tickets raised by Requesters, providing solutions, and ensuring user satisfaction.
@@ -86,8 +84,8 @@ graph TD
     class B helpdesk;
     class C requester;
 ```
-## Technology Stack and Features
-### Backend
+## 1.3 Technology Stack and Features
+### 1.3.1 Backend
 
 Built with **FastAPI** at its core, the backend is optimized for performance and ease of use, offering the following features:
 
@@ -103,7 +101,7 @@ Built with **FastAPI** at its core, the backend is optimized for performance and
 - **Testing:**
   - **Pytest:** Utilized for writing and running tests. Includes support for a test database, transaction rollbacks, and reusable Pytest fixtures.
 
-### Frontend
+### 1.3.2 Frontend
 
 The frontend is powered by **React**, providing a responsive and dynamic user experience:
 
@@ -116,7 +114,7 @@ The frontend is powered by **React**, providing a responsive and dynamic user ex
   - **Code Quality:** Adopts Prettier and ESLint (following the Airbnb style guide) for code linting and formatting.
   - **Architecture:** Follows the Flux architecture pattern for predictable state management across the application.
 
-### AWS Cloud Services
+### 1.3.3 AWS Cloud Services
 To enhance deployment, scalability, and global reach, TMS incorporates various AWS services:
 
 - **AWS Amplify**: Utilizes S3 for storage solutions, simplifying the setup and deployment of mobile and web applications with scalable environments.
@@ -127,12 +125,12 @@ To enhance deployment, scalability, and global reach, TMS incorporates various A
 
 
 
-### Development and Deployment
+### 1.4 Development and Deployment
 
 - **Docker Compose:** For simplifying the development and deployment process through containerization.
 - **Pre-commit:** Configured to automatically lint and format code on every git commit, ensuring code quality from the start.
 
-## Prerequisites
+## 1.5 Prerequisites
 
 Before you begin, ensure you have the following software installed on your system:
 
@@ -150,7 +148,7 @@ docker-compose --version
 python --version
 ```
 
-## Local Development
+## 1.6 Local Development
 
 To set up the local development environment for the UI, API, and Database components, follow these steps:
 
@@ -261,15 +259,15 @@ graph TD
         frontend -.-> frontend_port
     end
 ```
-### Running fastapi test
+### 1.6.1 Running fastapi test
    ```bash
    docker exec $(docker ps -q --filter ancestor=tms-backend) pytest
    ```
-### Running vite test
+### 1.6.2 Running vite test
    ```bash
    docker exec $(docker ps -q --filter ancestor=tms-frontend) npm run test
    ```
-# Overview 
+# 2 Overview 
 ##### Figure 1.3: Overview of TMS monorepo 
 ```
 /tms
@@ -312,9 +310,9 @@ graph TD
 ├──.gitignore           # Specifies intentionally untracked files to ignore
 └──.pre-commit-config   # Configuration for Black (formatting) and Flake8 (linting)
 ```
-## Coding conventions and tooling to reinforce to industry standard and best practice
+## 2.1 Coding conventions and tooling to reinforce to industry standard and best practice
 configured with pre-commit to reinforce standards of every git commit
-### Backend
+### 2.1.1 Backend
 
 - **Naming Conventions**:
   - **Variables & Functions**: I use `snake_case`.
@@ -333,7 +331,7 @@ configured with pre-commit to reinforce standards of every git commit
   - **Black**: For consistent code formatting across my codebase.
   - **Flake8**: For linting, ensuring I stick to best practices and avoid potential errors.
 
-### Frontend
+### 2.1.2 Frontend
 - **Naming Conventions**:
   - **Variables & Functions**: I follow `camelCase`.
   - **Components & Files**: For React components and their files, I use `PascalCase`.
@@ -350,7 +348,7 @@ configured with pre-commit to reinforce standards of every git commit
   - **ESLint**: It's crucial for enforcing coding standards and catching issues early.
   - **Prettier**: Works hand-in-hand with ESLint to format my code automatically, ensuring consistency.
   
-## Authentication & Authorization - My Approach (OAuth 2.0 Implemetion)
+## 2.2 Authentication & Authorization - My Approach (OAuth 2.0 Implemetion)
 
 ### My Authentication Flow with FastAPI
 - **Signing Up New Users**
@@ -374,7 +372,7 @@ configured with pre-commit to reinforce standards of every git commit
 - **RBAC UI**: Leveraging the roles encoded in the JWT, my React app controls access to different components and routes, ensuring users only interact with parts of the application relevant to their roles.
 
 
-## Validation Backend to Frontend - My Approach (dual-layered validation)
+## 3.3 Validation Backend to Frontend - My Approach (dual-layered validation)
 
 - **Backend: FastAPI with Pydantic Validation**
     - **Pydantic Models** - I use Pydantic models to define the expected data structure for incoming requests. This includes specifying types for each field and any additional validation requirements, such as minimum lengths or regex patterns for fields.
@@ -389,7 +387,7 @@ configured with pre-commit to reinforce standards of every git commit
 
 In my project, the combination of FastAPI with Pydantic on the backend and React with Yup and Formik on the frontend forms a robust validation framework. This ensures that data integrity is maintained from the point of input in the UI to the backend processing. It not only safeguards against invalid data but also enhances user interaction by providing clear, immediate validation feedback.
 
-## Notifications and Confirmations - Enhancing UX in My Application
+## 2.4 Notifications and Confirmations - Enhancing UX in My Application
 
 - **Notifications via Redux Middleware and RTK Query**
     - **Middleware Integration**: I have integrated Redux middleware with RTK Query to intercept all outgoing requests. This setup allows me to listen to the lifecycle of each request, particularly focusing on their completion status.
@@ -447,7 +445,7 @@ erDiagram
     }
 
 ```
-## Entity Relationships and with Application context 
+## 2.5 Entity Relationships and with Application context 
 
 ### Users
 
@@ -482,11 +480,11 @@ The `Users` table is central to the TMS, containing information about individual
 This outline elucidates how the TMS's entities interact, offering a comprehensive overview of the system's structure and the flow of data.
 
 
-# Backend Architecture Overview
+# 3 Backend Architecture Overview
 
 The backend of the Ticket Management System (TMS) is designed following the principles of Clean Architecture, ensuring the separation of concerns, scalability, and ease of maintenance. This architecture allows us to decouple the system into independent layers, each with a specific responsibility, enhancing the testability and flexibility of the codebase.
 
-## Key Components of the Architecture
+## 3.1 Key Components of the Architecture
 
 - **Entities/Models (`/models`):** These are the core business objects of my application. They represent the data and the business rules that govern that data. In context, entities include `User`, `Ticket`, and `ActivityLog`.
 
@@ -501,7 +499,7 @@ The backend of the Ticket Management System (TMS) is designed following the prin
   - **SQLAlchemy:** Used as the ORM for interacting with the database, abstracted by my repository layer.
   - **Pydantic:** Provides data validation and settings management through data parsing and serialization.
 
-## Clean Architecture Benefits in TMS
+## 3.2 Clean Architecture Benefits in TMS
 
 - **Independence from Frameworks:** The business logic of the application (services and entities) is not bound to the FastAPI framework, making it easier to migrate or upgrade frameworks if necessary.
 
@@ -511,7 +509,7 @@ The backend of the Ticket Management System (TMS) is designed following the prin
 
 - **Database-agnostic:** Changing the SQL database to a NoSQL database or vice versa affects only the repository layer, not the business logic.
 
-## Flow
+## 3.3 Flow
 
 The `main.py` file serves as the entry point for the Ticket Management System (TMS). It initializes the application and listens to all the routes defined in the `app` object, which point to the endpoints under `api/v1`. Here's a breakdown of how the flow works within the TMS backend:
 
@@ -565,7 +563,7 @@ graph TD
 - **Sanitize & Validate Response**: Prepares and validates the response data to be sent back to the client.
 - **Return Response to Client**: The final step where the response is sent back to the client.
 
-### Other programming concepts Implemented 
+### 3.4 Other programming concepts Implemented 
 
 1. **Async**: I use `async def` for route handlers to efficiently handle IO-bound operations and ensure high concurrency. This asynchronous programming approach greatly enhances the performance of my API by facilitating non-blocking execution of operations.
 
@@ -586,7 +584,7 @@ graph TD
 9. **Dependency Override**: FastAPI's feature for dependency override has been particularly useful for testing, allowing me to replace certain components with mocks or test versions. This capability is crucial for isolated testing, ensuring components can be tested under controlled conditions.
 
 
-## Folder Structure for Clean Architecture in TMS Backend
+## 3.5 Folder Structure for Clean Architecture in TMS Backend
 ##### Figure 1.6: expanded view of backend folder structure
 ```
 /backend
