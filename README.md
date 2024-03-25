@@ -309,6 +309,37 @@ configured with pre-commit to reinforce standards of every git commit
 - **Authentication State & Navigation**: The React app dynamically updates its UI and navigational options based on the user's authentication state, enhancing user experience and security while maintaining navigation state during token expiration.
 - **RBAC UI**: Leveraging the roles encoded in the JWT, my React app controls access to different components and routes, ensuring users only interact with parts of the application relevant to their roles.
 
+
+## Validation Backend to Frontend - My Approach (dual-layered validation)
+
+- **Backend: FastAPI with Pydantic Validation**
+    - **Pydantic Models** - I use Pydantic models to define the expected data structure for incoming requests. This includes specifying types for each field and any additional validation requirements, such as minimum lengths or regex patterns for fields.
+    - **Email Validation** - common validation requirement is verifying email formats. Pydantic allows for straightforward email validation using `EmailStr` in model definitions. This ensures that any email data conforms to a valid format before any processing occurs.
+    - **Error Handling** - Automatic Responses, When a request fails validation, FastAPI automatically returns a detailed error response. This includes which fields failed validation and why, making it easier for frontend developers to display appropriate feedback to users.
+
+- **Frontend: React with Yup and Formik**
+    - **Formik for Form Management** - I use Formik to handle form state in React. It abstracts away the boilerplate for managing form inputs, submissions, and validations, making the process more straightforward.
+    - **Yup for Schema Validation** - Coupled with Formik, I employ Yup to define validation schemas for my forms. This includes specifying requirements for fields, such as required fields, string lengths, and custom validations like regex patterns for emails.
+    - **Integrating Yup with Formik**- Formik’s integration with Yup allows for validations to run automatically on form submission and field changes. If validations fail, Formik makes error messages available to be displayed in the UI, offering immediate feedback to the user.
+    - **User Feedback** - The combination of Yup and Formik provides users with immediate feedback on validation errors. This includes highlighting fields that require attention and displaying error messages defined in the Yup schema, improving the overall user experience.
+
+In my project, the combination of FastAPI with Pydantic on the backend and React with Yup and Formik on the frontend forms a robust validation framework. This ensures that data integrity is maintained from the point of input in the UI to the backend processing. It not only safeguards against invalid data but also enhances user interaction by providing clear, immediate validation feedback.
+
+## Notifications and Confirmations - Enhancing UX in My Application
+
+- **Notifications via Redux Middleware and RTK Query**
+    - **Middleware Integration**: I have integrated Redux middleware with RTK Query to intercept all outgoing requests. This setup allows me to listen to the lifecycle of each request, particularly focusing on their completion status.
+    - **Status Code Handling**: Based on the response status code from each request, the middleware decides when to trigger a notification. For instance, a successful operation (e.g., status code 200) results in a success notification, whereas an error (e.g., status code 400 or 500) triggers an error notification to the user.
+    - **Popup Notifications**: Upon determining the type of notification, a popup is dynamically generated to inform the user. This approach ensures that users are always aware of the outcomes of their actions, enhancing the overall user experience.
+
+- **Confirmations for Deletions with a Reusable React Component**
+    - **Reusable Component Design**:To handle deletions, I've designed a reusable React component that encapsulates the confirmation logic. This component is designed to be easily integrated wherever a confirmation for deletion is required, maintaining consistency across the UI.
+    - **Popup Confirmation UI**: When a user initiates a delete action, instead of immediately executing the deletion, the component renders a confirmation popup in the UI. This ensures that users have a chance to review their decision, preventing accidental deletions.
+    - **Action on Confirmation**: The actual deletion action is only dispatched if the user confirms the deletion by clicking the 'Yes' button in the popup. This design pattern not only enhances the safety of user data but also contributes to a more intentional and user-friendly interface.
+
+By integrating notifications through Redux middleware with RTK Query and employing a reusable component for deletion confirmations, my application provides timely feedback and ensures user actions are deliberate. This setup not only improves the application's interactivity and responsiveness but also safeguards against potential user errors, making the user experience as intuitive and seamless as possible.
+
+
 # TMS Entiry Relationship Diagram 
 ```mermaid
 erDiagram
