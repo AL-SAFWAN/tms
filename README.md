@@ -20,7 +20,7 @@
   - 2.2  [Validation Backend to Frontend - My Approach](#validation-backend-to-frontend---my-approach)
   - 2.3  [Notifications and Confirmations - Enhancing UX in My Application](#notifications-and-confirmations---enhancing-ux-in-my-application)
   - 2.4  [Entity Relationships and Application Context](#entity-relationships-and-application-context)
-- 3[Backend Architecture Overview](#backend-architecture-overview)
+- 3 [Backend Architecture Overview](#backend-architecture-overview)
   - 3.1  [Key Components of the Architecture](#key-components-of-the-architecture)
   - 3.2  [Clean Architecture Benefits in TMS](#clean-architecture-benefits-in-tms)
   - 3.3  [Flow](#flow)
