@@ -285,6 +285,29 @@ configured with pre-commit to reinforce standards of every git commit
 - **Tooling**:
   - **ESLint**: It's crucial for enforcing coding standards and catching issues early.
   - **Prettier**: Works hand-in-hand with ESLint to format my code automatically, ensuring consistency.
+  
+## Authentication & Authorization - My Approach (OAuth 2.0 Implemetion)
+
+### My Authentication Flow with FastAPI
+- **Signing Up New Users**
+  - **Process**: In my `AuthService`, the `sign_up_new_user` method is pivotal. I start by checking if the provided email already exists in our database using `self.user_service.read_user_by_email`. If it's a new email, I proceed to hash the user's password with `self.get_password_hash`, and then use `self.user_service.create_user` to save the new user, including their username, role, email, and hashed password.
+- **User Login**
+  - **Authentication**: The `authenticate_user` method is responsible for logging in users. It fetches the user by their email and verifies the provided password against the stored hash with `self.verify_password`. A successful match authenticates the user, returning the user object; a failure returns `False`.
+- **Token Generation**
+  - **JWT Tokens**: Successfully authenticated users receive a JWT token via the `create_access_token` method. This method embeds user data and an expiry into the token, which is then encoded using a secret key and algorithm. This JWT token is essential for maintaining user sessions and identity across requests.
+
+### My Authorization Strategy
+- **Role-Based Access Control (RBAC)**
+  - **Implementing RBAC**: I use methods like `user_auth_required`, `admin_auth_required`, and `agent_auth_required` for authorization. These leverage `get_user_from_token` to decode the JWT, extracting the username and role. This step is crucial for enforcing access based on user roles.
+- **Handling Token Issues**
+  - **Expirations and Errors**: My system is equipped to handle token expirations and errors gracefully. In `get_user_from_token`, I specifically look for `ExpiredSignatureError` and `JWTError` to catch and respond to token issues, ensuring the client is informed of any authentication or authorization problems.
+    
+### Intergration With React
+
+- **Storing and Managing Tokens**: Upon receiving a JWT token from my backend, the React app stores this token securely in the user slice, considering the application's security needs.
+- **Sending Token in Requests(Authorization Header)**: My React app ensures that every request to protected endpoints includes the JWT token in the `Authorization` header, allowing my backend to verify the request's authenticity and permissions using RTK Query.
+- **Authentication State & Navigation**: The React app dynamically updates its UI and navigational options based on the user's authentication state, enhancing user experience and security while maintaining navigation state during token expiration.
+- **RBAC UI**: Leveraging the roles encoded in the JWT, my React app controls access to different components and routes, ensuring users only interact with parts of the application relevant to their roles.
 
 # TMS Entiry Relationship Diagram 
 ```mermaid
