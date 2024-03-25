@@ -1,26 +1,17 @@
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Docker compose reference guide at
-# https://docs.docker.com/compose/compose-file/
-
-# Here the instructions define your application as a service called "server".
-# This service is built from the Dockerfile in the current directory.
-# You can add other services your application may depend on here, such as a
-# database or a cache. For examples, see the Awesome Compose repository:
-# https://github.com/docker/awesome-compose
-
 version: "3.8"
 
 services:
-  db:
-    image: mysql:5.7
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+      target: development
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./mysql-init:/docker-entrypoint-initdb.d # Mount your initialization scripts directory
-    environment:
-      MYSQL_DATABASE: tms_db
-      MYSQL_ROOT_PASSWORD: password
+      - "./frontend:/app"
     ports:
-      - "3036:3306"
+      - "3000:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
 
   backend:
     build:
@@ -36,17 +27,16 @@ services:
     depends_on:
       - db
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: frontend.dockerfile
-      target: development
+  db:
+    image: mysql:5.7
     volumes:
-      - "./frontend:/app"
-    ports:
-      - "3000:5173"
+      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d # Mount initialization scripts
     environment:
-      - VITE_API_URL=http://localhost:8000
+      MYSQL_DATABASE: tms_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3036:3306"
 
 volumes:
   mysql_data:
