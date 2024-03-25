@@ -1,3 +1,6 @@
+# Table of Contents
+- [Ticket Management System (TMS)](#ticket-management-system-tms)
+  - [Technology Stack and Features](#Technology-Stack-and-Features)
 
 # Ticket Management System (TMS)
 ##### Table 1.1: Applications Infrastructure and Services Status
