@@ -134,19 +134,20 @@ INSERT INTO Comments (ticket_id, commented_by_id, creation_date, description) VA
 INSERT INTO ActivityLogs (user_id, activity_type, activity_date, details) VALUES
 -- Helpdesk Agent actions
 (3, 'Read', NOW(), 'viewing assigned tickets'),
-(4, 'Update', NOW() + INTERVAL 1 DAY, 'updated ticket 2'),
+(4, 'Update', NOW() - INTERVAL 1 DAY, 'updated ticket 2'),
 (9, 'Create', NOW(), 'created ticket 1'),
-(8, 'Update', NOW() + INTERVAL 1 DAY, 'updated ticket 7'),
-(5, 'Read', NOW() + INTERVAL 2 DAY, 'viewing all tickets'),
+(8, 'Update', NOW() - INTERVAL 1 DAY, 'updated ticket 7'),
+(5, 'Read', NOW() - INTERVAL 1 DAY, 'viewing all tickets'),
 
 -- Admin actions
 (1, 'Delete', NOW(), 'deleted ticket 4'),
-(1, 'Delete', NOW() + INTERVAL 2 DAY, 'deleted comment 4'),
+(1, 'Delete', NOW() - INTERVAL 2 DAY, 'deleted comment 4'),
 
 -- Requester actions
 (2, 'Create', NOW(), 'created a comment on ticket 2'),
-(6, 'Read', NOW() + INTERVAL 1 DAY, 'viewing ticket 3'),
-(7, 'Update', NOW() + INTERVAL 2 DAY, 'updated comment 5'),
-(9, 'Create', NOW() + INTERVAL 1 DAY, 'created ticket 5'),
-(10, 'Read', NOW() + INTERVAL 2 DAY, 'viewing ticket 6'),
+(6, 'Read', NOW() - INTERVAL 1 DAY, 'viewing ticket 3'),
+(7, 'Update', NOW() - INTERVAL 2 DAY, 'updated comment 5'),
+(9, 'Create', NOW() - INTERVAL 1 DAY, 'created ticket 5'),
+(10, 'Read', NOW() - INTERVAL 2 DAY, 'viewing ticket 6'),
 (11, 'Update', NOW(), 'updated ticket 8');
+
