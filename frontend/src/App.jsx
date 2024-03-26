@@ -16,7 +16,7 @@ import Ticket from './pages/ticket/index.jsx';
 import AssignedTickets from './pages/my_tickets/index.jsx';
 import Users from './pages/users/index.jsx';
 import User from './pages/users/user.jsx';
-import Logs from './pages/logs/index.jsx';
+import Logs from './pages/all_user_logs/index.jsx';
 
 import Nav from './components/Nav.jsx';
 import NotFound from './components/NotFound.jsx';
